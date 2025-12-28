@@ -1,0 +1,55 @@
+
+[[main]]
+name = "Home"
+weight = 10
+identifier = "home"
+url = "/"
+
+[[main]]
+name = "Glance"
+weight = 20
+identifier = "glance"
+url = "/glance/"
+[[main]]
+name = "Doc"
+weight = 30
+identifier = "doc"
+url = "/doc/"
+[[main]]
+name = "Cases"
+weight = 40
+identifier = "cases"
+url = "/cases/"
+
+# [[main]]
+# name = "Download"
+# weight = 50
+# url = "https://codeberg.org/santo/lumesh/releases"
+
+[[main]]
+name = "Search"
+weight = 60
+  [main.params]
+  type = "search"
+[[main]]
+name = "Github"
+weight = 100
+  [main.params]
+  icon = "github"
+[[main]]
+name = "Lang-Switch"
+weight = 110
+  [main.params]
+  type = "language-switch"
+  # label = true
+  icon = "globe-alt"
+[[main]]
+name = "Theme"
+weight = 120
+  [main.params]
+  type = "theme-toggle"
+  # label = true
+  
+# weight = 60
+# identifier = "about"
+# url = "/about/"

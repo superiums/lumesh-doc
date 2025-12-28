@@ -1,0 +1,17 @@
+baseURL = "https://lumesh.codeberg.page/"
+title = "Lumesh Wiki"
+enableRobotsTXT = true
+enableGitInfo = true
+hasCJKLanguage = true
+defaultContentLanguage = "en"
+enableInlineShortcodes = true
+theme = "hextra"
+
+[outputs]
+home = [ "html", "llms" ]
+page = [ "html" ]
+section = [ "html", "rss" ]
+
+
+# defaultContentLanguageInSubdir = "true" # Render English site under /en
+defaultContentLanguage = "en"           # Default language to use

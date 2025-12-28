@@ -1,0 +1,78 @@
+.mcard {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+}
+.mcard > div,
+.mcard > li {
+    flex: 1 1 100%; /* 默认每行一个 */
+    min-width: 250px; /* 最小宽度，防止内容过小 */
+    padding: 20px;
+    border: 1px solid slategray;
+}
+
+@media screen and (min-width: 30em) {
+    .mcard > div,
+    .mcard > li {
+        flex: 1 1 40%;
+        padding: 30px;
+    }
+}
+@media screen and (min-width: 100em) {
+    .mcard > div,
+    .mcard > li {
+        flex: 1 1 30%;
+        padding: 40px;
+    }
+}
+
+.flex-center-end {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+
+.button {
+    padding: 10px 30px;
+    border: 2px solid royalblue;
+}
+.bg-blue {
+    background-color: #6a6bac;
+}
+
+.lang-switcher {
+    display: flex;
+    gap: 1px;
+}
+
+.lang-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 2px 4px;
+    border-radius: 5px;
+    transition: var(--transition);
+    font-size: 2px;
+
+    &:focus {
+        outline: 2px solid var(--primary-color);
+    }
+
+    &.active,
+    &:hover {
+        color: var(--primary-color);
+        background: rgba(0, 212, 255, 0.1);
+    }
+}
+
+.flex-wrap {
+    flex-wrap: true;
+}
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.flex-col {
+    flex-direction: column;
+}

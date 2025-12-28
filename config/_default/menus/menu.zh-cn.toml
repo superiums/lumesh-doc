@@ -1,0 +1,44 @@
+
+[[main]]
+name = "主页"
+weight = 10
+identifier = "home"
+url = "/zh-cn/"
+[[main]]
+name = "概览"
+weight = 20
+identifier = "glance"
+url = "/zh-cn/glance/"
+[[main]]
+name = "文档"
+weight = 30
+identifier = "doc"
+url = "/zh-cn/doc/"
+[[main]]
+name = "用例"
+weight = 40
+identifier = "cases"
+url = "/zh-cn/cases/"
+
+[[main]]
+name = "Search"
+weight = 60
+  [main.params]
+  type = "search"
+[[main]]
+name = "Github"
+weight = 100
+  [main.params]
+  icon = "github"
+[[main]]
+name = "Lang-Switch"
+weight = 110
+  [main.params]
+  type = "language-switch"
+  # label = true
+  icon = "globe-alt"
+[[main]]
+name = "Theme"
+weight = 120
+  [main.params]
+  type = "theme-toggle"

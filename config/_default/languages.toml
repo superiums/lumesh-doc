@@ -1,0 +1,11 @@
+[en]
+  LanguageName = "English"
+  languageCode = "en"
+  contentDir = 'content/en'
+  weight = 2
+[zh-cn]
+  LanguageName = "简体中文"
+  languageCode = "zh-CN"
+  weight = 3
+  contentDir = 'content/zh-cn'
+  title = "Lumesh 文档"

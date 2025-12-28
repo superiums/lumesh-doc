@@ -1,0 +1,14 @@
+<svg width="200" height="120" xmlns="http://www.w3.org/2000/svg">
+  <!-- 黑色终端背景 -->
+  <rect x="0" y="0" width="200" height="120" fill="#000000" rx="5"/>
+  
+  <!-- 标题栏 -->
+  <rect x="0" y="0" width="200" height="10" fill="#1E1E1E" rx="5"/>
+  
+  <!-- 闪电图标（加粗） -->
+  <text x="10" y="66" font-family="monospace" font-size="60" font-weight="900" fill="#007BFF" transform="rotate(-10 20 60)">⚡</text>
+  
+  <!-- 下划线光标（加粗） -->
+  <text x="30" y="62" font-family="monospace" font-size="20" font-weight="bold" fill="#FFFFFF">_</text>
+</svg>
+
