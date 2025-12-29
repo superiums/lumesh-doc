@@ -7,16 +7,16 @@
           {{ if .Title }}<h1>{{ .Title }}</h1>{{ end }}
           {{ .Content }}
         </div>
-        <div class="hx:mt-16 mcard">
+        <div class="hx:mt-16 hx:flex hx:flex-wrap hx:gap-4 hx:md-gap-8">
     		{{ range .Pages }}
-    		<div>
+    		<div class="hx:w-full hx:md:w-2/5 hx:grow hx:min-h-24 hx:md:min-32 hx:p-2 hx:md:p-6 hx:border-2 hx:rounded-lg hx:border-gray-500 hx:shadow-sm hx:hover:bg-sky-100/60">
     			<a href="{{ .Permalink }}">
-    				<h2>{{ .Title }}</h2>
+    				<h2 class="hx:text-lg hx:text-bold hx:text-primary">{{ .Title }}</h2>
     			</a>
     			<div>
-    			{{ truncate 100 .Plain }}
+    			<p class="hx:text-sm hx:text-gray-500">{{ truncate 100 .Plain }}</p>
                         {{ if .Truncated }}
-                        <a href="{{ .RelPermalink }}">Read More…</a>
+                        <a class="hx:text-sm hx:text-indigo-200" href="{{ .RelPermalink }}">Read More…</a>
                         {{ end }}
     			</div>
     		</div>

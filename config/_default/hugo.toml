@@ -14,4 +14,4 @@ section = [ "html", "rss" ]
 
 
 # defaultContentLanguageInSubdir = "true" # Render English site under /en
-defaultContentLanguage = "en"           # Default language to use
+# defaultContentLanguage = "en"           # Default language to use

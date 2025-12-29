@@ -28,6 +28,7 @@ weight = 60
 [[main]]
 name = "Github"
 weight = 100
+url = "https://github.com/superiums/lumesh"
   [main.params]
   icon = "github"
 [[main]]

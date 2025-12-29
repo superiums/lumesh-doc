@@ -1,0 +1,27 @@
+{{- define "main" }}
+<div class="hx:flex hx:flex-col hx:items-center hx:vh">
+	<div class="hx:w-full hx:flex hx:justify-center hx:flex-wrap">
+    	<div class="hx:w-lg hx:h-80" style="background-image: url(/images/lumesh.svg);background-size: contain;background-repeat: no-repeat;min-width: 400px;">
+    	</div>
+    	<div class="hx:w-md w-md hx:content-center hx:p-4">
+           	<h2 class="hx:bold hx:text-primary hx:mb-4 hx:font-mono hx:tracking-wider">一个光速般的shell</h2>
+	<li>像js一样书写</li>
+	<li>像bash一样运行</li>
+	<li>像光一样快速</li>
+	<li>像气一样轻盈</li>
+	<li>像水一样灵活</li>
+    	</div>
+	</div>
+
+	<div class="hx:flex hx:justify-center hx:flex-col hx:text-center hx:p-10 hx:md:w-3/5">
+	    {{ .Content }}
+	</div>
+
+	<!--<div class="hx:justify-center hx:p-6">
+    	<div class="" style="z-index: 50;">
+           	<a class="button" href="/glance/">Overview</a>
+           	<a class="hx:button bg-blue" href="https://codeberg.org/santo/lumesh/releases">Download</a>
+    	</div>
+	</div>-->
+</div>
+{{- end }}

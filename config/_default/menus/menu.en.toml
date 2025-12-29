@@ -34,6 +34,7 @@ weight = 60
 [[main]]
 name = "Github"
 weight = 100
+url = "https://github.com/superiums/lumesh"
   [main.params]
   icon = "github"
 [[main]]
@@ -49,7 +50,7 @@ weight = 120
   [main.params]
   type = "theme-toggle"
   # label = true
-  
+
 # weight = 60
 # identifier = "about"
 # url = "/about/"
