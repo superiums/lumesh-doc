@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <defs>
+    <linearGradient id="water" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:0.8"/>
+      <stop offset="50%" style="stop-color:#4682B4;stop-opacity:0.4"/>
+      <stop offset="100%" style="stop-color:#4682B4;stop-opacity:0"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="200" cy="200" rx="160" ry="60" fill="url(#water)">
+    <animate attributeName="ry" values="60;70;60" dur="3s" repeatCount="indefinite"/>
+  </ellipse>
+  <path d="M100 180 Q150 140 200 180 Q250 220 300 180" stroke="#87CEEB" stroke-width="3" fill="none" opacity="0.7">
+    <animate attributeName="d" values="M100 180 Q150 140 200 180 Q250 220 300 180;M100 190 Q150 150 200 190 Q250 230 300 190;M100 180 Q150 140 200 180 Q250 220 300 180" dur="3s" repeatCount="indefinite"/>
+  </path>
+  <path d="M80 200 Q140 160 200 200 Q260 240 320 200" stroke="#4682B4" stroke-width="2" fill="none" opacity="0.5">
+    <animate attributeName="d" values="M80 200 Q140 160 200 200 Q260 240 320 200;M80 210 Q140 170 200 210 Q260 250 320 210;M80 200 Q140 160 200 200 Q260 240 320 200" dur="3.5s" repeatCount="indefinite"/>
+  </path>
+  <ellipse cx="200" cy="140" rx="30" ry="40" fill="#87CEEB" opacity="0.4">
+    <animate attributeName="ry" values="40;50;40" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.4;0.2;0.4" dur="2s" repeatCount="indefinite"/>
+  </ellipse>
+</svg>

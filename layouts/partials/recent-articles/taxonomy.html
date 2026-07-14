@@ -1,0 +1,42 @@
+{{ $recentArticles := 5 }} {{ $recentArticles =
+.Site.Params.homepage.showRecentItems }} {{ $taxonomy :=
+.Site.Params.homepage.taxonomy | default "goal" }} {{ $taxo := index
+.Site.Taxonomies $taxonomy }}
+
+<style>
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+</style>
+
+{{ range $termName, $termPages := $taxo }}
+<section class="mt-10">
+    <h2
+        class="text-xl font-semibold mb-6 p-2 bg-neutral-300 dark:bg-neutral-700 rounded-lg"
+    >
+        <a href="{{ $taxonomy }}/{{ $termName }}">{{ $termName }}</a>
+    </h2>
+
+    {{ $pages := $termPages.Pages.ByWeight.Reverse }}
+
+    <div
+        class="flex gap-3 overflow-x-auto sm:scrollbar-hide md:scrollbar-x pb-2 snap-x snap-mandatory"
+    >
+        {{ range first $recentArticles $pages }}
+        <div class="flex-shrink-0 w-1/3 snap-start">
+            {{ partial "article-link/card.html" . }}
+        </div>
+        {{ end }}
+        <a
+            href="{{ $taxonomy }}/{{ $termName }}"
+            class="flex-shrink-0 p-4 w-64 snap-start flex items-center justify-center rounded-lg border-2 border-dashed border-neutral-300 dark:border-neutral-600 hover:border-primary-500 transition-colors min-h-32 text-lg font-semibold text-neutral-500 dark:text-neutral-400 no-underline"
+        >
+            更多 &raquo;
+        </a>
+    </div>
+</section>
+{{ end }}

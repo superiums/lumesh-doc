@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <defs>
+    <radialGradient id="light" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:1"/>
+      <stop offset="30%" style="stop-color:#FFFACD;stop-opacity:0.6"/>
+      <stop offset="70%" style="stop-color:#FFD700;stop-opacity:0.2"/>
+      <stop offset="100%" style="stop-color:#FFD700;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="200" cy="150" r="100" fill="url(#light)">
+    <animate attributeName="r" values="100;110;100" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  <ellipse cx="200" cy="150" rx="40" ry="70" fill="#FFFACD" opacity="0.3">
+    <animate attributeName="opacity" values="0.3;0.15;0.3" dur="3s" repeatCount="indefinite"/>
+  </ellipse>
+  <circle cx="200" cy="150" r="60" fill="none" stroke="#FFFFFF" stroke-width="3" opacity="0.8">
+    <animate attributeName="r" values="60;70;60" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.8;0.4;0.8" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="200" cy="150" r="40" fill="none" stroke="#FFFACD" stroke-width="2" opacity="0.6">
+    <animate attributeName="r" values="40;50;40" dur="3.5s" repeatCount="indefinite"/>
+  </circle>
+  <line x1="200" y1="90" x2="200" y2="210" stroke="#FFD700" stroke-width="2" opacity="0.4">
+    <animate attributeName="opacity" values="0.4;0.15;0.4" dur="2s" repeatCount="indefinite"/>
+  </line>
+  <line x1="140" y1="150" x2="260" y2="150" stroke="#FFD700" stroke-width="2" opacity="0.4">
+    <animate attributeName="opacity" values="0.4;0.15;0.4" dur="2.5s" repeatCount="indefinite"/>
+  </line>
+</svg>

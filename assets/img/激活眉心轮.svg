@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <defs>
+    <radialGradient id="thirdEye" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#4169E1;stop-opacity:1"/>
+      <stop offset="50%" style="stop-color:#6A5ACD;stop-opacity:0.5"/>
+      <stop offset="100%" style="stop-color:#483D8B;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  <ellipse cx="200" cy="150" rx="70" ry="45" fill="url(#thirdEye)">
+    <animate attributeName="rx" values="70;80;70" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="ry" values="45;55;45" dur="3s" repeatCount="indefinite"/>
+  </ellipse>
+  <ellipse cx="200" cy="150" rx="70" ry="45" fill="none" stroke="#4169E1" stroke-width="3" opacity="0.8">
+    <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/>
+  </ellipse>
+  <ellipse cx="200" cy="150" rx="45" ry="28" fill="none" stroke="#6A5ACD" stroke-width="2" opacity="0.6">
+    <animate attributeName="rx" values="45;55;45" dur="2.5s" repeatCount="indefinite"/>
+    <animate attributeName="ry" values="28;38;28" dur="2.5s" repeatCount="indefinite"/>
+  </ellipse>
+  <circle cx="200" cy="150" r="12" fill="#4169E1" opacity="0.9">
+    <animate attributeName="r" values="12;16;12" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="200" cy="150" r="6" fill="#FFFFFF" opacity="1">
+    <animate attributeName="opacity" values="1;0.5;1" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+</svg>

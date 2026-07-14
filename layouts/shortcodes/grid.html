@@ -1,0 +1,26 @@
+{{ $id := delimit (slice "grid" (partial "functions/uid.html" .)) "-" }}
+{{ $cols := .Get "cols" | default 2 }}
+{{ $gap := .Get "gap" | default 4 }}
+{{ $sm := .Get "sm" | default 1 }}
+{{ $md := .Get "md" | default 2 }}
+
+<style>
+  #{{ $id }} {
+    display: grid;
+    gap: {{ $gap }}px;
+    grid-template-columns: repeat({{ $sm }}, minmax(0, 1fr));
+  }
+  @media (min-width: 640px) {
+    #{{ $id }} {
+      grid-template-columns: repeat({{ $md }}, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 768px) {
+    #{{ $id }} {
+      grid-template-columns: repeat({{ $cols }}, minmax(0, 1fr));
+    }
+  }
+</style>
+<div id="{{ $id }}">
+  {{ .Inner }}
+</div>
