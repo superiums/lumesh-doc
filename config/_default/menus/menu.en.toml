@@ -1,0 +1,48 @@
+
+[[main]]
+name = "Home"
+weight = 10
+identifier = "home"
+url = "/"
+
+[[main]]
+name = "Glance"
+weight = 20
+identifier = "glance"
+url = "/glance/"
+[[main]]
+name = "Doc"
+weight = 30
+identifier = "doc"
+url = "/doc/"
+[[main]]
+name = "Topics"
+weight = 31
+identifier = "topics"
+url = "/topics/"
+[[main]]
+name = "Cases"
+weight = 40
+identifier = "cases"
+url = "/cases/"
+
+[[footer]]
+name = "codeberg"
+identifier = "codeberg"
+pre = "codeberg"
+weight = 10
+url = "https://codeberg.org/santo/lumesh/"
+
+[[footer]]
+name = "github"
+identifier = "github"
+pre = "github"
+weight = 20
+url = "https://github.com/superiums/lumesh/"
+
+[[footer]]
+name = "download"
+identifier = "download"
+pre = "download"
+weight = 30
+url = "https://codeberg.org/santo/lumesh/releases"

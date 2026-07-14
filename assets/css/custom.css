@@ -1,0 +1,8 @@
+table {
+    width: 100%;
+    table-layout: auto;
+}
+.flow > * {
+    flex-basis: 12rem;
+    flex-grow: 1;
+}

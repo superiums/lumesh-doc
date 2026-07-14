@@ -1,0 +1,87 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 1084 322"
+  width="1084"
+  height="322"
+  preserveAspectRatio="xMidYMid slice"
+  aria-hidden="true"
+>
+  <defs>
+    <style>
+      @media (prefers-color-scheme: dark) {
+        .bg   { fill: #080c18; }
+        .grid { stroke: #141c2b; }
+        .line { stroke: #1a2438; }
+        .glow { fill: #1a3a5a; }
+        .text { fill: #3a5a6a; }
+        .dot  { fill: #2a6a8a; }
+      }
+
+      @media (prefers-color-scheme: light) {
+        .bg   { fill: #f2f4f8; }
+        .grid { stroke: #dde1e8; }
+        .line { stroke: #c8cdd5; }
+        .glow { fill: #d0e0f0; }
+        .text { fill: #7a8a9a; }
+        .dot  { fill: #5a8aaa; }
+      }
+
+      text {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 12px;
+      }
+    </style>
+  </defs>
+
+  <!-- 背景 -->
+  <rect class="bg" width="1084" height="322"/>
+
+  <!-- 极淡网格 -->
+  <g opacity="0.25">
+    <path d="M0 107H1084" class="grid"/>
+    <path d="M0 215H1084" class="grid"/>
+    <path d="M361 0V322" class="grid"/>
+    <path d="M723 0V322" class="grid"/>
+  </g>
+
+  <!-- 漂浮光点 -->
+  <g>
+    <circle cx="180" cy="80" r="1.5" class="dot" opacity="0.6">
+      <animate attributeName="cy" values="80;76;80" dur="6s" repeatCount="indefinite"/>
+    </circle>
+
+    <circle cx="520" cy="260" r="1.2" class="dot" opacity="0.5">
+      <animate attributeName="cy" values="260;264;260" dur="7s" repeatCount="indefinite"/>
+    </circle>
+
+    <circle cx="900" cy="120" r="1.5" class="dot" opacity="0.4">
+      <animate attributeName="cy" values="120;116;120" dur="5s" repeatCount="indefinite"/>
+    </circle>
+
+    <circle cx="1050" cy="200" r="1" class="dot" opacity="0.35">
+      <animate attributeName="cy" values="200;204;200" dur="8s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- 缓慢移动的光带 -->
+  <rect x="-200" y="140" width="300" height="1" class="line" opacity="0.15">
+    <animate
+      attributeName="x"
+      from="-300"
+      to="1084"
+      dur="25s"
+      repeatCount="indefinite"
+    />
+  </rect>
+
+  <!-- 微弱光晕 -->
+  <ellipse cx="540" cy="160" rx="320" ry="80" class="glow" opacity="0.08"/>
+
+  <!-- 中间文字 -->
+  <text x="540" y="168" text-anchor="middle" class="text" opacity="0.6">
+    $ echo "Hello, Terminal"
+  </text>
+
+  <!-- 底部细线 -->
+  <path d="M0 321H1084" class="line" opacity="0.2"/>
+</svg>

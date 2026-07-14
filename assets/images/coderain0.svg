@@ -1,0 +1,207 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 1084 322"
+  width="1084"
+  height="322"
+  preserveAspectRatio="xMidYMid slice"
+  aria-hidden="true"
+>
+  <defs>
+    <style>
+      /* ===== 暗色模式 ===== */
+      @media (prefers-color-scheme: dark) {
+        .bg   { fill: #070a12; }
+        .char { fill: #1a3a2a; }
+        .head { fill: #2a6a4a; }
+        .glow { stroke: #1a4a3a; }
+      }
+
+      /* ===== 亮色模式 ===== */
+      @media (prefers-color-scheme: light) {
+        .bg   { fill: #f4f6f8; }
+        .char { fill: #c8d8d0; }
+        .head { fill: #5a8a7a; }
+        .glow { stroke: #b8d8c8; }
+      }
+
+      text {
+        font-family: ui-monospace, "Courier New", Courier, monospace;
+        font-size: 13px;
+        opacity: 0.7;
+      }
+    </style>
+  </defs>
+
+  <!-- 背景 -->
+  <rect class="bg" width="1084" height="322"/>
+
+  <!-- 雨列 1 -->
+  <g>
+    <text x="40" y="-20" class="char">
+      <tspan dy="0">01</tspan>
+      <tspan dy="16">10</tspan>
+      <tspan dy="16">11</tspan>
+      <tspan dy="16" class="head">$</tspan>
+      <animateTransform
+        attributeName="transform"
+        type="translate"
+        from="0 0"
+        to="0 342"
+        dur="12s"
+        repeatCount="indefinite"
+      />
+    </text>
+  </g>
+
+  <!-- 雨列 2 -->
+  <g>
+    <text x="120" y="-60" class="char">
+      <tspan dy="0">cat</tspan>
+      <tspan dy="16">ls</tspan>
+      <tspan dy="16">cd</tspan>
+      <tspan dy="16" class="head">></tspan>
+      <animateTransform
+        attributeName="transform"
+        type="translate"
+        from="0 0"
+        to="0 342"
+        dur="14s"
+        repeatCount="indefinite"
+      />
+    </text>
+  </g>
+
+  <!-- 雨列 3 -->
+  <g>
+    <text x="220" y="-40" class="char">
+      <tspan dy="0">sudo</tspan>
+      <tspan dy="16">echo</tspan>
+      <tspan dy="16">git</tspan>
+      <tspan dy="16" class="head">#</tspan>
+      <animateTransform
+        attributeName="transform"
+        type="translate"
+        from="0 0"
+        to="0 342"
+        dur="16s"
+        repeatCount="indefinite"
+      />
+    </text>
+  </g>
+
+  <!-- 雨列 4 -->
+  <g>
+    <text x="340" y="-80" class="char">
+      <tspan dy="0">1010</tspan>
+      <tspan dy="16">0101</tspan>
+      <tspan dy="16">1100</tspan>
+      <tspan dy="16" class="head">_</tspan>
+      <animateTransform
+        attributeName="transform"
+        type="translate"
+        from="0 0"
+        to="0 342"
+        dur="13s"
+        repeatCount="indefinite"
+      />
+    </text>
+  </g>
+
+  <!-- 雨列 5 -->
+  <g>
+    <text x="460" y="-30" class="char">
+      <tspan dy="0">npm</tspan>
+      <tspan dy="16">yarn</tspan>
+      <tspan dy="16">pnpm</tspan>
+      <tspan dy="16" class="head">$</tspan>
+      <animateTransform
+        attributeName="transform"
+        type="translate"
+        from="0 0"
+        to="0 342"
+        dur="15s"
+        repeatCount="indefinite"
+      />
+    </text>
+  </g>
+
+  <!-- 雨列 6 -->
+  <g>
+    <text x="600" y="-70" class="char">
+      <tspan dy="0">const</tspan>
+      <tspan dy="16">let</tspan>
+      <tspan dy="16">var</tspan>
+      <tspan dy="16" class="head">></tspan>
+      <animateTransform
+        attributeName="transform"
+        type="translate"
+        from="0 0"
+        to="0 342"
+        dur="17s"
+        repeatCount="indefinite"
+      />
+    </text>
+  </g>
+
+  <!-- 雨列 7 -->
+  <g>
+    <text x="740" y="-50" class="char">
+      <tspan dy="0">true</tspan>
+      <tspan dy="16">false</tspan>
+      <tspan dy="16">null</tspan>
+      <tspan dy="16" class="head">#</tspan>
+      <animateTransform
+        attributeName="transform"
+        type="translate"
+        from="0 0"
+        to="0 342"
+        dur="11s"
+        repeatCount="indefinite"
+      />
+    </text>
+  </g>
+
+  <!-- 雨列 8 -->
+  <g>
+    <text x="900" y="-90" class="char">
+      <tspan dy="0">exit</tspan>
+      <tspan dy="16">clear</tspan>
+      <tspan dy="16">help</tspan>
+      <tspan dy="16" class="head">_</tspan>
+      <animateTransform
+        attributeName="transform"
+        type="translate"
+        from="0 0"
+        to="0 342"
+        dur="18s"
+        repeatCount="indefinite"
+      />
+    </text>
+  </g>
+
+  <!-- 雨列 9 -->
+  <g>
+    <text x="1020" y="-20" class="char">
+      <tspan dy="0">ssh</tspan>
+      <tspan dy="16">curl</tspan>
+      <tspan dy="16">wget</tspan>
+      <tspan dy="16" class="head">$</tspan>
+      <animateTransform
+        attributeName="transform"
+        type="translate"
+        from="0 0"
+        to="0 342"
+        dur="14s"
+        repeatCount="indefinite"
+      />
+    </text>
+  </g>
+
+  <!-- 底部淡入遮罩（防止字符突然消失） -->
+  <defs>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0.7" stop-opacity="1"/>
+      <stop offset="1" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+</svg>

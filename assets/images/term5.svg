@@ -1,0 +1,167 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 1280 800"
+  width="1280"
+  height="800"
+  aria-hidden="true"
+>
+  <defs>
+    <style>
+      text {
+        font-family: ui-monospace, "Courier New", Courier, monospace;
+      }
+    </style>
+
+    <!-- 渐变背景 -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0e27"/>
+      <stop offset="50%" stop-color="#0d1b3e"/>
+      <stop offset="100%" stop-color="#0a0e27"/>
+    </linearGradient>
+
+    <!-- 光带渐变 -->
+    <linearGradient id="beam" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00ff88" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#00ff88" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#00a8ff" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- 粒子渐变 -->
+    <radialGradient id="p1">
+      <stop offset="0%" stop-color="#00ff88"/>
+      <stop offset="100%" stop-color="#00ff88" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="p2">
+      <stop offset="0%" stop-color="#00a8ff"/>
+      <stop offset="100%" stop-color="#00a8ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="p3">
+      <stop offset="0%" stop-color="#ff5f56"/>
+      <stop offset="100%" stop-color="#ff5f56" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="p4">
+      <stop offset="0%" stop-color="#ffbd2e"/>
+      <stop offset="100%" stop-color="#ffbd2e" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="1280" height="800" fill="url(#bg)"/>
+
+  <!-- 装饰网格线 -->
+  <g opacity="0.15">
+    <path d="M0 200H1280" stroke="#1a3a5c" stroke-width="0.5"/>
+    <path d="M0 400H1280" stroke="#1a3a5c" stroke-width="0.5"/>
+    <path d="M0 600H1280" stroke="#1a3a5c" stroke-width="0.5"/>
+    <path d="M320 0V800" stroke="#1a3a5c" stroke-width="0.5"/>
+    <path d="M640 0V800" stroke="#1a3a5c" stroke-width="0.5"/>
+    <path d="M960 0V800" stroke="#1a3a5c" stroke-width="0.5"/>
+  </g>
+
+  <!-- 横向光带 -->
+  <rect x="-200" y="380" width="400" height="3" fill="url(#beam)" opacity="0.6">
+    <animate attributeName="x" from="-400" to="1280" dur="6s" repeatCount="indefinite"/>
+  </rect>
+  <rect x="-200" y="420" width="300" height="2" fill="url(#beam)" opacity="0.4">
+    <animate attributeName="x" from="1280" to="-400" dur="8s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- 彩色粒子 -->
+  <circle cx="200" cy="300" r="60" fill="url(#p1)" opacity="0.3">
+    <animate attributeName="cx" values="200;220;200" dur="4s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="300;280;300" dur="5s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle cx="1000" cy="500" r="80" fill="url(#p2)" opacity="0.25">
+    <animate attributeName="cx" values="1000;1020;1000" dur="6s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="500;480;500" dur="4s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle cx="600" cy="200" r="50" fill="url(#p3)" opacity="0.2">
+    <animate attributeName="cx" values="600;580;600" dur="5s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="200;220;200" dur="3s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle cx="1100" cy="300" r="70" fill="url(#p4)" opacity="0.2">
+    <animate attributeName="cx" values="1100;1080;1100" dur="4.5s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="300;320;300" dur="3.5s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- 数字雨装饰（左侧） -->
+  <g opacity="0.25" font-size="13" fill="#00ff88">
+    <text x="60" y="-20">
+      <tspan dy="0">0101</tspan>
+      <tspan dy="16">1010</tspan>
+      <tspan dy="16">0110</tspan>
+      <tspan dy="16" fill="#00ff88">$</tspan>
+      <animateTransform attributeName="transform" type="translate"
+        from="0 0" to="0 820" dur="10s" repeatCount="indefinite"/>
+    </text>
+  </g>
+
+  <g opacity="0.2" font-size="13" fill="#00a8ff">
+    <text x="180" y="-60">
+      <tspan dy="0">const</tspan>
+      <tspan dy="16">let</tspan>
+      <tspan dy="16">fn</tspan>
+      <tspan dy="16" fill="#00a8ff">#</tspan>
+      <animateTransform attributeName="transform" type="translate"
+        from="0 0" to="0 820" dur="12s" repeatCount="indefinite"/>
+    </text>
+  </g>
+
+  <!-- 中央终端窗口 -->
+  <rect x="340" y="220" width="600" height="360" rx="8"
+        fill="#0d1117" stroke="#1a3a5c" stroke-width="1.5" opacity="0.85"/>
+
+  <!-- 终端标题栏 -->
+  <rect x="340" y="220" width="600" height="32" rx="8 8 0 0"
+        fill="#161b22" stroke="#1a3a5c" stroke-width="1"/>
+  <circle cx="362" cy="236" r="6" fill="#ff5f56"/>
+  <circle cx="382" cy="236" r="6" fill="#ffbd2e"/>
+  <circle cx="402" cy="236" r="6" fill="#27c93f"/>
+  <text x="430" y="241" font-size="12" fill="#6b8a9e">terminal — blog@cyberdeck:~/</text>
+
+  <!-- 终端内容 -->
+  <g font-size="15" font-family="ui-monospace, monospace">
+    <text x="370" y="290" fill="#00ff88">
+      <tspan fill="#00a8ff">➜</tspan> cat article.md
+    </text>
+    <text x="370" y="325" fill="#6b8a9e" opacity="0.8">
+      # The Future of Terminal Blogging
+    </text>
+    <text x="370" y="355" fill="#6b8a9e" opacity="0.6">
+      Exploring the intersection of code, design, and...
+    </text>
+
+    <text x="370" y="410" fill="#00ff88">
+      <tspan fill="#00a8ff">➜</tspan> nuctl run deploy
+    </text>
+    <text x="370" y="445" fill="#00ff88" opacity="0.8">
+      ✔ Deployment successful
+    </text>
+
+    <text x="370" y="500" fill="#00ff88">
+      <tspan fill="#00a8ff">➜</tspan>
+      <tspan opacity="0.8">_</tspan>
+      <animate attributeName="opacity" values="0.8;0.2;0.8" dur="1s" repeatCount="indefinite"/>
+    </text>
+  </g>
+
+  <!-- 右侧装饰线 -->
+  <g opacity="0.3">
+    <path d="M980 240V560" stroke="#00ff88" stroke-width="1" stroke-dasharray="4 4">
+      <animate attributeName="stroke-dashoffset" from="0" to="-16" dur="2s" repeatCount="indefinite"/>
+    </path>
+    <path d="M1000 280V520" stroke="#00a8ff" stroke-width="1" stroke-dasharray="4 4">
+      <animate attributeName="stroke-dashoffset" from="0" to="16" dur="2.5s" repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <!-- 底部装饰 -->
+  <g opacity="0.15">
+    <text x="640" y="780" text-anchor="middle" font-size="11" fill="#6b8a9e">
+      Powered by Nushell • Rust • WebAssembly
+    </text>
+  </g>
+</svg>

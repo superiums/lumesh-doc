@@ -1,0 +1,5 @@
+{{- define "main" }}
+
+<section class="w-full">{{ .Content }}</section>
+
+{{- end }}

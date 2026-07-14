@@ -1,0 +1,4 @@
+{{- $class := .Get "class" }}
+<div class="flow flex flex-wrap gap-2 {{ with $class }}{{ . }}{{ end }}">
+	{{ .InnerDeindent }}
+</div>

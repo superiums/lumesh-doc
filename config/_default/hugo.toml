@@ -1,15 +1,20 @@
+baseURL = "https://lumesh.codeberg.page/"
+title = "Lumesh"
+enableGitInfo = true
+hasCJKLanguage = true
+
 # -- Site Configuration --
 # Refer to the theme docs for more details about each of these parameters.
 # https://blowfish.page/docs/getting-started/
 
-theme = "blowfish"
-baseURL = "/"
-defaultContentLanguage = "zh-CN"
+theme = "blowfish" # UNCOMMENT THIS LINE
+# baseURL = "https://your_domain.com/"
+defaultContentLanguage = "en"
 
-# pluralizeListTitles = "true" # hugo function useful for non-english languages, find out more in  https://gohugo.io/getting-started/configuration/#pluralizelisttitles
+pluralizeListTitles = true # hugo function useful for non-english languages, find out more in  https://gohugo.io/getting-started/configuration/#pluralizelisttitles
 
 enableRobotsTXT = true
-summaryLength = 0
+summaryLength = 100
 
 buildDrafts = false
 buildFuture = false
@@ -27,12 +32,8 @@ enableEmoji = true
 [taxonomies]
   tag = "tags"
   # category = "categories"
-  author = "authors"
-  series = "series"
-  goal = "goal"
-  method = "method"
-  duration = "duration"
-  level = "level"
+  # author = "authors"
+  # series = "series"
 
 [sitemap]
   changefreq = 'daily'
@@ -47,24 +48,20 @@ enableEmoji = true
   toLower = false
 
     [[related.indices]]
-        name = "series"
-        weight = 150
-
-    [[related.indices]]
         name = "tags"
         weight = 100
 
     [[related.indices]]
-        name = "goal"
+        name = "categories"
         weight = 100
 
     [[related.indices]]
-        name = "authors"
-        weight = 60
+        name = "series"
+        weight = 50
 
     [[related.indices]]
-        name = "level"
-        weight = 50
+        name = "authors"
+        weight = 20
 
     [[related.indices]]
         name = "date"

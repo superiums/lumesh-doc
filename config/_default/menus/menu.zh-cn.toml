@@ -1,0 +1,48 @@
+
+[[main]]
+name = "主页"
+weight = 10
+identifier = "home"
+url = "/zh-cn/"
+[[main]]
+name = "概览"
+weight = 20
+identifier = "glance"
+url = "/zh-cn/glance/"
+[[main]]
+name = "文档"
+weight = 30
+identifier = "doc"
+url = "/zh-cn/doc/"
+[[main]]
+name = "话题"
+weight = 31
+identifier = "topics"
+url = "/zh-cn/topics/"
+[[main]]
+name = "用例"
+weight = 40
+identifier = "cases"
+url = "/zh-cn/cases/"
+
+[[footer]]
+name = "codeberg"
+identifier = "codeberg"
+pre = "codeberg"
+weight = 10
+url = "https://codeberg.org/santo/lumesh/"
+
+[[footer]]
+name = "github"
+identifier = "github"
+pre = "github"
+weight = 20
+url = "https://github.com/superiums/lumesh/"
+
+[[footer]]
+name = "下载"
+identifier = "download"
+pre = "download"
+weight = 30
+url = "https://codeberg.org/santo/lumesh/releases"
+

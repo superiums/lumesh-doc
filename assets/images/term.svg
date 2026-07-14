@@ -1,0 +1,114 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 1084 322"
+  width="1084"
+  height="322"
+  preserveAspectRatio="xMidYMid slice"
+  aria-hidden="true"
+>
+  <defs>
+    <!-- ===== 暗色模式 ===== -->
+    <style>
+      @media (prefers-color-scheme: dark) {
+        .bg { fill: #0b0f1a; }
+        .grid { stroke: #1a2233; }
+        .line { stroke: #223344; }
+        .prompt { fill: #3a7ca5; }
+        .text { fill: #5f7a8a; }
+        .cursor { fill: #4a8fa8; }
+      }
+
+      /* ===== 亮色模式 ===== */
+      @media (prefers-color-scheme: light) {
+        .bg { fill: #f4f6f8; }
+        .grid { stroke: #d8dee4; }
+        .line { stroke: #cdd4dd; }
+        .prompt { fill: #4a6f8a; }
+        .text { fill: #6b7a8a; }
+        .cursor { fill: #5a8ca8; }
+      }
+
+      /* 通用样式 */
+      text {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 14px;
+      }
+    </style>
+
+    <!-- 网格 -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" class="grid"/>
+    </pattern>
+
+    <!-- 扫描线 -->
+    <pattern id="scanline" width="2" height="4" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="2" y2="0" class="line" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+
+  <!-- 背景 -->
+  <rect class="bg" width="1084" height="322"/>
+  <rect width="1084" height="322" fill="url(#grid)" opacity="0.6"/>
+  <rect width="1084" height="322" fill="url(#scanline)" opacity="0.25">
+    <animate attributeName="y" from="0" to="322" dur="18s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- 顶部细线 -->
+  <line x1="0" y1="1" x2="1084" y2="1" class="line" stroke-width="1" opacity="0.5"/>
+
+  <!-- 左侧终端轮廓 -->
+  <rect x="30" y="30" width="520" height="260" rx="6"
+        fill="none" stroke-width="1" class="line" opacity="0.6"/>
+
+  <!-- 窗口按钮 -->
+  <circle cx="48" cy="46" r="4" class="line" opacity="0.5"/>
+  <circle cx="64" cy="46" r="4" class="line" opacity="0.5"/>
+  <circle cx="80" cy="46" r="4" class="line" opacity="0.5"/>
+
+  <!-- 终端文字 -->
+  <g class="text" opacity="0.75">
+    <text x="110" y="48">~/blog</text>
+
+    <text x="50" y="95">
+      <tspan class="prompt">$</tspan>
+      <tspan dx="8">whoami</tspan>
+    </text>
+    <text x="170" y="95">shell</text>
+
+    <text x="50" y="125">
+      <tspan class="prompt">$</tspan>
+      <tspan dx="8">ls posts/</tspan>
+    </text>
+    <text x="170" y="125">42 entries</text>
+
+    <text x="50" y="155">
+      <tspan class="prompt">$</tspan>
+      <tspan dx="8">uptime</tspan>
+    </text>
+    <text x="170" y="155">99 days</text>
+
+    <!-- 当前输入行 -->
+    <text x="50" y="190">
+      <tspan class="prompt">$</tspan>
+      <tspan dx="8">_</tspan>
+      <tspan class="cursor" opacity="0.8">
+        <animate attributeName="opacity" values="0.8;0.2;0.8" dur="1.4s" repeatCount="indefinite"/>
+      </tspan>
+    </text>
+  </g>
+
+  <!-- 右侧装饰线（缓慢呼吸） -->
+  <g class="line" opacity="0.35">
+    <line x1="620" y1="40" x2="1060" y2="40">
+      <animate attributeName="opacity" values="0.35;0.15;0.35" dur="6s" repeatCount="indefinite"/>
+    </line>
+    <line x1="620" y1="280" x2="1060" y2="280">
+      <animate attributeName="opacity" values="0.35;0.15;0.35" dur="7s" repeatCount="indefinite"/>
+    </line>
+  </g>
+
+  <!-- 底部微光条 -->
+  <rect x="0" y="318" width="1084" height="4" class="line" opacity="0.15">
+    <animate attributeName="opacity" values="0.15;0.08;0.15" dur="8s" repeatCount="indefinite"/>
+  </rect>
+</svg>
