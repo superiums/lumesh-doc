@@ -1,0 +1,36 @@
+{{ $id := delimit (slice "flex" (partial "functions/uid.html" .)) "-" }}
+{{ $gap := .Get "gap" | default 3 }}
+{{ $direction := .Get "direction" | default "row" }}
+{{ $scroll := .Get "scroll" | default false }}
+{{ $wrap := .Get "wrap" | default "nowrap" }}
+{{ $itemWidth := .Get "item-width" | default "" }}
+{{ $align := .Get "align" | default "flex-start" }}
+
+<style>
+  #{{ $id }} {
+    display: flex;
+    gap: {{ $gap }}px;
+    flex-direction: {{ if eq $direction "column" }}column{{ else }}row{{ end }};
+    flex-wrap: {{ if eq $wrap "wrap" }}wrap{{ else }}nowrap{{ end }};
+    align-items: {{ $align }};
+    {{ if eq $scroll "true" }}
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    {{ end }}
+  }
+  {{ if eq $scroll "true" }}
+  #{{ $id }}::-webkit-scrollbar {
+    display: none;
+  }
+  {{ end }}
+  {{ if $itemWidth }}
+  #{{ $id }} > * {
+    flex-shrink: 0;
+    width: {{ $itemWidth }};
+  }
+  {{ end }}
+</style>
+<div id="{{ $id }}">
+  {{ .Inner }}
+</div>

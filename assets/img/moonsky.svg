@@ -1,0 +1,111 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 1084 322"
+  width="1084"
+  height="322"
+  preserveAspectRatio="xMidYMid slice"
+>
+  <defs>
+    <!-- 天空 -->
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#A0B9D4"/>
+      <stop offset="100%" stop-color="#4982BF"/>
+    </linearGradient>
+
+    <!-- 水面 -->
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4A8FDC"/>
+      <stop offset="100%" stop-color="#7AA5D4"/>
+    </linearGradient>
+
+    <!-- 月光光晕 -->
+    <radialGradient id="glow" cx="50%" cy="50%" r="40%">
+      <stop offset="0%" stop-color="#f5f7fb" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#b0bed4" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- 天空 -->
+  <rect width="1084" height="322" fill="url(#sky)"/>
+
+  <!-- 月光光晕 -->
+  <circle cx="542" cy="110" r="140" fill="url(#glow)">
+    <animate
+      attributeName="r"
+      values="140;150;140"
+      dur="14s"
+      repeatCount="indefinite"
+    />
+  </circle>
+
+  <!-- 月亮 -->
+  <circle cx="542" cy="110" r="26" fill="#f8f9fc">
+    <animateTransform
+      attributeName="transform"
+      type="scale"
+      values="1;1.06;1"
+      dur="10s"
+      repeatCount="indefinite"
+      additive="sum"
+    />
+  </circle>
+
+  <!-- 水面 -->
+  <path d="
+      M0 160
+      Q271 140 542 160
+      T1084 160
+      V322 H0 Z
+    "
+    fill="url(#water)"
+  >
+    <animate
+      attributeName="d"
+      dur="18s"
+      repeatCount="indefinite"
+      values="
+        M0 160 Q271 140 542 160 T1084 160 V322 H0 Z;
+        M0 160 Q271 180 542 160 T1084 160 V322 H0 Z;
+        M0 160 Q271 140 542 160 T1084 160 V322 H0 Z
+      "
+    />
+  </path>
+
+  <!-- 第二层水波 -->
+  <path d="
+      M0 190
+      Q271 170 542 190
+      T1084 190
+      V322 H0 Z
+    "
+    fill="url(#water)"
+    opacity="0.6"
+  >
+    <animate
+      attributeName="d"
+      dur="22s"
+      repeatCount="indefinite"
+      values="
+        M0 190 Q271 170 542 190 T1084 190 V322 H0 Z;
+        M0 190 Q271 210 542 190 T1084 190 V322 H0 Z;
+        M0 190 Q271 170 542 190 T1084 190 V322 H0 Z
+      "
+    />
+  </path>
+
+  <!-- 极小的月影 -->
+  <ellipse cx="542" cy="215" rx="24" ry="3" fill="#f5f7fb" opacity="0.25">
+    <animate
+      attributeName="ry"
+      values="3;5;3"
+      dur="10s"
+      repeatCount="indefinite"
+    />
+    <animate
+      attributeName="opacity"
+      values="0.25;0.35;0.25"
+      dur="10s"
+      repeatCount="indefinite"
+    />
+  </ellipse>
+</svg>
