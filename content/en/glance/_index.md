@@ -8,6 +8,7 @@ categories:
  - wiki
  - why
 ---
+![demo](images/demo.gif)
 
 Why lumesh
 

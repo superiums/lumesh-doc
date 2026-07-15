@@ -77,7 +77,7 @@ _fish was unable to finish 1,000,000 times circle._
 * test result
 
 
-| ![highlight](/images/mem_chart.png) | ![highlight](/images/time_chart.png) |
+| ![highlight](/images/mem_chart.svg) | ![highlight](/images/time_chart.svg) |
 |------------------------|------------------------|
 
 _as fish was unable to fishish one million times task, we take the time of its harf task_

@@ -41,8 +41,15 @@ weight = 20
 url = "https://github.com/superiums/lumesh/"
 
 [[footer]]
-name = "download"
+name = "download 1"
 identifier = "download"
+pre = "download"
+weight = 30
+url = "https://github.com/superiums/lumesh/releases"
+
+[[footer]]
+name = "download 2"
+identifier = "download2"
 pre = "download"
 weight = 30
 url = "https://codeberg.org/santo/lumesh/releases"

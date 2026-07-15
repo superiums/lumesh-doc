@@ -9,6 +9,7 @@ categories:
  - why
 ---
 
+![demo](images/demo.gif)
 
 ## 1.1 什么是Lumesh
 

@@ -74,7 +74,7 @@ _其中fish无法成功完成百万次循环_
 
 * 测试结果
 
-| ![highlight](images/mem_chart.png) | ![highlight](images/time_chart.png) |
+| ![highlight](images/mem_chart.svg) | ![highlight](images/time_chart.svg) |
 |------------------------|------------------------|
 
 _由于fish无法完成百万次任务，我们取值它完成一半任务的时间_
