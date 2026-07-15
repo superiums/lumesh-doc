@@ -1,0 +1,382 @@
+<svg  
+  xmlns="http://www.w3.org/2000/svg"  
+  viewBox="0 0 900 680"  
+  width="900"  
+  height="680"  
+  aria-hidden="true"  
+>  
+  <defs>  
+    <style>  
+      text {  
+        font-family: 'JetBrains Mono', ui-monospace, 'Courier New', Courier, monospace;  
+      }  
+    </style>  
+  
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">  
+      <stop offset="0%" stop-color="#0a0e1a"/>  
+      <stop offset="50%" stop-color="#111827"/>  
+      <stop offset="100%" stop-color="#0a0e1a"/>  
+    </linearGradient>  
+  
+    <pattern id="scanlines" width="4" height="4" patternUnits="userSpaceOnUse">  
+      <line x1="0" y1="0" x2="4" y2="0" stroke="#0a1a2a" stroke-width="0.5"/>  
+    </pattern>  
+  </defs>  
+  
+  <!-- 背景 -->  
+  <rect width="900" height="680" fill="url(#bg)"/>  
+  <rect width="900" height="680" fill="url(#scanlines)" opacity="0.3"/>  
+  
+  <!-- 装饰光带 -->  
+  <rect x="-200" y="60" width="300" height="2" fill="#00ff88" opacity="0.35">  
+  <animate attributeName="x" from="-300" to="900" dur="4s" repeatCount="indefinite"/>  
+</rect>  
+  
+<rect x="600" y="620" width="400" height="2" fill="#00a8ff" opacity="0.25">  
+  <animate attributeName="x" from="900" to="-400" dur="6s" repeatCount="indefinite"/>  
+</rect>  
+  
+  <!-- ========== 标题栏 ========== -->  
+  <g transform="translate(30, 18)">  
+    <rect x="0" y="0" width="840" height="38" rx="8"  
+          fill="#0d1117" stroke="#21262d" stroke-width="1.5" opacity="0.95"/>  
+    <circle cx="20" cy="19" r="6" fill="#ff5f56" opacity="0.9"/>  
+    <circle cx="38" cy="19" r="6" fill="#ffbd2e" opacity="0.9"/>  
+    <circle cx="56" cy="19" r="6" fill="#27c93f" opacity="0.9"/>  
+    <text x="80" y="24" font-size="13" fill="#8b949e">  
+      <tspan fill="#ff7b72" font-weight="bold">Lumesh</tspan>  
+      <tspan dx="8">快捷键绑定</tspan>  
+    </text>  
+  </g>  
+  
+  <g font-size="10">  
+  
+    <!-- ======================================================== -->  
+    <!-- ==================== 左列 ==================== -->  
+    <!-- ======================================================== -->  
+    <g transform="translate(30, 75)">  
+      <rect x="0" y="0" width="270" height="24" rx="4"  
+            fill="#1f2937" stroke="#1f6feb" stroke-width="1" opacity="0.85"/>  
+      <text x="12" y="16" fill="#58a6ff" font-size="11" font-weight="bold">  
+        字符操作  
+      </text>  
+  
+      <g transform="translate(0, 30)">  
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>  
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Ctrl+A</text>  
+        <text x="90" y="14" fill="#c9d1d9">移动到行首</text>  
+      </g>  
+      <g transform="translate(0, 52)">  
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>  
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Ctrl+E</text>  
+        <text x="90" y="14" fill="#c9d1d9">移动到行尾</text>  
+      </g>  
+      <g transform="translate(0, 74)">  
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>  
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Ctrl+B</text>  
+        <text x="90" y="14" fill="#c9d1d9">左移一个字符</text>  
+      </g>  
+      <g transform="translate(0, 96)">  
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>  
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Ctrl+F</text>  
+        <text x="90" y="14" fill="#c9d1d9">右移一个字符</text>  
+      </g>  
+      <g transform="translate(0, 118)">  
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>  
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Ctrl+H</text>  
+        <text x="90" y="14" fill="#c9d1d9">删除前一个字符</text>  
+      </g>  
+      <g transform="translate(0, 140)">  
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>  
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Ctrl+W</text>  
+        <text x="90" y="14" fill="#c9d1d9">删除前一个词</text>  
+      </g>  
+      <g transform="translate(0, 162)">  
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>  
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Alt+D</text>  
+        <text x="90" y="14" fill="#c9d1d9">删除后一个词</text>  
+      </g>  
+      <g transform="translate(0, 184)">  
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>  
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Ctrl+U</text>  
+        <text x="90" y="14" fill="#c9d1d9">删除到行首</text>  
+      </g>  
+      <g transform="translate(0, 206)">  
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>  
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Ctrl+K</text>  
+        <text x="90" y="14" fill="#c9d1d9">删除到行尾</text>  
+      </g>  
+      <g transform="translate(0, 228)">  
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>  
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Ctrl+L</text>  
+        <text x="90" y="14" fill="#c9d1d9">清屏</text>  
+      </g>  
+      <g transform="translate(0, 250)">  
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>  
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Ctrl+T</text>  
+        <text x="90" y="14" fill="#c9d1d9">交换字符</text>  
+      </g>  
+      <g transform="translate(0, 272)">  
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>  
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Ctrl+Y</text>  
+        <text x="90" y="14" fill="#c9d1d9">粘贴</text>  
+      </g>  
+      <g transform="translate(0, 294)">  
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>  
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Alt+B</text>  
+        <text x="90" y="14" fill="#c9d1d9">左移一个词</text>  
+      </g>  
+      <g transform="translate(0, 316)">  
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>  
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Alt+F</text>  
+        <text x="90" y="14" fill="#c9d1d9">右移一个词</text>  
+      </g>  
+  
+          <!-- ===== Custom Bindings ===== -->  
+      <g transform="translate(0, 354)">  
+        <rect x="0" y="0" width="270" height="24" rx="4"  
+              fill="#1f2937" stroke="#eab308" stroke-width="1" opacity="0.85"/>  
+        <text x="12" y="16" fill="#facc15" font-size="11" font-weight="bold">  
+          自定义绑定  
+        </text>  
+  
+        <g transform="translate(0, 30)">  
+          <rect x="0" y="0" width="90" height="18" rx="4" fill="#1a2332" stroke="#eab308" stroke-width="0.8"/>  
+          <text x="4" y="14" fill="#facc15" font-weight="bold">Ctrl+/</text>  
+          <text x="100" y="14" fill="#c9d1d9">菜单</text>  
+        </g>  
+        <g transform="translate(0, 52)">  
+          <rect x="0" y="0" width="90" height="18" rx="4" fill="#1a2332" stroke="#eab308" stroke-width="0.8"/>  
+          <text x="4" y="14" fill="#facc15" font-weight="bold">Ctrl+Shift+G</text>  
+          <text x="100" y="14" fill="#c9d1d9">模糊跳转</text>  
+        </g>  
+        <g transform="translate(0, 74)">  
+          <rect x="0" y="0" width="90" height="18" rx="4" fill="#1a2332" stroke="#eab308" stroke-width="0.8"/>  
+          <text x="4" y="14" fill="#facc15" font-weight="bold">Ctrl+Shift+M</text>  
+          <text x="100" y="14" fill="#c9d1d9">执行标记</text>  
+        </g>  
+      </g>  
+  
+    </g>  
+  
+    <!-- ======================================================== -->  
+    <!-- ==================== 中列 ==================== -->  
+    <!-- ======================================================== -->  
+    <g transform="translate(315, 75)">  
+      <!-- ===== Lumesh Special（上） ===== -->  
+      <rect x="0" y="0" width="270" height="24" rx="4"  
+            fill="#1f2937" stroke="#10b981" stroke-width="1" opacity="0.85"/>  
+      <text x="12" y="16" fill="#34d399" font-size="11" font-weight="bold">  
+        Lumesh 特色功能  
+      </text>  
+  
+      <g transform="translate(0, 30)">  
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#10b981" stroke-width="0.8"/>  
+        <text x="6" y="14" fill="#34d399" font-weight="bold">Alt+S</text>  
+        <text x="90" y="14" fill="#c9d1d9">切换 sudo</text>  
+      </g>  
+      <g transform="translate(0, 52)">  
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#10b981" stroke-width="0.8"/>  
+        <text x="6" y="14" fill="#34d399" font-weight="bold">Space</text>  
+        <text x="90" y="14" fill="#c9d1d9">触发缩写展开</text>  
+      </g>  
+      <g transform="translate(0, 74)">  
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#10b981" stroke-width="0.8"/>  
+           <text x="6" y="14" fill="#34d399" font-weight="bold">Alt+O</text>  
+        <text x="90" y="14" fill="#c9d1d9">AI 替换</text>  
+      </g>  
+      <g transform="translate(0, 96)">  
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#10b981" stroke-width="0.8"/>  
+        <text x="6" y="14" fill="#34d399" font-weight="bold">Alt+Enter</text>  
+        <text x="90" y="14" fill="#c9d1d9">AI 替换</text>  
+      </g>  
+      <g transform="translate(0, 118)">  
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#10b981" stroke-width="0.8"/>  
+        <text x="6" y="14" fill="#34d399" font-weight="bold">Alt+I</text>  
+        <text x="90" y="14" fill="#c9d1d9">AI 提示</text>  
+      </g>  
+      <g transform="translate(0, 140)">  
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#10b981" stroke-width="0.8"/>  
+        <text x="6" y="14" fill="#34d399" font-weight="bold">Ctrl+J</text>  
+        <text x="90" y="14" fill="#c9d1d9">接受提示（到特殊字符）</text>  
+      </g>  
+      <g transform="translate(0, 162)">  
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#10b981" stroke-width="0.8"/>  
+        <text x="6" y="14" fill="#34d399" font-weight="bold">Alt+J</text>  
+        <text x="90" y="14" fill="#c9d1d9">接受提示（到空格或斜杠）</text>  
+      </g>  
+  
+      <!-- ===== Function Keys（下，与左/右列对齐） ===== -->  
+      <g transform="translate(0, 228)">  
+        <rect x="0" y="0" width="270" height="24" rx="4"  
+              fill="#1f2937" stroke="#f59e0b" stroke-width="1" opacity="0.85"/>  
+        <text x="12" y="16" fill="#fbbf24" font-size="11" font-weight="bold">  
+          功能键  
+        </text>  
+  
+        <g transform="translate(0, 30)">  
+          <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#f59e0b" stroke-width="0.8"/>  
+          <text x="6" y="14" fill="#f59e0b" font-weight="bold">Ctrl+C</text>  
+          <text x="90" y="14" fill="#c9d1d9">中断（SIGINT）</text>  
+        </g>  
+        <g transform="translate(0, 52)">  
+          <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#f59e0b" stroke-width="0.8"/>  
+          <text x="6" y="14" fill="#f59e0b" font-weight="bold">Ctrl+D</text>  
+          <text x="90" y="14" fill="#c9d1d9">EOF / 删除字符</text>  
+        </g>  
+        <g transform="translate(0, 74)">  
+          <rect x="0" y="0" width="50" height="18" rx="4" fill="#1a2332" stroke="#f59e0b" stroke-width="0.8"/>  
+          <text x="4" y="14" fill="#f59e0b" font-weight="bold">Tab</text>  
+          <text x="60" y="14" fill="#c9d1d9">触发补全</text>  
+        </g>  
+        <g transform="translate(0, 96)">  
+          <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#f59e0b" stroke-width="0.8"/>  
+          <text x="6" y="14" fill="#f59e0b" font-weight="bold">Ctrl+R</text>  
+          <text x="90" y="14" fill="#c9d1d9">历史搜索</text>  
+        </g>  
+        <g transform="translate(0, 118)">  
+          <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#f59e0b" stroke-width="0.8"/>  
+          <text x="6" y="14" fill="#f59e0b" font-weight="bold">BackTab</text>  
+          <text x="90" y="14" fill="#c9d1d9">反向补全</text>  
+        </g>  
+        <g transform="translate(0, 140)">  
+          <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#f59e0b" stroke-width="0.8"/>  
+          <text x="6" y="14" fill="#f59e0b" font-weight="bold">Escape</text>  
+          <text x="90" y="14" fill="#c9d1d9">取消 / 退出多行模式</text>  
+        </g>  
+        <g transform="translate(0, 162)">  
+          <rect x="0" y="0" width="60" height="18" rx="4" fill="#1a2332" stroke="#f59e0b" stroke-width="0.8"/>  
+          <text x="4" y="14" fill="#f59e0b" font-weight="bold">Enter</text>  
+          <text x="70" y="14" fill="#c9d1d9">接受 / 换行</text>  
+        </g>  
+        <g transform="translate(0, 184)">  
+          <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#f59e0b" stroke-width="0.8"/>  
+          <text x="6" y="14" fill="#f59e0b" font-weight="bold">Ctrl+N</text>  
+          <text x="90" y="14" fill="#c9d1d9">下一个补全</text>  
+        </g>  
+        <g transform="translate(0, 206)">  
+          <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#f59e0b" stroke-width="0.8"/>  
+          <text x="6" y="14" fill="#f59e0b" font-weight="bold">Ctrl+P</text>  
+          <text x="90" y="14" fill="#c9d1d9">上一个补全</text>  
+        </g>  
+      </g>  
+    </g>  
+  
+    <!-- ======================================================== -->  
+    <!-- ==================== 右列 ==================== -->  
+    <!-- ======================================================== -->  
+    <g transform="translate(600, 75)">  
+      <!-- ===== Completion Mode ===== -->  
+      <rect x="0" y="0" width="270" height="24" rx="4"  
+            fill="#1f2937" stroke="#06b6d4" stroke-width="1" opacity="0.85"/>  
+      <text x="12" y="16" fill="#22d3ee" font-size="11" font-weight="bold">  
+        补全模式  
+      </text>  
+  
+      <g transform="translate(0, 30)">  
+        <rect x="0" y="0" width="90" height="18" rx="4" fill="#1a2332" stroke="#06b6d4" stroke-width="0.8"/>  
+        <text x="4" y="14" fill="#22d3ee" font-weight="bold">Up / Ctrl+P</text>  
+        <text x="100" y="14" fill="#c9d1d9">上一个补全</text>  
+      </g>  
+      <g transform="translate(0, 52)">  
+        <rect x="0" y="0" width="90" height="18" rx="4" fill="#1a2332" stroke="#06b6d4" stroke-width="0.8"/>  
+        <text x="4" y="14" fill="#22d3ee" font-weight="bold">Down / Ctrl+N</text>  
+        <text x="100" y="14" fill="#c9d1d9">下一个补全</text>  
+      </g>  
+      <g transform="translate(0, 74)">  
+        <rect x="0" y="0" width="50" height="18" rx="4" fill="#1a2332" stroke="#06b6d4" stroke-width="0.8"/>  
+        <text x="4" y="14" fill="#22d3ee" font-weight="bold">Tab</text>  
+        <text x="60" y="14" fill="#c9d1d9">下一个补全</text>  
+      </g>  
+      <g transform="translate(0, 96)">  
+        <rect x="0" y="0" width="50" height="18" rx="4" fill="#1a2332" stroke="#06b6d4" stroke-width="0.8"/>  
+        <text x="4" y="14" fill="#22d3ee" font-weight="bold">BackTab</text>  
+        <text x="60" y="14" fill="#c9d1d9">上一个补全</text>  
+      </g>  
+      <g transform="translate(0, 118)">  
+        <rect x="0" y="0" width="90" height="18" rx="4" fill="#1a2332" stroke="#06b6d4" stroke-width="0.8"/>  
+        <text x="4" y="14" fill="#22d3ee" font-weight="bold">Enter / Space</text>  
+        <text x="100" y="14" fill="#c9d1d9">接受补全</text>  
+      </g>  
+      <g transform="translate(0, 140)">  
+        <rect x="0" y="0" width="90" height="18" rx="4" fill="#1a2332" stroke="#06b6d4" stroke-width="0.8"/>  
+        <text x="4" y="14" fill="#22d3ee" font-weight="bold">Escape</text>  
+        <text x="100" y="14" fill="#c9d1d9">取消补全</text>  
+      </g>  
+      <g transform="translate(0, 162)">  
+        <rect x="0" y="0" width="90" height="18" rx="4" fill="#1a2332" stroke="#06b6d4" stroke-width="0.8"/>  
+        <text x="4" y="14" fill="#22d3ee" font-weight="bold">任意键</text>  
+        <text x="100" y="14" fill="#c9d1d9">过滤（模糊搜索）</text>  
+      </g>  
+      <g transform="translate(0, 184)">  
+        <rect x="0" y="0" width="90" height="18" rx="4" fill="#1a2332" stroke="#06b6d4" stroke-width="0.8"/>  
+        <text x="4" y="14" fill="#22d3ee" font-weight="bold">Backspace</text>  
+        <text x="100" y="14" fill="#c9d1d9">删除并过滤</text>  
+      </g>  
+  
+      <!-- ===== Multi-line Mode ===== -->  
+      <g transform="translate(0, 228)">  
+        <rect x="0" y="0" width="270" height="24" rx="4"  
+              fill="#1f2937" stroke="#8b5cf6" stroke-width="1" opacity="0.85"/>  
+        <text x="12" y="16" fill="#a78bfa" font-size="11" font-weight="bold">  
+          多行模式  
+        </text>  
+  
+        <g transform="translate(0, 30)">  
+          <rect x="0" y="0" width="50" height="18" rx="4" fill="#1a1a2e" stroke="#8b5cf6" stroke-width="0.8"/>  
+          <text x="4" y="14" fill="#d2a8ff" font-weight="bold">Up</text>  
+          <text x="60" y="14" fill="#c9d1d9">上移一行</text>  
+        </g>  
+        <g transform="translate(0, 52)">  
+          <rect x="0" y="0" width="50" height="18" rx="4" fill="#1a1a2e" stroke="#8b5cf6" stroke-width="0.8"/>  
+          <text x="4" y="14" fill="#d2a8ff" font-weight="bold">Down</text>  
+          <text x="60" y="14" fill="#c9d1d9">下移一行</text>  
+        </g>  
+        <g transform="translate(0, 74)">  
+          <rect x="0" y="0" width="50" height="18" rx="4" fill="#1a1a2e" stroke="#8b5cf6" stroke-width="0.8"/>  
+          <text x="4" y="14" fill="#d2a8ff" font-weight="bold">Home</text>  
+          <text x="60" y="14" fill="#c9d1d9">当前行首</text>  
+        </g>  
+        <g transform="translate(0, 96)">  
+          <rect x="0" y="0" width="50" height="18" rx="4" fill="#1a1a2e" stroke="#8b5cf6" stroke-width="0.8"/>  
+          <text x="4" y="14" fill="#d2a8ff" font-weight="bold">End</text>  
+          <text x="60" y="14" fill="#c9d1d9">当前行尾</text>  
+        </g>  
+        <g transform="translate(0, 118)">  
+          <rect x="0" y="0" width="50" height="18" rx="4" fill="#1a1a2e" stroke="#8b5cf6" stroke-width="0.8"/>  
+          <text x="4" y="14" fill="#d2a8ff" font-weight="bold">Escape</text>  
+          <text x="60" y="14" fill="#c9d1d9">退出多行模式</text>  
+        </g>  
+        <g transform="translate(0, 140)">  
+          <rect x="0" y="0" width="50" height="18" rx="4" fill="#1a1a2e" stroke="#8b5cf6" stroke-width="0.8"/>  
+          <text x="4" y="14" fill="#d2a8ff" font-weight="bold">Enter</text>  
+          <text x="60" y="14" fill="#c9d1d9">空行时接受，否则换行</text>  
+        </g>  
+        <g transform="translate(0, 162)">  
+          <rect x="0" y="0" width="50" height="18" rx="4" fill="#1a1a2e" stroke="#8b5cf6" stroke-width="0.8"/>  
+                    <text x="4" y="14" fill="#d2a8ff" font-weight="bold">Ctrl+A</text>
+          <text x="60" y="14" fill="#c9d1d9">移动到行首</text>
+        </g>
+        <g transform="translate(0, 184)">
+          <rect x="0" y="0" width="50" height="18" rx="4" fill="#1a1a2e" stroke="#8b5cf6" stroke-width="0.8"/>
+          <text x="4" y="14" fill="#d2a8ff" font-weight="bold">Ctrl+E</text>
+
+            <text x="4" y="14" fill="#d2a8ff" font-weight="bold">Ctrl+E</text>  
+        <text x="60" y="14" fill="#c9d1d9">移动到行尾</text>  
+      </g>  
+      <g transform="translate(0, 206)">  
+        <rect x="0" y="0" width="50" height="18" rx="4" fill="#1a1a2e" stroke="#8b5cf6" stroke-width="0.8"/>  
+        <text x="4" y="14" fill="#d2a8ff" font-weight="bold">Ctrl+O</text>  
+        <text x="60" y="14" fill="#c9d1d9">清空输入</text>  
+      </g>  
+    </g>  
+  </g>  
+</g>  
+  <!-- 底部 -->  
+  <text x="450" y="670" text-anchor="middle" font-size="9" fill="#4a5568" opacity="0.5">  
+    Lumesh · Emacs 风格绑定 · 在配置文件中定义  
+  </text>  
+  
+  <line x1="0" y1="678" x2="900" y2="678" stroke="#21262d" stroke-width="2" opacity="0.4"/>  
+</svg>
+

@@ -2,16 +2,17 @@
 {{ $gap := .Get "gap" | default 3 }}
 {{ $direction := .Get "direction" | default "row" }}
 {{ $scroll := .Get "scroll" | default false }}
-{{ $wrap := .Get "wrap" | default "nowrap" }}
+{{ $wrap := .Get "wrap" | default true }}
 {{ $itemWidth := .Get "item-width" | default "" }}
 {{ $align := .Get "align" | default "flex-start" }}
 
 <style>
   #{{ $id }} {
     display: flex;
+    width: 100%;
     gap: {{ $gap }}px;
     flex-direction: {{ if eq $direction "column" }}column{{ else }}row{{ end }};
-    flex-wrap: {{ if eq $wrap "wrap" }}wrap{{ else }}nowrap{{ end }};
+    flex-wrap: {{ if $wrap }}wrap{{ else }}nowrap{{ end }};
     align-items: {{ $align }};
     {{ if eq $scroll "true" }}
     overflow-x: auto;

@@ -92,7 +92,7 @@ let x = 10
 let name = "Lumesh"
 
 # 多变量赋值
-let a, b, c = 1, 2, 3
+let a, b, c = 1
 let x, y = getValue()
 ```
 

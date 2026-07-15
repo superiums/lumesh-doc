@@ -1,0 +1,381 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 900 680"
+  width="900"
+  height="680"
+  aria-hidden="true"
+>
+  <defs>
+    <style>
+      text {
+        font-family: 'JetBrains Mono', ui-monospace, 'Courier New', Courier, monospace;
+      }
+    </style>
+
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0a0e1a"/>
+    </linearGradient>
+
+    <pattern id="scanlines" width="4" height="4" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="4" y2="0" stroke="#0a1a2a" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="900" height="680" fill="url(#bg)"/>
+  <rect width="900" height="680" fill="url(#scanlines)" opacity="0.3"/>
+
+  <!-- 装饰光带 -->
+  <rect x="-200" y="60" width="300" height="2" fill="#00ff88" opacity="0.35">
+  <animate attributeName="x" from="-300" to="900" dur="4s" repeatCount="indefinite"/>
+</rect>
+
+<rect x="600" y="620" width="400" height="2" fill="#00a8ff" opacity="0.25">
+  <animate attributeName="x" from="900" to="-400" dur="6s" repeatCount="indefinite"/>
+</rect>
+
+  <!-- ========== 标题栏 ========== -->
+  <g transform="translate(30, 18)">
+    <rect x="0" y="0" width="840" height="38" rx="8"
+          fill="#0d1117" stroke="#21262d" stroke-width="1.5" opacity="0.95"/>
+    <circle cx="20" cy="19" r="6" fill="#ff5f56" opacity="0.9"/>
+    <circle cx="38" cy="19" r="6" fill="#ffbd2e" opacity="0.9"/>
+    <circle cx="56" cy="19" r="6" fill="#27c93f" opacity="0.9"/>
+    <text x="80" y="24" font-size="13" fill="#8b949e">
+      <tspan fill="#ff7b72" font-weight="bold">Lumesh</tspan>
+      <tspan dx="8">Keyboard Shortcuts</tspan>
+    </text>
+  </g>
+
+  <g font-size="10">
+
+    <!-- ======================================================== -->
+    <!-- ==================== 左列 ==================== -->
+    <!-- ======================================================== -->
+    <g transform="translate(30, 75)">
+      <rect x="0" y="0" width="270" height="24" rx="4"
+            fill="#1f2937" stroke="#1f6feb" stroke-width="1" opacity="0.85"/>
+      <text x="12" y="16" fill="#58a6ff" font-size="11" font-weight="bold">
+        Character Operations
+      </text>
+
+      <g transform="translate(0, 30)">
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Ctrl+A</text>
+        <text x="90" y="14" fill="#c9d1d9">Line start</text>
+      </g>
+      <g transform="translate(0, 52)">
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Ctrl+E</text>
+        <text x="90" y="14" fill="#c9d1d9">Line end</text>
+      </g>
+      <g transform="translate(0, 74)">
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Ctrl+B</text>
+        <text x="90" y="14" fill="#c9d1d9">Left 1 char</text>
+      </g>
+      <g transform="translate(0, 96)">
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Ctrl+F</text>
+        <text x="90" y="14" fill="#c9d1d9">Right 1 char</text>
+      </g>
+      <g transform="translate(0, 118)">
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Ctrl+H</text>
+        <text x="90" y="14" fill="#c9d1d9">Delete prev char</text>
+      </g>
+      <g transform="translate(0, 140)">
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Ctrl+W</text>
+        <text x="90" y="14" fill="#c9d1d9">Delete prev word</text>
+      </g>
+      <g transform="translate(0, 162)">
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Alt+D</text>
+        <text x="90" y="14" fill="#c9d1d9">Delete next word</text>
+      </g>
+      <g transform="translate(0, 184)">
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Ctrl+U</text>
+        <text x="90" y="14" fill="#c9d1d9">Delete to line start</text>
+      </g>
+      <g transform="translate(0, 206)">
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Ctrl+K</text>
+        <text x="90" y="14" fill="#c9d1d9">Delete to line end</text>
+      </g>
+      <g transform="translate(0, 228)">
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Ctrl+L</text>
+        <text x="90" y="14" fill="#c9d1d9">Clear screen</text>
+      </g>
+      <g transform="translate(0, 250)">
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Ctrl+T</text>
+        <text x="90" y="14" fill="#c9d1d9">Swap chars</text>
+      </g>
+      <g transform="translate(0, 272)">
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Ctrl+Y</text>
+        <text x="90" y="14" fill="#c9d1d9">Paste</text>
+      </g>
+      <g transform="translate(0, 294)">
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Alt+B</text>
+        <text x="90" y="14" fill="#c9d1d9">Word left</text>
+      </g>
+      <g transform="translate(0, 316)">
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#ff7b72" stroke-width="0.8"/>
+        <text x="6" y="14" fill="#ff7b72" font-weight="bold">Alt+F</text>
+        <text x="90" y="14" fill="#c9d1d9">Word right</text>
+      </g>
+
+          <!-- ===== Custom Bindings ===== -->
+      <g transform="translate(0, 354)">
+        <rect x="0" y="0" width="270" height="24" rx="4"
+              fill="#1f2937" stroke="#eab308" stroke-width="1" opacity="0.85"/>
+        <text x="12" y="16" fill="#facc15" font-size="11" font-weight="bold">
+          Custom Bindings
+        </text>
+
+        <g transform="translate(0, 30)">
+          <rect x="0" y="0" width="90" height="18" rx="4" fill="#1a2332" stroke="#eab308" stroke-width="0.8"/>
+          <text x="4" y="14" fill="#facc15" font-weight="bold">Ctrl+/</text>
+          <text x="100" y="14" fill="#c9d1d9">menu</text>
+        </g>
+        <g transform="translate(0, 52)">
+          <rect x="0" y="0" width="90" height="18" rx="4" fill="#1a2332" stroke="#eab308" stroke-width="0.8"/>
+          <text x="4" y="14" fill="#facc15" font-weight="bold">Ctrl+Shift+G</text>
+          <text x="100" y="14" fill="#c9d1d9">fuzzy go</text>
+        </g>
+        <g transform="translate(0, 74)">
+          <rect x="0" y="0" width="90" height="18" rx="4" fill="#1a2332" stroke="#eab308" stroke-width="0.8"/>
+          <text x="4" y="14" fill="#facc15" font-weight="bold">Ctrl+Shift+M</text>
+          <text x="100" y="14" fill="#c9d1d9">execute marked</text>
+        </g>
+      </g>
+
+    </g>
+
+    <!-- ======================================================== -->
+    <!-- ==================== 中列 ==================== -->
+    <!-- ======================================================== -->
+    <g transform="translate(315, 75)">
+      <!-- ===== Lumesh Special（上） ===== -->
+      <rect x="0" y="0" width="270" height="24" rx="4"
+            fill="#1f2937" stroke="#10b981" stroke-width="1" opacity="0.85"/>
+      <text x="12" y="16" fill="#34d399" font-size="11" font-weight="bold">
+        Lumesh Special
+      </text>
+
+      <g transform="translate(0, 30)">
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#10b981" stroke-width="0.8"/>
+        <text x="6" y="14" fill="#34d399" font-weight="bold">Alt+S</text>
+        <text x="90" y="14" fill="#c9d1d9">Toggle sudo</text>
+      </g>
+      <g transform="translate(0, 52)">
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#10b981" stroke-width="0.8"/>
+        <text x="6" y="14" fill="#34d399" font-weight="bold">Space</text>
+        <text x="90" y="14" fill="#c9d1d9">Trigger abbrev</text>
+      </g>
+      <g transform="translate(0, 74)">
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#10b981" stroke-width="0.8"/>
+        <text x="6" y="14" fill="#34d399" font-weight="bold">Alt+O</text>
+        <text x="90" y="14" fill="#c9d1d9">AI replacement</text>
+      </g>
+      <g transform="translate(0, 96)">
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#10b981" stroke-width="0.8"/>
+        <text x="6" y="14" fill="#34d399" font-weight="bold">Alt+Enter</text>
+        <text x="90" y="14" fill="#c9d1d9">AI replacement</text>
+      </g>
+      <g transform="translate(0, 118)">
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#10b981" stroke-width="0.8"/>
+        <text x="6" y="14" fill="#34d399" font-weight="bold">Alt+I</text>
+        <text x="90" y="14" fill="#c9d1d9">AI prompt</text>
+      </g>
+      <g transform="translate(0, 140)">
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#10b981" stroke-width="0.8"/>
+        <text x="6" y="14" fill="#34d399" font-weight="bold">Ctrl+J</text>
+        <text x="90" y="14" fill="#c9d1d9">Accept hint (to char)</text>
+      </g>
+      <g transform="translate(0, 162)">
+        <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#10b981" stroke-width="0.8"/>
+        <text x="6" y="14" fill="#34d399" font-weight="bold">Alt+J</text>
+        <text x="90" y="14" fill="#c9d1d9">Accept hint (to /)</text>
+      </g>
+
+      <!-- ===== Function Keys（下，与左/右列对齐） ===== -->
+      <g transform="translate(0, 228)">
+        <rect x="0" y="0" width="270" height="24" rx="4"
+              fill="#1f2937" stroke="#f59e0b" stroke-width="1" opacity="0.85"/>
+        <text x="12" y="16" fill="#fbbf24" font-size="11" font-weight="bold">
+          Function Keys
+        </text>
+
+        <g transform="translate(0, 30)">
+          <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#f59e0b" stroke-width="0.8"/>
+          <text x="6" y="14" fill="#f59e0b" font-weight="bold">Ctrl+C</text>
+          <text x="90" y="14" fill="#c9d1d9">Interrupt (SIGINT)</text>
+        </g>
+        <g transform="translate(0, 52)">
+          <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#f59e0b" stroke-width="0.8"/>
+          <text x="6" y="14" fill="#f59e0b" font-weight="bold">Ctrl+D</text>
+          <text x="90" y="14" fill="#c9d1d9">EOF / Delete char</text>
+        </g>
+        <g transform="translate(0, 74)">
+          <rect x="0" y="0" width="50" height="18" rx="4" fill="#1a2332" stroke="#f59e0b" stroke-width="0.8"/>
+          <text x="4" y="14" fill="#f59e0b" font-weight="bold">Tab</text>
+          <text x="60" y="14" fill="#c9d1d9">Trigger completion</text>
+        </g>
+        <g transform="translate(0, 96)">
+          <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#f59e0b" stroke-width="0.8"/>
+          <text x="6" y="14" fill="#f59e0b" font-weight="bold">Ctrl+R</text>
+          <text x="90" y="14" fill="#c9d1d9">History search</text>
+        </g>
+        <g transform="translate(0, 118)">
+          <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#f59e0b" stroke-width="0.8"/>
+          <text x="6" y="14" fill="#f59e0b" font-weight="bold">BackTab</text>
+          <text x="90" y="14" fill="#c9d1d9">Reverse completion</text>
+        </g>
+        <g transform="translate(0, 140)">
+          <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#f59e0b" stroke-width="0.8"/>
+          <text x="6" y="14" fill="#f59e0b" font-weight="bold">Escape</text>
+          <text x="90" y="14" fill="#c9d1d9">Cancel / Exit multi-line</text>
+        </g>
+        <g transform="translate(0, 162)">
+          <rect x="0" y="0" width="60" height="18" rx="4" fill="#1a2332" stroke="#f59e0b" stroke-width="0.8"/>
+          <text x="4" y="14" fill="#f59e0b" font-weight="bold">Enter</text>
+          <text x="70" y="14" fill="#c9d1d9">Accept / New line</text>
+        </g>
+        <g transform="translate(0, 184)">
+          <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#f59e0b" stroke-width="0.8"/>
+          <text x="6" y="14" fill="#f59e0b" font-weight="bold">Ctrl+N</text>
+          <text x="90" y="14" fill="#c9d1d9">Next completion</text>
+        </g>
+        <g transform="translate(0, 206)">
+          <rect x="0" y="0" width="80" height="18" rx="4" fill="#1a2332" stroke="#f59e0b" stroke-width="0.8"/>
+          <text x="6" y="14" fill="#f59e0b" font-weight="bold">Ctrl+P</text>
+          <text x="90" y="14" fill="#c9d1d9">Prev completion</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- ======================================================== -->
+    <!-- ==================== 右列 ==================== -->
+    <!-- ======================================================== -->
+    <g transform="translate(600, 75)">
+      <!-- ===== Completion Mode ===== -->
+      <rect x="0" y="0" width="270" height="24" rx="4"
+            fill="#1f2937" stroke="#06b6d4" stroke-width="1" opacity="0.85"/>
+      <text x="12" y="16" fill="#22d3ee" font-size="11" font-weight="bold">
+        Completion Mode
+      </text>
+
+      <g transform="translate(0, 30)">
+        <rect x="0" y="0" width="90" height="18" rx="4" fill="#1a2332" stroke="#06b6d4" stroke-width="0.8"/>
+        <text x="4" y="14" fill="#22d3ee" font-weight="bold">Up / Ctrl+P</text>
+        <text x="100" y="14" fill="#c9d1d9">Prev completion</text>
+      </g>
+      <g transform="translate(0, 52)">
+        <rect x="0" y="0" width="90" height="18" rx="4" fill="#1a2332" stroke="#06b6d4" stroke-width="0.8"/>
+        <text x="4" y="14" fill="#22d3ee" font-weight="bold">Down / Ctrl+N</text>
+        <text x="100" y="14" fill="#c9d1d9">Next completion</text>
+      </g>
+      <g transform="translate(0, 74)">
+        <rect x="0" y="0" width="50" height="18" rx="4" fill="#1a2332" stroke="#06b6d4" stroke-width="0.8"/>
+        <text x="4" y="14" fill="#22d3ee" font-weight="bold">Tab</text>
+        <text x="60" y="14" fill="#c9d1d9">Next completion</text>
+      </g>
+      <g transform="translate(0, 96)">
+        <rect x="0" y="0" width="50" height="18" rx="4" fill="#1a2332" stroke="#06b6d4" stroke-width="0.8"/>
+        <text x="4" y="14" fill="#22d3ee" font-weight="bold">BackTab</text>
+        <text x="60" y="14" fill="#c9d1d9">Prev completion</text>
+      </g>
+      <g transform="translate(0, 118)">
+        <rect x="0" y="0" width="90" height="18" rx="4" fill="#1a2332" stroke="#06b6d4" stroke-width="0.8"/>
+        <text x="4" y="14" fill="#22d3ee" font-weight="bold">Enter / Space</text>
+        <text x="100" y="14" fill="#c9d1d9">Accept completion</text>
+      </g>
+      <g transform="translate(0, 140)">
+        <rect x="0" y="0" width="90" height="18" rx="4" fill="#1a2332" stroke="#06b6d4" stroke-width="0.8"/>
+        <text x="4" y="14" fill="#22d3ee" font-weight="bold">Escape</text>
+        <text x="100" y="14" fill="#c9d1d9">Cancel completion</text>
+      </g>
+      <g transform="translate(0, 162)">
+        <rect x="0" y="0" width="90" height="18" rx="4" fill="#1a2332" stroke="#06b6d4" stroke-width="0.8"/>
+        <text x="4" y="14" fill="#22d3ee" font-weight="bold">Any key</text>
+        <text x="100" y="14" fill="#c9d1d9">Filter (fuzzy search)</text>
+      </g>
+      <g transform="translate(0, 184)">
+        <rect x="0" y="0" width="90" height="18" rx="4" fill="#1a2332" stroke="#06b6d4" stroke-width="0.8"/>
+        <text x="4" y="14" fill="#22d3ee" font-weight="bold">Backspace</text>
+        <text x="100" y="14" fill="#c9d1d9">Delete &amp; filter</text>
+      </g>
+
+      <!-- ===== Multi-line Mode ===== -->
+      <g transform="translate(0, 228)">
+        <rect x="0" y="0" width="270" height="24" rx="4"
+              fill="#1f2937" stroke="#8b5cf6" stroke-width="1" opacity="0.85"/>
+        <text x="12" y="16" fill="#a78bfa" font-size="11" font-weight="bold">
+          Multi-line Mode
+        </text>
+
+        <g transform="translate(0, 30)">
+          <rect x="0" y="0" width="50" height="18" rx="4" fill="#1a1a2e" stroke="#8b5cf6" stroke-width="0.8"/>
+          <text x="4" y="14" fill="#d2a8ff" font-weight="bold">Up</text>
+          <text x="60" y="14" fill="#c9d1d9">Move up 1 line</text>
+        </g>
+        <g transform="translate(0, 52)">
+          <rect x="0" y="0" width="50" height="18" rx="4" fill="#1a1a2e" stroke="#8b5cf6" stroke-width="0.8"/>
+          <text x="4" y="14" fill="#d2a8ff" font-weight="bold">Down</text>
+          <text x="60" y="14" fill="#c9d1d9">Move down 1 line</text>
+        </g>
+        <g transform="translate(0, 74)">
+          <rect x="0" y="0" width="50" height="18" rx="4" fill="#1a1a2e" stroke="#8b5cf6" stroke-width="0.8"/>
+          <text x="4" y="14" fill="#d2a8ff" font-weight="bold">Home</text>
+          <text x="60" y="14" fill="#c9d1d9">Current line start</text>
+        </g>
+        <g transform="translate(0, 96)">
+          <rect x="0" y="0" width="50" height="18" rx="4" fill="#1a1a2e" stroke="#8b5cf6" stroke-width="0.8"/>
+          <text x="4" y="14" fill="#d2a8ff" font-weight="bold">End</text>
+          <text x="60" y="14" fill="#c9d1d9">Current line end</text>
+        </g>
+        <g transform="translate(0, 118)">
+          <rect x="0" y="0" width="50" height="18" rx="4" fill="#1a1a2e" stroke="#8b5cf6" stroke-width="0.8"/>
+          <text x="4" y="14" fill="#d2a8ff" font-weight="bold">Escape</text>
+          <text x="60" y="14" fill="#c9d1d9">Exit multi-line mode</text>
+        </g>
+        <g transform="translate(0, 140)">
+          <rect x="0" y="0" width="50" height="18" rx="4" fill="#1a1a2e" stroke="#8b5cf6" stroke-width="0.8"/>
+          <text x="4" y="14" fill="#d2a8ff" font-weight="bold">Enter</text>
+          <text x="60" y="14" fill="#c9d1d9">Accept if empty, else newline</text>
+        </g>
+        <g transform="translate(0, 162)">
+          <rect x="0" y="0" width="50" height="18" rx="4" fill="#1a1a2e" stroke="#8b5cf6" stroke-width="0.8"/>
+          <text x="4" y="14" fill="#d2a8ff" font-weight="bold">Ctrl+A</text>
+          <text x="60" y="14" fill="#c9d1d9">Move to line start</text>
+        </g>
+        <g transform="translate(0, 184)">
+          <rect x="0" y="0" width="50" height="18" rx="4" fill="#1a1a2e" stroke="#8b5cf6" stroke-width="0.8"/>
+          <text x="4" y="14" fill="#d2a8ff" font-weight="bold">Ctrl+E</text>
+          <text x="60" y="14" fill="#c9d1d9">Move to line end</text>
+        </g>
+        <g transform="translate(0, 206)">
+          <rect x="0" y="0" width="50" height="18" rx="4" fill="#1a1a2e" stroke="#8b5cf6" stroke-width="0.8"/>
+          <text x="4" y="14" fill="#d2a8ff" font-weight="bold">Ctrl+O</text>
+          <text x="60" y="14" fill="#c9d1d9">Clear input</text>
+        </g>
+      </g>
+    </g>
+
+  </g>
+
+  <!-- 底部 -->
+  <text x="450" y="670" text-anchor="middle" font-size="9" fill="#4a5568" opacity="0.5">
+    Lumesh · Emacs-style bindings · Define yours in config
+  </text>
+
+  <line x1="0" y1="678" x2="900" y2="678" stroke="#21262d" stroke-width="2" opacity="0.4"/>
+</svg>

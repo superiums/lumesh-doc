@@ -11,6 +11,8 @@ categories:
 ---
 
 ## 快捷键绑定总览
+![hot-key](images/key_cn.svg)
+
 ### 默认 Emacs 风格绑定
 
 #### 字符操作
@@ -46,10 +48,8 @@ categories:
 ### Lumesh特色功能绑定
 - Alt+S	切换 sudo 命令（可配置为doas等）
 - Space	触发缩写展开
-- Ctrl+G	**AI 替换**
-- Alt+Enter	**AI 替换**
-- Alt+I	**AI 提示**
-
+- **Alt+O** / **Alt+Enter** | **AI 替换**
+- **Alt+I** | **AI 提示**
 
 #### Hint操作：
 - Ctrl+J	接受提示的第一个词（到特殊字符）
@@ -88,7 +88,7 @@ Ctrl+R	触发历史搜索
 
 - Ctrl+A	移动到段首
 - Ctrl+E	移动到段尾
-- Ctrl+O  清空输入
+- **Ctrl+O**  清空输入
 
 
 ### 自定义编辑器绑定
@@ -108,28 +108,12 @@ Ctrl+R	触发历史搜索
 ### 缩写展开
 输入缩写后按空格触发展开：
 
-以下为默认示例
 > 缩写展开通过 LUME_ABBREVIATIONS 来自定义。
 
+例如：
 
-缩写	展开为（Linux）	展开为（macOS）	展开为（Windows）
-#### Linux
-xi	doas pacman -S	-	-
-xup	doas pacman -Syu	-	-
-xq	pacman -Q	-	-
-xs	pacman -Ss	-	-
-xr	doas pacman -Rs	-	-
-
-#### MacOS
-o	-	open	-
-bi	-	brew install	-
-bs	-	brew search	-
-bu	-	brew update	-
-bg	-	brew upgrade	-
-xr	-	brew uninstall	-
-
-#### Windows
-cpu	-	-	wmic cpu get name
-sfc	-	-	sfc /scannow
-net	-	-	netstat -ano
-ip	-	-	ipconfig /all
+- xi	doas pacman -S
+- xup	doas pacman -Syu
+- xq	pacman -Q
+- xs	pacman -Ss
+- xr	doas pacman -Rs

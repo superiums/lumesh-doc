@@ -28,7 +28,7 @@ smartTOCHideUnfocusedChildren = false
 #   layout = "fixed" # valid options: basic, fixed, fixed-fill, fixed-gradient, fixed-fill-blur
 
 [author]
-name = "Santo"
+name = "Lume shell"
 image = "/images/logo.svg"
 # headline = "A generally awesome human"
 # bio = "A little bit about me"
@@ -37,7 +37,11 @@ image = "/images/logo.svg"
 # ]
 
 [homepage]
-  layout = "page" # valid options: page, profile, hero, card, background, custom
+  showHero = true
+  heroStyle = "background"
+  layoutBackgroundBlur = true # only used when heroStyle equals background
+  layoutBackgroundHeaderSpace = true
+  layout = "hero" # valid options: page, profile, hero, card, background, custom
   # homepageImage = "img/coderain0.svg" # used in: hero, and card
   showRecent = true
   showRecentItems = 3
@@ -45,7 +49,6 @@ image = "/images/logo.svg"
   # showMoreLinkDest = "/practice/"
   cardView = true
   cardViewScreenWidth = false
-  layoutBackgroundBlur = false # only used when layout equals background
   disableHeroImageFilter = false # only used when layout equals hero
 
 

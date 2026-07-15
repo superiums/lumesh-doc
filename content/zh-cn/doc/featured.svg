@@ -63,7 +63,7 @@
   <circle cx="62" cy="42" r="6" fill="#ffbd2e" opacity="0.8"/>
   <circle cx="79" cy="42" r="6" fill="#27c93f" opacity="0.8"/>
   <text x="100" y="47" font-family="monospace" font-size="13" fill="#6b8a9e">
-    terminal — blog@cyberdeck:~/
+    terminal — lume@shell:~/
   </text>
   
   <!-- 命令行提示符和文本 -->
@@ -75,29 +75,29 @@
     <text x="180" y="85" fill="#00ff88" opacity="0">
       <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1s" fill="freeze"/>
       <animate attributeName="opacity" values="1;0.7;1" dur="2s" begin="1.5s" repeatCount="indefinite"/>
-      cyberpunk_blogger
+      lume shell
     </text>
     
     <!-- 第二行 -->
     <text x="40" y="115" fill="#00ff88" opacity="0">
       <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="2s" fill="freeze"/>
-      <tspan fill="#00a8ff">➜</tspan> cat /dev/skills | grep "web"
+      <tspan fill="#00a8ff">➜</tspan> fs.ls -lh | where(size>3M)
     </text>
-    <text x="300" y="115" fill="#00ff88" opacity="0">
+    <text x="300" y="215" fill="#00ff88" opacity="0">
       <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="2.8s" fill="freeze"/>
       <animate attributeName="opacity" values="1;0.7;1" dur="2s" begin="3.3s" repeatCount="indefinite"/>
-      Frontend • Backend • DevOps
+      System Manager • Developer • DevOps
     </text>
     
     <!-- 第三行 -->
     <text x="40" y="145" fill="#00ff88" opacity="0">
       <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="3.5s" fill="freeze"/>
-      <tspan fill="#00a8ff">➜</tspan> echo $BLOG_POSTS | wc -l
+      <tspan fill="#00a8ff">➜</tspan> 5+3/0 ?: 0
     </text>
     <text x="310" y="145" fill="#00ff88" opacity="0">
       <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="4.3s" fill="freeze"/>
       <animate attributeName="opacity" values="1;0.7;1" dur="2s" begin="4.8s" repeatCount="indefinite"/>
-      42
+      default 0 while err
     </text>
     
     <!-- 第四行 - 当前命令 -->
@@ -147,13 +147,13 @@
     <animate attributeName="opacity" from="0" to="1" dur="0.5s" begin="1.5s" fill="freeze"/>
     
     <text x="775" y="80" fill="#6b8a9e">HOSTNAME    :</text>
-    <text x="910" y="80" fill="#00ff88">cyberdeck-01</text>
+    <text x="910" y="80" fill="#00ff88">lumesh.cc.cd</text>
     
     <text x="775" y="100" fill="#6b8a9e">UPTIME      :</text>
     <text x="910" y="100" fill="#00ff88">99d 12h 34m</text>
     
     <text x="775" y="120" fill="#6b8a9e">SHELL       :</text>
-    <text x="910" y="120" fill="#00ff88">zsh 5.9</text>
+    <text x="910" y="120" fill="#00ff88">lumesh 0.16</text>
     
     <text x="775" y="140" fill="#6b8a9e">KERNEL      :</text>
     <text x="910" y="140" fill="#00ff88">6.1.0-rt</text>
