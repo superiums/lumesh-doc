@@ -10,287 +10,126 @@ categories:
  - libs
 ---
 
-控制台操作
+# Console 模块
 
-**模块路径**：`console`
-**功能说明**：提供终端控制、光标操作、键盘输入等控制台交互功能。支持两种调用方式：
-
-*   函数式调用：`console.func(arg0, arg1...)`
-*   命令式调用：`console.func arg0 arg1...`
+Console 模块提供终端控制功能，包括终端信息查询、输出控制、模式切换、光标控制和输入读取。
 
 ---
 
-#### 函数分类及详细说明
+## Console Information（终端信息）
 
-##### 一、终端基本信息
+| 函数 | 描述 | 参数 | 返回值 |
+|------|------|------|--------|
+| `width` | 获取终端宽度 | 无 | 整数（列数）或 `None` |
+| `height` | 获取终端高度 | 无 | 整数（行数）或 `None` |
 
-1.  **`console.width`**
-    **功能**：获取终端宽度（列数）
-    **参数**：无
-    **返回值**：`integer`（失败返回`none`）
-    **示例**：
-
-    ```bash
-        console.width()  # => 120
-    ```
-
-
-2.  **`console.height`**
-    **功能**：获取终端高度（行数）
-    **参数**：无
-    **返回值**：`integer`（失败返回`none`）
-    **示例**：
-
-    ```bash
-        console.height()  # => 40
-    ```
-
+```bash
+console.width()    # 返回终端列数
+console.height()   # 返回终端行数
+```
 
 ---
 
-##### 二、终端控制
+## Output Control（输出控制）
 
-1.  **`console.write`**
-    **功能**：在指定位置输出文本
-    **参数**：
+| 函数 | 描述 | 参数 | 返回值 |
+|------|------|------|--------|
+| `write` | 在指定位置写入文本 | `<text> <x> <y>` | `None` |
+| `title` | 设置终端标题 | `<string>` | `None` |
+| `clear` | 清屏 | 无 | `None` |
+| `flush` | 刷新输出缓冲区 | 无 | `None` |
+| `print_tty` | 向 tty 输出控制序列 | `<arg>` | `None` |
+| `discard` | 丢弃数据（类似 /dev/null） | `<arg>` | `None` |
 
-    *   `x: integer`（列位置）
-    *   `y: integer`（行位置）
-    *   `text: string`（要输出的内容）
-    **返回值**：`none`
-    **示例**：
+```bash
+# write - text 在前，适应管道符操作
+"Hello" | console.write 10 5    # 在 (10,5) 位置写入 "Hello"
 
-    ```bash
-        console.write 10 5 "Hello"  # 在第5行第10列输出"Hello"
-    ```
+console.title "My Terminal"     # 设置终端标题
+console.clear()                   # 清屏
+console.flush()                   # 刷新缓冲区
 
-
-2.  **`console.title`**
-    **功能**：设置终端窗口标题
-    **参数**：`title: string`
-    **返回值**：`none`
-    **示例**：
-
-    ```bash
-        console.title "My App"
-    ```
-
-
-3.  **`console.clear`**
-    **功能**：清空终端屏幕
-    **参数**：无
-    **返回值**：`none`
-    **示例**：
-
-    ```bash
-        console.clear()
-    ```
-
-
-4.  **`console.flush`**
-    **功能**：强制刷新输出缓冲区
-    **参数**：无
-    **返回值**：`none`
-    **示例**：
-
-    ```bash
-        console.flush()
-    ```
-
+console.print_tty() "\x1b[31m"    # 向 tty 输出红色控制序列
+data | console.discard()          # 丢弃数据
+```
 
 ---
 
-##### 三、终端模式控制
+## Mode Control（模式控制）
 
-1.  **`console.mode_raw`**
-    **功能**：启用原始输入模式（禁用行缓冲）
-    **参数**：无
-    **返回值**：`none`
-    **示例**：
+| 函数 | 描述 | 参数 | 返回值 |
+|------|------|------|--------|
+| `mode_raw` | 启用 raw 模式 | 无 | `None` |
+| `mode_normal` | 禁用 raw 模式 | 无 | `None` |
+| `screen_alternate` | 启用备用屏幕 | 无 | `None` |
+| `screen_normal` | 禁用备用屏幕 | 无 | `None` |
 
-    ```bash
-        console.mode_raw()
-    ```
-
-
-2.  **`console.mode_normal`**
-    **功能**：禁用原始输入模式（启用行缓冲）
-    **参数**：无
-    **返回值**：`none`
-    **示例**：
-
-    ```bash
-        console.mode_normal()
-    ```
-
-
-3.  **`console.screen_alternate`**
-    **功能**：启用备用屏幕（保留主屏幕内容）
-    **参数**：无
-    **返回值**：`none`
-    **示例**：
-
-    ```bash
-        console.screen_alternate()
-    ```
-
-
-4.  **`console.screen_normal`**
-    **功能**：禁用备用屏幕（返回主屏幕）
-    **参数**：无
-    **返回值**：`none`
-    **示例**：
-
-    ```bash
-        console.screen_normal()
-    ```
-
+```bash
+console.mode_raw()           # 启用 raw 模式（禁用行缓冲、回显）
+console.mode_normal()        # 恢复正常模式
+console.screen_alternate()   # 切换到备用屏幕（如 vim、htop）
+console.screen_normal()      # 返回主屏幕
+```
 
 ---
 
-##### 四、光标控制
+## Cursor Control（光标控制）
 
-1.  **`console.cursor_to`**
-    **功能**：移动光标到指定位置
-    **参数**：
+| 函数 | 描述 | 参数 | 返回值 |
+|------|------|------|--------|
+| `cursor_to` | 移动光标到指定位置 | `<x> <y>` | `None` |
+| `cursor_up` | 光标向上移动 | `<n>` | `None` |
+| `cursor_down` | 光标向下移动 | `<n>` | `None` |
+| `cursor_left` | 光标向左移动 | `<n>` | `None` |
+| `cursor_right` | 光标向右移动 | `<n>` | `None` |
+| `cursor_save` | 保存光标位置 | 无 | `None` |
+| `cursor_restore` | 恢复光标位置 | 无 | `None` |
+| `cursor_hide` | 隐藏光标 | 无 | `None` |
+| `cursor_show` | 显示光标 | 无 | `None` |
 
-    *   `x: integer`（列位置）
-    *   `y: integer`（行位置）
-    **返回值**：`none`
-    **示例**：
+```bash
+console.cursor_to 10 5      # 移动光标到 (10,5)
+console.cursor_up 3         # 光标向上移动 3 行
+console.cursor_down 2       # 光标向下移动 2 行
+console.cursor_left 5       # 光标向左移动 5 列
+console.cursor_right 1      # 光标向右移动 1 列
 
-    ```bash
-        console.cursor_to 10 5
-    ```
-
-
-2.  **方向移动**：
-
-    | 函数                          | 参数               | 功能         |
-    |-------------------------------|--------------------|--------------|
-    | `console.cursor_up()`         | `lines: integer`    | 上移N行     |
-    | `console.cursor_down()`       | `lines: integer`    | 下移N行     |
-    | `console.cursor_left()`       | `cols: integer`     | 左移N列     |
-    | `console.cursor_right()`      | `cols: integer`     | 右移N列     |
-
-    **示例**：
-
-    ```bash
-        console.cursor_down 3  # 下移3行
-    ```
-
-
-3.  **`console.cursor_save`**
-    **功能**：保存当前光标位置
-    **参数**：无
-    **返回值**：`none`
-    **示例**：
-
-    ```bash
-        console.cursor_save()
-    ```
-
-
-4.  **`console.cursor_restore`**
-    **功能**：恢复保存的光标位置
-    **参数**：无
-    **返回值**：`none`
-    **示例**：
-
-    ```bash
-        console.cursor_restore()
-    ```
-
-
-5.  **`console.cursor_hide`**
-    **功能**：隐藏光标
-    **参数**：无
-    **返回值**：`none`
-    **示例**：
-
-    ```bash
-        console.cursor_hide()
-    ```
-
-
-6.  **`console.cursor_show`**
-    **功能**：显示光标
-    **参数**：无
-    **返回值**：`none`
-    **示例**：
-
-    ```bash
-        console.cursor_show()
-    ```
-
+console.cursor_save()         # 保存当前位置
+console.cursor_restore()      # 恢复到保存的位置
+console.cursor_hide()         # 隐藏光标
+console.cursor_show()         # 显示光标
+```
 
 ---
 
-##### 五、键盘输入
+## Input Control（输入控制）
 
-1.  **`console.read_line`**
-    **功能**：读取一行输入（显示输入内容）
-    **参数**：无
-    **返回值**：`string`
-    **示例**：
+| 函数 | 描述 | 参数 | 返回值 |
+|------|------|------|--------|
+| `read_line` | 从键盘读取一行 | `[prompt]` | 字符串 |
+| `read_password` | 从键盘读取密码（不回显） | `[prompt]` | 字符串 |
+| `read_key` | 从键盘读取单个按键 | 无 | 按键名称字符串 |
+| `keys` | 列出所有可识别的特殊键名 | 无 | 名称列表 |
 
-    ```bash
-        let input = console.read_line()
-    ```
+```bash
+console.read_line "Enter name: "    # 带提示符读取
+console.read_line()                   # 无提示符读取
 
+console.read_password "Password: "  # 带提示符读取密码
+console.read_password()               # 无提示符读取密码
 
-2.  **`console.read_password`**
-    **功能**：读取密码（隐藏输入内容）
-    **参数**：无
-    **返回值**：`string`
-    **示例**：
+console.read_key()                    # 读取单个按键，返回名称如 "left", "enter", "a"
+console.keys()                        # 返回 ["enter", "backspace", "left", ...]
+```
 
-    ```bash
-        let pwd = console.read_password()
-    ```
-
-
-3.  **`console.read_key`**
-    **功能**：读取单个按键
-    **参数**：无
-    **返回值**：`string`（特殊按键的转义序列）
-    **示例**：
-
-    ```bash
-        let key = console.read_key()
-    ```
-
-
-4.  **特殊按键常量**：
-
-    ```bash
-        console.keys.enter      # 回车键
-        console.keys.backspace  # 退格键
-        console.keys.tab        # Tab键
-        console.keys.esc        # ESC键
-        console.keys.up         # 上箭头
-        console.keys.down       # 下箭头
-        console.keys.left       # 左箭头
-        console.keys.right      # 右箭头
-        console.keys.f1         # F1功能键
-        ...                             # 其他功能键类似
-    ```
-
+**`read_key` 返回的按键名称**：`enter`, `backspace`, `delete`, `left`, `right`, `up`, `down`, `home`, `end`, `page_up`, `page_down`, `tab`, `esc`, `insert`, `f1`–`f12`, `null`, `back_tab`，以及普通字符本身（如 `"a"`, `"A"`）。 
 
 ---
 
-#### 通用规则
+## Notes
 
-1.  **坐标系统**：
-
-    *   左上角为原点 (0, 0)
-    *   X轴向右递增（列）
-    *   Y轴向下递增（行）
-
-2.  **错误处理**：
-
-    *   参数类型错误时抛出异常
-    *   终端操作失败返回`none`
-
-3.  **ANSI转义序列**：
-    所有控制功能均使用标准ANSI转义序列实现
+- `write` 函数的参数顺序为 `<text> <x> <y>`，text 在前是为了适应管道符操作（`"text" | console.write() x y`）
+- `read_key` 会忽略鼠标移动、窗口 resize 等非 Key 事件，持续等待直到收到按键事件  
+- `print_tty` 和 `discard` 是从 `sys` 模块移至 `console` 模块的终端控制函数  
+- 所有光标移动和模式切换函数使用 crossterm 库，自动处理跨平台差异
+- 坐标系统使用 0-indexed（左上角为 0,0）

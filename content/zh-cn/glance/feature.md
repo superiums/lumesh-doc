@@ -154,7 +154,7 @@ Lumesh 使用精确定义的运算符优先级系统：
 支持三种字符串类型：
 - 原始字符串：`'raw string'`
 - 转义字符串：`"first line \nsecond line"`
-- 模板字符串：`` `template $variable` ``
+- 模板字符串：`` `template $variable {var}` ``
 
 #### 集合类型
 

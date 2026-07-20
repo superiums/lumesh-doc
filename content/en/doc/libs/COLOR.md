@@ -68,7 +68,7 @@ COLOR.green + 'lume'
 string.color('lume','green')
 ```
 
-- 按代码
+- via hex code
 
 | foreground | background |
 |--------|--------|

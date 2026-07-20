@@ -1,10 +1,12 @@
 ---
-title: 快捷键绑定
+title: 按键绑定
 date: 2026-07-05 09:36:45
 highlight: true
 weight: 50
 tags:
  - hotkey
+ - bindings
+ - slash cmd
 categories:
  - wiki
  - hotkey
@@ -104,6 +106,7 @@ Ctrl+R	触发历史搜索
 - Alt+e	在外部编辑器中编辑命令
 
 更多参看配置文件...
+> 配置中，每一个按键对应一个函数，该函数必须有一个形参，以接收当前行的已输入内容。返回值如果是字符串，将被用于替换当前输入行。
 
 ### 缩写展开
 输入缩写后按空格触发展开：
@@ -117,3 +120,24 @@ Ctrl+R	触发历史搜索
 - xq	pacman -Q
 - xs	pacman -Ss
 - xr	doas pacman -Rs
+
+### /命令
+
+
+以下是内置的/命令
+
+不接收参数：
+- `/` 菜单，会启动 `LUME_SLASH_MENU` 定义的函数
+- `/q` 退出
+
+接收一个参数
+- `/ <some_query>` 快速模糊目录跳转，类似zoxide的z跳转
+- `/history [prefix]` 打印历史记录（按输入顺序）
+- `/h [prefix]` 选择历史命令并执行（按权重顺序）
+- `/hh [prefix]` 选择当前目录专属的历史命令并执行
+- `/hm [prefix]` 选择多目录适用的历史命令并执行
+
+> /命令是在回车后执行，因此，可以接收一个字符串参数，返回值将被丢弃。
+
+> 自定义命令可通过 LUME_SLASH_BINDINGS 配置
+> 每一个绑定对应一个函数，该函数必须有一个形参，返回值将被忽略。
