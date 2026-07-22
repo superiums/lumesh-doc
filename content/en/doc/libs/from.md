@@ -31,10 +31,10 @@ These functions parse various data formats into Lumesh expressions:
 - **Returns**: `Expression` - Fromd expression
 - **Example**:
   ```bash
-  From.json '{"name": "Alice", "age": 30}'
+  from.json '{"name": "Alice", "age": 30}'
   # Returns: {name: "Alice", age: 30}
 
-  '{"items": [1, 2, 3]}' | From.json()
+  '{"items": [1, 2, 3]}' | from.json()
   # Returns: {items: [1, 2, 3]}
   ```
 
@@ -43,10 +43,10 @@ These functions parse various data formats into Lumesh expressions:
 - **Returns**: `Expression` - Fromd expression
 - **Example**:
   ```bash
-  From.toml 'name = "Alice"\nage = 30'
+  from.toml 'name = "Alice"\nage = 30'
   # Returns: {name: "Alice", age: 30}
 
-  fs.read "config.toml" | From.toml()
+  fs.read "config.toml" | from.toml()
   # From TOML configuration file
   ```
 
@@ -55,12 +55,12 @@ These functions parse various data formats into Lumesh expressions:
 - **Returns**: `List[Map]` - Fromd table data
 - **Example**:
   ```bash
-  From.csv "name,age\nAlice,30\nBob,25"
+  from.csv "name,age\nAlice,30\nBob,25"
   # Returns: [{name: "Alice", age: "30"}, {name: "Bob", age: "25"}]
 
   # Supports custom delimiters (via IFS environment variable)
   IFS = ";"
-  From.csv "name;age\nAlice;30"
+  from.csv "name;age\nAlice;30"
   ```
 
 
@@ -73,10 +73,10 @@ These functions are used to parse and process Lumesh scripts:
 - **Returns**: `Expression` - Fromd expression
 - **Example**:
   ```bash
-  From.script "1 + 2 * 3"
+  from.script "1 + 2 * 3"
   # Returns: 7
 
-  From.script "let x = 10; x * 2" | eval()
+  from.script "let x = 10; x * 2" | eval()
   # Dynamically execute script code
   ```
 
@@ -87,13 +87,13 @@ These functions are used to parse and process Lumesh scripts:
 - **Returns**: `List[Map]` - Structured table data
 - **Example**:
   ```bash
-  ls -l | From.cmd()
+  ls -l | from.cmd()
   # Automatically detects headers and parses ls output
 
-  ps aux | From.cmd(USER, PID, CPU, MEM, COMMAND)
+  ps aux | from.cmd(USER, PID, CPU, MEM, COMMAND)
   # From ps output using custom headers
 
-  df -h | From.cmd() | .drop(1) | where(C2.to_filesize() > 10G) | pprint
+  df -h | from.cmd() | .drop(1) | where(C2.to_filesize() > 10G) | pprint
   # From disk usage and filter
   ```
 
@@ -104,13 +104,13 @@ These functions are used to parse and process Lumesh scripts:
 - **Returns**: `Expression` - Query result
 - **Example**:
   ```bash
-  From.jq ".name" '{"name": "Alice", "age": 30}'
+  from.jq ".name" '{"name": "Alice", "age": 30}'
   # Returns: "Alice"
 
-  From.jq ".[]" '[1, 2, 3]'
+  from.jq ".[]" '[1, 2, 3]'
   # Returns all elements in the array
 
-  From.jq "select(.age > 25)" '[{"name":"Alice","age":30},{"name":"Bob","age":20}]'
+  from.jq "select(.age > 25)" '[{"name":"Alice","age":30},{"name":"Bob","age":20}]'
   # Filter records with age greater than 25
   ```
 

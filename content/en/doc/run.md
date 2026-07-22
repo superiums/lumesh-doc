@@ -51,7 +51,7 @@ It supports syntax highlighting and auto-completion.
 
 - Typing part of a word will prompt Lumesh to suggest matching built-in functions, third-party commands, aliases, built-in syntax, and historical commands.
 
-- Typing `module_name + dot + space`: `Into. ` will suggest all available functions within that module.
+- Typing `module_name + dot + space`: `into. ` will suggest all available functions within that module.
 
 **Auto Completion**:
 

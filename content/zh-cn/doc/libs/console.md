@@ -20,8 +20,8 @@ Console 模块提供终端控制功能，包括终端信息查询、输出控制
 
 | 函数 | 描述 | 参数 | 返回值 |
 |------|------|------|--------|
-| `width` | 获取终端宽度 | 无 | 整数（列数）或 `None` |
-| `height` | 获取终端高度 | 无 | 整数（行数）或 `None` |
+| `width` | 获取终端宽度 | 无 | 整数（列数）或 `none` |
+| `height` | 获取终端高度 | 无 | 整数（行数）或 `none` |
 
 ```bash
 console.width()    # 返回终端列数
@@ -34,12 +34,12 @@ console.height()   # 返回终端行数
 
 | 函数 | 描述 | 参数 | 返回值 |
 |------|------|------|--------|
-| `write` | 在指定位置写入文本 | `<text> <x> <y>` | `None` |
-| `title` | 设置终端标题 | `<string>` | `None` |
-| `clear` | 清屏 | 无 | `None` |
-| `flush` | 刷新输出缓冲区 | 无 | `None` |
-| `print_tty` | 向 tty 输出控制序列 | `<arg>` | `None` |
-| `discard` | 丢弃数据（类似 /dev/null） | `<arg>` | `None` |
+| `write` | 在指定位置写入文本 | `<text> <x> <y>` | `none` |
+| `title` | 设置终端标题 | `<string>` | `none` |
+| `clear` | 清屏 | 无 | `none` |
+| `flush` | 刷新输出缓冲区 | 无 | `none` |
+| `print_tty` | 向 tty 输出控制序列 | `<arg>` | `none` |
+| `discard` | 丢弃数据（类似 /dev/null） | `<arg>` | `none` |
 
 ```bash
 # write - text 在前，适应管道符操作
@@ -59,10 +59,10 @@ data | console.discard()          # 丢弃数据
 
 | 函数 | 描述 | 参数 | 返回值 |
 |------|------|------|--------|
-| `mode_raw` | 启用 raw 模式 | 无 | `None` |
-| `mode_normal` | 禁用 raw 模式 | 无 | `None` |
-| `screen_alternate` | 启用备用屏幕 | 无 | `None` |
-| `screen_normal` | 禁用备用屏幕 | 无 | `None` |
+| `mode_raw` | 启用 raw 模式 | 无 | `none` |
+| `mode_normal` | 禁用 raw 模式 | 无 | `none` |
+| `screen_alternate` | 启用备用屏幕 | 无 | `none` |
+| `screen_normal` | 禁用备用屏幕 | 无 | `none` |
 
 ```bash
 console.mode_raw()           # 启用 raw 模式（禁用行缓冲、回显）
@@ -77,15 +77,15 @@ console.screen_normal()      # 返回主屏幕
 
 | 函数 | 描述 | 参数 | 返回值 |
 |------|------|------|--------|
-| `cursor_to` | 移动光标到指定位置 | `<x> <y>` | `None` |
-| `cursor_up` | 光标向上移动 | `<n>` | `None` |
-| `cursor_down` | 光标向下移动 | `<n>` | `None` |
-| `cursor_left` | 光标向左移动 | `<n>` | `None` |
-| `cursor_right` | 光标向右移动 | `<n>` | `None` |
-| `cursor_save` | 保存光标位置 | 无 | `None` |
-| `cursor_restore` | 恢复光标位置 | 无 | `None` |
-| `cursor_hide` | 隐藏光标 | 无 | `None` |
-| `cursor_show` | 显示光标 | 无 | `None` |
+| `cursor_to` | 移动光标到指定位置 | `<x> <y>` | `none` |
+| `cursor_up` | 光标向上移动 | `<n>` | `none` |
+| `cursor_down` | 光标向下移动 | `<n>` | `none` |
+| `cursor_left` | 光标向左移动 | `<n>` | `none` |
+| `cursor_right` | 光标向右移动 | `<n>` | `none` |
+| `cursor_save` | 保存光标位置 | 无 | `none` |
+| `cursor_restore` | 恢复光标位置 | 无 | `none` |
+| `cursor_hide` | 隐藏光标 | 无 | `none` |
+| `cursor_show` | 显示光标 | 无 | `none` |
 
 ```bash
 console.cursor_to 10 5      # 移动光标到 (10,5)

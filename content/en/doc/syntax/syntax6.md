@@ -67,7 +67,7 @@ This is a special environment variable used for internal field separation.
 | 2    | **Command String Parameters** | Pass the entire string as a single parameter | Use `newline` as the default separator | Split using IFS value as the separator |
 | 4    | **For Loop/Loop Dispatch Pipe Split** | Attempt to split by `line, space, semicolon, comma` in order | Attempt to split by `line, space, semicolon, comma` in order | Split string using IFS value |
 | 8    | **string.split Function** | Split using `whitespace` (`split_whitespace`) | Use `space(" ")` as the default separator | Split using IFS value as the separator |
-| 16   | **From.csv/Into.csv Functions** | Use `comma(",")` as the CSV separator | Use `comma(",")` as the default separator | Use the first character of IFS value as the CSV separator* |
+| 16   | **from.csv/into.csv Functions** | Use `comma(",")` as the CSV separator | Use `comma(",")` as the default separator | Use the first character of IFS value as the CSV separator* |
 | 32   | **ui.pick Function** | Use `newline("\n")` to separate options | Use `newline("\n")` as the default separator | Split option list using IFS value |
 
 _*Note: The CSV functions have special handling; if IFS is set to "\n", it still uses a comma as the separator._

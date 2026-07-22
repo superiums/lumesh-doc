@@ -38,7 +38,7 @@ ls -1 |> print "-->" _ "<--"
 
 - 结构化管道
 ```bash
-df -H | Into.table() | pprint
+df -H | into.table() | pprint
 fs.ls -l | where(size > 5K) | select(name,size,modified)
 ```
 
@@ -117,11 +117,11 @@ let result = map.map(
 ### 系统管理
 - 找出cpu占用率超过2%的用户进程，以表格显示
 ```bash
- ps u -u1000 | Into.table() | where( Into.float(CPU) > 2.0 ) | pprint
+ ps u -u1000 | into.table() | where( into.float(CPU) > 2.0 ) | pprint
 ```
 - 找出内存使用超过10%的进程
 ```bash
-ps u -u1000 | Into.table() | where( Into.float(MEM) > 10.0 ) | pprint
+ps u -u1000 | into.table() | where( into.float(MEM) > 10.0 ) | pprint
 ```
 
 ### 网络操作
@@ -129,18 +129,18 @@ ps u -u1000 | Into.table() | where( Into.float(MEM) > 10.0 ) | pprint
 - 请求json数据并解读为表格
 ```bash
 # HTTP 请求
-curl 'https://jsonplaceholder.typicode.com/posts/1/comments' | From.json() | pprint
+curl 'https://jsonplaceholder.typicode.com/posts/1/comments' | from.json() | pprint
 
 # 进一步筛选
-curl 'https://jsonplaceholder.typicode.com/posts/1/comments' | From.json() | where(id < 3) | select(name,email)| pprint
+curl 'https://jsonplaceholder.typicode.com/posts/1/comments' | from.json() | where(id < 3) | select(name,email)| pprint
 ```
 
 - 请求json数据并转为其他格式保存
 ```bash
-let a = curl 'https://jsonplaceholder.typicode.com/posts/1/comments' | From.json()
+let a = curl 'https://jsonplaceholder.typicode.com/posts/1/comments' | from.json()
 a >> data.json                         # json 格式
-a | Into.csv() >> data.csv         # csv 格式
-a | Into.toml() >> data.toml       # toml 格式
+a | into.csv() >> data.csv         # csv 格式
+a | into.toml() >> data.toml       # toml 格式
 
 # a 已经是Lumesh的有效表达式
 type a     # List
@@ -150,13 +150,13 @@ len(a)     # 可以进行其他常规操作
 ### 运维脚本
 - 写一个脚本让用户选择可挂载磁盘
 ```bash
-let sel = ( lsblk -rno 'name,type,size,mountpoint,label,fstype' | Into.table([name,'type',size,mountpoint,label,fstype]) \
+let sel = ( lsblk -rno 'name,type,size,mountpoint,label,fstype' | into.table([name,'type',size,mountpoint,label,fstype]) \
     | where($type!='disk' && !$mountpoint && $fstype !~: 'member') \
     | ui.pick "which to mount:") ?: { print 'no device selected' }
 
 if $sel {
     let src = (sel.type == 'part' ? `/dev/${sel.name}` : `/dev/mapper/${sel.name}`)
-    let point = (sel.label==None ? sel.name : sel.label)
+    let point = (sel.label==none ? sel.name : sel.label)
     let dest = `/run/user/${id -u}/media/${point}`
     if !fs.exists($dest){ mkdir -p $dest }
     sudo mount -m -o 'defaults,noatime' $src $dest  ?: \

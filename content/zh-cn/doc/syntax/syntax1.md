@@ -82,8 +82,8 @@ categories:
   5 == "5"        # true
   5 == 5.0        # true
   "abc" ~: "a"    # true
-  0..<8 ~: 8      # false
-  0..8 ~: 8       # true
+  0..8 ~: 8      # false
+  0..=8 ~: 8       # true
   "abc" ~: r'\d'  # false
 
   ```
@@ -343,7 +343,7 @@ categories:
 他们会把左右两侧的值转为Bool值并进行逻辑运算。如：
 ```bash
 False && print a   # 不执行打印，返回False
-True && print a   # 执行打印，返回False，因为右侧语句返回None
+True && print a   # 执行打印，返回False，因为右侧语句返回none
 ```
 
 - 与Bash比较

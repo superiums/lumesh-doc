@@ -55,7 +55,7 @@ let flag = True
 let disabled = False
 
 # Null values
-let empty = None
+let empty = none
 
 # File sizes
 let a = 3000K
@@ -363,8 +363,8 @@ let age = obj@age         # 25 (@ access)
 
 ```bash
 # Basic range
-1..10           # 1 to 10
-1..<10          # 1 to 9 (explicitly excluding)
+1..10            # 1 to 9 
+1..=10           # 1 to 10(explicitly including)
 
 # Ranges with step
 1..10:2         # 1, 3, 5, 7, 9

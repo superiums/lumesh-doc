@@ -202,10 +202,10 @@ error catch could be use in expression and whole function declare.
 
 ```bash
 
-ls -l | From.cmd() | where( int C4 > 4000 )            # use normal ls command
+ls -l | from.cmd() | where( int C4 > 4000 )            # use normal ls command
 
 let thead = [mode,i,user,group,size,mday,mtime,name]
-ls -l | From.cmd(thead)  | where(int size > 400) | select([name,size,mtime])      #parse with table head
+ls -l | from.cmd(thead)  | where(int size > 400) | select([name,size,mtime])      #parse with table head
 
 fs.ls -l | where(mode==420) | select(name)              # use builtin ls
 ```

@@ -123,7 +123,7 @@ rand.int -50 50      # => -12
 |-----------|-------|---------------------------------|
 | 1         | `List`| The data list to sample from    |
 
-**Return Value**: Any element from the list (returns `None` for an empty list)  
+**Return Value**: Any element from the list (returns `none` for an empty list)  
 **Example**:
 
 ```bash

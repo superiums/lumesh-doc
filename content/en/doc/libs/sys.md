@@ -28,23 +28,23 @@ The Sys module provides system-level operations and environment management funct
 These functions are used to manage system environment variables:
 
 **`env`** - Get the root environment as a mapping  
-- **Parameters**: None  
+- **Parameters**: none  
 - **Returns**: `Map` - All variables in the root environment  
 
 **`set <var> <val>`** - Define a variable in the root environment  
 - **Parameters**: `var` (required): `String` - Variable name, `val` (required): `Any` - Variable value  
-- **Returns**: `None`  
+- **Returns**: `none`  
 
 **`unset <var>`** - Remove a variable from the root environment  
 - **Parameters**: `var` (required): `String` - Name of the variable to remove  
-- **Returns**: `None`  
+- **Returns**: `none`  
 
 ## Variable Check Functions
 
 These functions are used to check the definition status of variables:
 
 **`vars`** - Get the defined variables in the current environment  
-- **Parameters**: None  
+- **Parameters**: none  
 - **Returns**: `Map` - Mapping of variables in the current environment  
 
 **`has <var>`** - Check if a variable is defined in the current environment  
@@ -70,28 +70,28 @@ These functions are used for error handling and debugging:
 - **Returns**: Throws `LmError::CustomError`  
 
 **`ecodes_rt`** - Display runtime error codes  
-- **Parameters**: None  
+- **Parameters**: none  
 - **Returns**: `Expression` - List of runtime error codes  
 
 **`ecodes_lm`** - Display LmError error codes  
-- **Parameters**: None  
+- **Parameters**: none  
 - **Returns**: `Expression` - List of LmError error codes  
 
 ## System Information Functions
 
 **`info`** - Get operating system information  
-- **Parameters**: None  
+- **Parameters**: none  
 - **Returns**: `String` - Operating system information string  
 
 ## Output Control Functions
 
 **`print_tty <arg>`** - Print control sequences to TTY  
 - **Parameters**: `arg` (required): `String` - Content to print  
-- **Returns**: `None`  
+- **Returns**: `none`  
 
 **`discard <arg>`** - Send data to /dev/null  
 - **Parameters**: `arg` (required): `Any` - Data to discard  
-- **Returns**: `None`  
+- **Returns**: `none`  
 
 ## Notes
 

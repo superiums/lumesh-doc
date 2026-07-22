@@ -28,7 +28,7 @@ categories:
   | 集合  | `S{1, "a", true}`          |
   | 映射（BtreeMap）| `{name: "Alice", age: 30}`|
   | 映射（HashMap）| `H{name: "Alice", age: 30}`|
-  | 区间       | `1..8`, `1..<10`          |
+  | 区间       | `1..8`, `1..=10`          |
   | regex       | `r'^\w+` |
   | 时间       | `t'2025-5-20'` |
   | 文件大小   | `4K`,`5T`  |

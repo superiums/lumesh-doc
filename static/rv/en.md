@@ -61,9 +61,9 @@ done
 ```bash
 # /tmp/cc.lm
 for i in 0..100 {
-  Fs.read /tmp/cmds | String.lines() | List.drop(1) \
-    | List.map(x -> {String.split("\t\t", $x) \
-    | List.first()}) | print
+  fs.read /tmp/cmds | String.lines() | list.drop(1) \
+    | list.map(x -> {String.split("\t\t", $x) \
+    | list.first()}) | print
 }
 ```
 
@@ -338,9 +338,9 @@ df -h | awk '$3 ~ /G/ && $3 + 0 > 1'
 - Lume
 ```bash
 # Lume pipelines support structured data streams, so tasks can be efficiently completed without relying on third-party programs
-df -h  | Into.table(fs, size, used, rest, up, mp)  \
+df -h  | into.table(fs, size, used, rest, up, mp)  \
   | where(fs == 'tmpfs') | select(mp, size)
-df -h  | Into.table(fs, size, used, rest, up, mp) | .drop(1) \
+df -h  | into.table(fs, size, used, rest, up, mp) | .drop(1) \
   | where(used.to_filesize() > 1G )
 ```
 
@@ -427,7 +427,7 @@ Built-in a large number of utility function libraries to achieve functional prog
 - Logging:     `Log`
 
 ```bash
-0...10 | List.filter(x -> x % 2 == 0)
+0...10 | list.filter(x -> x % 2 == 0)
 0..10 | .map(x -> x * 2)               # Pipeline method
 ```
 
@@ -438,11 +438,11 @@ Built-in a large number of utility function libraries to achieve functional prog
 ```bash
 "hello world".split(' ').join(',').to_upper().green()
 # Equivalent to:
-String.split(' ', "hello world") | List.join(',') | String.to_upper() | String.green()
+String.split(' ', "hello world") | list.join(',') | String.to_upper() | String.green()
 
 data | .filter(x -> x > 0) | .join(',')
 # Equivalent to:
-List.filter(x -> x > 0, data) | List.join(',')
+list.filter(x -> x > 0, data) | list.join(',')
 ```
 Chained calls can omit the corresponding library name and can be called consecutively.
 
@@ -462,4 +462,3 @@ Chained calls can omit the corresponding library name and can be called consecut
 
 - Documentation   [https://lumesh.codeberg.page](https://lumesh.codeberg.page)
 - Source Code [https://codeberg.org/santo/lumesh](https://codeberg.org/santo/lumesh)
-

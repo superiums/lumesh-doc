@@ -32,7 +32,7 @@ categories:
   - `cd` - Switch to home directory
 
 **`pwd`** - Display the current working directory
-- **Parameters**: None
+- **Parameters**: none
 - **Returns**: `String` - Absolute path of the current directory
 
 #### Environment Variable Management

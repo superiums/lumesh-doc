@@ -38,13 +38,13 @@ cmd all-cmd ${{
 
 ```bash
 cmd history-dir ${{
-  let hist = lf -remote `query $id jumps` | Into.table('jump','path') | .drop(1) | ui.pick "choose history:"
+  let hist = lf -remote `query $id jumps` | into.table('jump','path') | .drop(1) | ui.pick "choose history:"
   lf --remote `send $id cd ${$hist.path}`
 }}
 ```
 
 - ` lf -remote `query $id jumps` ` 获取lf的历史目录
-- `Into.table()` 将数据转换为表格结构
+- `into.table()` 将数据转换为表格结构
 - 字符串插值 `${$hist.path}` 语法
 - 对象属性访问 `$hist.path`
 

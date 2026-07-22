@@ -77,7 +77,7 @@ For example:
   3+5 | bat                   # The operation result is directly sent to the next program
 
   # -- This is incorrect usage --
-  print 3+5 | bat             # The print statement outputs to standard output, while also passing None as the operation result; bat captures the None result from the print statement
+  print 3+5 | bat             # The print statement outputs to standard output, while also passing none as the operation result; bat captures the none result from the print statement
 
   # -- This is a structured pipe --
   tap 3+5 | bat               # The tap statement prints to standard output while passing the result down, bat correctly captures this operation result
@@ -160,7 +160,7 @@ From the examples above, we can see:
   ```
 
 - **Compatible with Third-party System Commands**
-> You can use From.cmd or Into.table or chained calls .table() to convert text into structured data. It can accept a sequence of column names as parameters.
+> You can use from.cmd or into.table or chained calls .table() to convert text into structured data. It can accept a sequence of column names as parameters.
 
 > However, when comparing data, you need to manually convert types.
 

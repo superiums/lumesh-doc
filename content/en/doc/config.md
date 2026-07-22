@@ -39,7 +39,7 @@ Default paths:
 | macOS    | `$HOME/Library/Caches`              | /Users/Alice/Library/Caches  |
 | Windows  | `{FOLDERID_LocalAppData}`           | C:\Users\Alice\AppData\Local |
 
-You can execute `Into.dirs()` to view your default paths.
+You can execute `into.dirs()` to view your default paths.
 
 
 ## Configuration Items
@@ -72,7 +72,7 @@ You can execute `Into.dirs()` to view your default paths.
      c: "clear",
      h: "fs.read ~/.cache/.lume_history | string.lines() | ui.pick('select history:') ?! | exec_str()",
      x: "fs.read ~/.cache/bookmark | string.lines() | ui.pick('select bookmark:') ?! | exec_str()",
-     m: 'let cmd := "$CMD_CURRENT";let s = Into.str(cmd); if s {s+"\n" >> /tmp/bookmark;println "\t[MARKED]"}',
+     m: 'let cmd := "$CMD_CURRENT";let s = into.str(cmd); if s {s+"\n" >> /tmp/bookmark;println "\t[MARKED]"}',
  }
  ```
 
@@ -91,12 +91,12 @@ You can execute `Into.dirs()` to view your default paths.
 5. Command Alias Configuration.
  ```bash
  # ====== alias
- alias int = Into.int()
- alias str = Into.str()
+ alias int = into.int()
+ alias str = into.str()
  alias each = list.map()
  alias sort = list.sort()
  alias group = list.group()
- alias table = Into.table()
+ alias table = into.table()
  alias format = string.format()
  alias ll = fs.ls -l
  alias lsx = ls -l --time-style=long-iso
@@ -135,7 +135,7 @@ You can execute `Into.dirs()` to view your default paths.
       ```bash
       let LUME_PROMPT_TEMPLATE := x -> {
           string.format "{} {}{}{} " string.blue(x) string.green(string.bold("|")) \
-          (if (Into.exists '.git') {git branch --show-current | string.cyan()} else "") \
+          (if (into.exists '.git') {git branch --show-current | string.cyan()} else "") \
           string.green(string.bold(">"))
       }
       ```

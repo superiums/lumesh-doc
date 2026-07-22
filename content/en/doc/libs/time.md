@@ -323,7 +323,7 @@ time.seconds                   # => 55845 (seconds since midnight)
 - `h`: Hours (e.g., "2h")
 - `d`: Days (e.g., "1d")
 
-**Return Value**: `None`  
+**Return Value**: `none`  
 **Example**:
 
 ```bash

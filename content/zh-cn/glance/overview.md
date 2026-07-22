@@ -1,6 +1,6 @@
 ---
 title: 快速概览
-date: 2025-06-11 19:16:45
+date: 2026-07-11 19:16:45
 highlight: true
 weight: 1
 tags:
@@ -15,14 +15,20 @@ categories:
 
 [demo](images/demo.gif)
 
-- 自动补全
-   * 可执行命令补全
-   * 参数补全
-   * 路径补全
-   * 历史命令补全
-   * ai补全(alt+i)
 
-| ![complete](images/ai.png) | ![complete](images/complete.png) |
+### 语法高亮
+
+![highlight](images/highlight.gif)
+
+- 自动补全
+   * 命令补全/提示
+   * 参数补全/提示
+   * 路径补全
+   * 历史命令补全/提示
+   * 内置库补全/提示，参数提示
+   * ai补全提示(alt+i)
+
+| ![complete](images/completion.gif) | ![complete](images/ai.gif) |
 |------------------------|------------------------|
 
 
@@ -30,31 +36,48 @@ categories:
 
 |          语法错误提示          |         运行错误提示           |
 |------------------------|------------------------|
-| ![complete](images/errhint1.png) | ![complete](images/errhint2.png) |
+| ![err](images/err.gif) | ![err runtime](images/err_runtime.gif) |
 
-
-
-### 语法高亮
-
-| ![highlight](images/highlight0.png) | ![highlight](images/highlight1.png) |
-|------------------------|------------------------|
 
 ### 按键绑定
 
 #### 快捷键绑定,可自定义函数修改输入行
-如 `alt+m` mark_cmd
+```bash
+set LUME_HOT_BINDINGS = {
+    CTRL_q: 'exit',
+    ALT_m: save_cmdmark,
+    CTRL_SHIFT_M: select_cmdmark,
+    CTRL_SHIFT_D: select_dirmark,
+    ALT_e: fix_typos,
+    CTRL_SHIFT_t: timestamp,
+    'CTRL_/': menu,
+}
+```
 
 #### 斜杠命令
 1. 内置/命令：
 - `/` 命令菜单
 - `/ <query>` 快速模糊目录跳转，类似zoxide的z命令
 - `/h [prefix]` 历史命令模糊搜索
+![slash cmd](images/bindings.gif)
 
 2. 支持自定义/xxx命令
+```bash
+let open_file = (b) -> {fd -t file | ui.pick('select file:') ?! | handlr open -- _}
 
-| `alt + m` 保存命令书签 |  `alt + x` 用fzf搜索并执行书签  |
-|------------------------|------------------------|
-| ![highlight](images/hotkey1.png) | ![highlight](images/hotkey2.png) |
+set LUME_SLASH_BINDINGS = {
+    sm: save_cmdmark,
+    sd: save_dirmark,
+    m: select_cmdmark,
+    d: select_dirmark,
+    g: fuzzy_go,
+    o: open_file,
+    e: edit_file,
+    sc: search_content,
+    cm: git_commit,
+}
+```
+
 
 ### 性能
 
@@ -117,16 +140,16 @@ println(b,c)      # 也可以
 
 - 数组/列表
 ```bash
-let arr = [10, "a", True]
-let arr_b = 0..10
+let arr = [10, "a", true]
+let arr_b = 0...10
 
 arr[0]       # → 10
-arr_b.1
+arr_b[1]
 
 # 切片操作
-arr[1:3]     # → ["a", True]（左闭右开）
-arr[::2]     # → [10, True]（步长2）
-arr[-1:]      # → True（切片支持负数索引）
+arr[1:3]     # → ["a", true]（左闭右开）
+arr[::2]     # → [10, true]（步长2）
+arr[-1:]      # → true（切片支持负数索引）
 
 # 复杂嵌套
 [1,24,5,[5,6,8]][3][1]     # 显示6
@@ -134,7 +157,7 @@ arr[-1:]      # → True（切片支持负数索引）
 
 - 映射/字典
 ```bash
-let dict = {name: "Alice", age: 30}
+let dict = {name: "Lume", age: 30}
 
 # 基础访问
 dict.name
@@ -154,13 +177,13 @@ if a>0 && b==0 {
 ```bash
 match a {
  10 => print "ten",
- 20 => print "twenty"     # 逗号是可选的
+ 20 => print "twenty"
  _ => print other
 }
 ```
 
 - 其他语句
-同时支持 *For, While, Loop* 等循环语句.
+同时支持 *for, while, loop* 等循环语句.
 条件赋值语句 *a?b:c*
 延迟赋值语句 `let a := b + c`
 
@@ -196,12 +219,12 @@ add(3,4,5,6,7)
 let e = x -> print x
 
 3 / 0 ?: e # 你可以使用函数来捕获和处理错误
+3 / 0 ?: 0 # 在失败时给出默认值
 
 3 / 0 ?. # 你也可以选择忽略它。
 3 / 0 ?? # 你也可以选择在 错误输出 上显示它。
 3 / 0 ?+ # 你也可以选择将其合并到 标准输出。
 3 / 0 ?! # 你也可以选择将错误作为结果使用，这对错误重定向很有用
-3 / 0 ?: 0 # 在失败时给出默认值
 
 ```
 错误捕获可以在表达式和整个函数声明中使用。
@@ -219,7 +242,7 @@ ls -l | into.table() | where( int C4 > 4000 )            # 使用系统ls命令
 let thead = [mode,i,user,group,size,mday,mtime,name]
 ls -l | into.table(thead)  | where(int size > 400) | select([name,size,mtime])   # 自定义转换表头
 
-fs.ls -l | where(mode==420) | select(name)              # 使用内置ls命令
+fs.ls -lh | where(size > 3M) | select(name)              # 使用内置ls命令
 ```
 
 更多详细信息，请参见手册。
@@ -228,7 +251,7 @@ fs.ls -l | where(mode==420) | select(name)              # 使用内置ls命令
 
  - [语法手册](/zh-cn/doc/syntax)
  - [内置库函数](/zh-cn/doc/libs/)
- - [快捷键列表](/zh-cn/doc/keys)
+ - [按键绑定](/zh-cn/doc/keys)
  - [Bash语法对比](/zh-cn/glance/bash)
 
 ## 测试脚本

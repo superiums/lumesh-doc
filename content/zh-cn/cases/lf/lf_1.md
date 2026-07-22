@@ -274,7 +274,7 @@ done
 **写法对比**:
 - **lumesh**: 使用结构化数据处理
 ```bash
-let sel = lsblk -rno 'name,type,size,mountpoint,label,fstype' | Into.table([name,'type',size,mountpoint,label,fstype])
+let sel = lsblk -rno 'name,type,size,mountpoint,label,fstype' | into.table([name,'type',size,mountpoint,label,fstype])
 | where($type!='disk' && !$mountpoint && $fstype !~: 'member')
 | ui.pick "which to mount:"
 let src = $sel.type == 'part' ? `/dev/${$sel.name}` : `/dev/mapper/${$sel.name}`

@@ -5,7 +5,7 @@ date: 2025-12-25 19:16:45
 
 {{% flex gap=3 wrap=true %}}
 <!-- ![demo](images/demo.gif) -->
-![lumesh logo](images/logo.svg)
+![lumesh logo](images/ban.svg)
 
 > a modern shell and scripting language
 >

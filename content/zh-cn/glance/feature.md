@@ -27,7 +27,7 @@ cmd1 |^ cmd2     # PTY 管道
 ```
 结构化管道：
 ```bash
-ls -l | Into.table() | where(size > 5K)
+ls -l | into.table() | where(size > 5K)
 fs.ls -l | where(size > 5K) | select(name,size,modified)
 ls -1 |> adb push _ /sdcard/Download/
 ```
@@ -71,8 +71,8 @@ let {name, age} = user_data
 提供多种区间操作符：
 
 ```bash
-1..10      # 包含结束
-1..<10     # 不包含结束
+1..=10      # 包含结束
+1..10     # 不包含结束
 1..10:2    # 带步长
 1...10     # 直接创建数组
 ```

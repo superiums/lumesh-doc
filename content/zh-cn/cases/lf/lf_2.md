@@ -164,8 +164,8 @@ fi
 **写法对比**:
 - **lumesh**: 使用结构化数据和可选链
 ```bash
-let sel = lsblk -rno 'name,type,size,mountpoint,label,fstype' | Into.table([name,'type',size,mountpoint,label,fstype]) \
-| where(mountpoint != None)
+let sel = lsblk -rno 'name,type,size,mountpoint,label,fstype' | into.table([name,'type',size,mountpoint,label,fstype]) \
+| where(mountpoint != none)
 | ui.pick() ?.
 if sel {
     if $PWD ~: $sel.mountpoint {

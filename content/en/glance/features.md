@@ -27,7 +27,7 @@ cmd1 |^ cmd2     # PTY pipeline
 ```
 Structured pipelines:
 ```bash
-ls -l | Into.table() | where(size > 5K)
+ls -l | into.table() | where(size > 5K)
 fs.ls -l | where(size > 5K) | select(name,size,modified)
 ls -1 |> adb push _ /sdcard/Download/
 ```
@@ -71,8 +71,8 @@ let {name, age} = user_data
 Provides various range operators:
 
 ```bash
-1..10      # Inclusive of end
-1..<10     # Exclusive of end
+1..=10      # Inclusive of end
+1..10     # Exclusive of end
 1..10:2    # With step
 1...10     # Directly create an array
 ```

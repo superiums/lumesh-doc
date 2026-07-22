@@ -61,9 +61,9 @@ done
 ```bash
 # /tmp/cc.lm
 for i in 0..100{
-  Fs.read /tmp/cmds | String.lines() | List.drop(1) \
-    | List.map(x -> {String.split("\t\t", $x) \
-    | List.first()}) | print
+  fs.read /tmp/cmds | String.lines() | list.drop(1) \
+    | list.map(x -> {String.split("\t\t", $x) \
+    | list.first()}) | print
 }
 ```
 
@@ -344,9 +344,9 @@ df -h | awk '$3 ~ /G/ && $3+0 > 1'
 - Lume
 ```bash
 # Lume管道支持结构化数据流，因此无须借助三方程序即可高效完成任务
-df -h  | Into.table(fs,size,used,rest,up,mp)  \
+df -h  | into.table(fs,size,used,rest,up,mp)  \
   | where(fs=='tmpfs') | select(mp,size)
-df -h  | Into.table(fs,size,used,rest,up,mp) | .drop(1) \
+df -h  | into.table(fs,size,used,rest,up,mp) | .drop(1) \
   | where(used.to_filesize() > 1G )
 ```
 
@@ -435,7 +435,7 @@ let arr = 0...10        # 数组
 - 日志记录:     `Log`
 
 ```bash
-0...10 | List.filter(x -> x % 2 == 0)
+0...10 | list.filter(x -> x % 2 == 0)
 0..10 | .map(x -> x * 2)               # 管道方法
 ```
 
@@ -446,11 +446,11 @@ let arr = 0...10        # 数组
 ```bash
 "hello world".split(' ').join(',').to_upper().green()
 # 等同于：
-String.split(' ',"hello world") | List.join(',') | String.to_upper() | String.green()
+String.split(' ',"hello world") | list.join(',') | String.to_upper() | String.green()
 
 data | .filter(x -> x > 0) | .join(',')
 # 等同于：
-List.filter(x -> x>0, data) | List.join(',')
+list.filter(x -> x>0, data) | list.join(',')
 ```
 链式调用可以省略相应库名，且可连续调用。
 

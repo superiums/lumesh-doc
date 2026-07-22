@@ -26,11 +26,11 @@ categories:
   | Boolean    | `True`, `False`             |
   | List (Array)| `[1, "a", True]`           |
   | Map (Dictionary)| `{name: "Alice", age: 30}`|
-  | Range      | `1..8`, `1..<10`            |
+  | Range      | `1..8`, `1..=10`            |
   | Regex      | `r'^\w+'`                   |
   | Time       | `t'2025-5-20'`              |
   | File Size  | `4K`, `5T`                  |
-  | Null       | `None`                      |
+  | Null       | `none`                      |
 
 #### Complex Types
   | Type       | Example                     |

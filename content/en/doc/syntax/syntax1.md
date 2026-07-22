@@ -77,7 +77,7 @@ Examples:
   5 == "5"        # False
   5 ~= "5"        # True
   "abc" ~: "a"    # True
-  0..<8 ~: 8      # False
+  0..8 ~: 8      # False
   0..8 ~: 8       # True
   "abc" ~: '\d'   # False
   ```
@@ -317,12 +317,12 @@ Only applicable to numeric operations.
 
 For uninitialized variables, they are automatically initialized to 0.
 
-Unlike arithmetic operations, for non-numeric values, it will return None instead of throwing an exception.
+Unlike arithmetic operations, for non-numeric values, it will return none instead of throwing an exception.
 For example:
 
   ```bash
   a += 1               # → 1
-  a += [1]             # None
+  a += [1]             # none
   ```
 **Edge Cases**:
 - Division by zero will throw an error.
@@ -332,7 +332,7 @@ For example:
 They convert the values on both sides to Bool values and perform logical operations. For example:
 ```bash
 False && print a   # Does not execute print, returns False
-True && print a    # Executes print, returns False because the right side statement returns None
+True && print a    # Executes print, returns False because the right side statement returns none
 ```
 
 - Compared to Bash

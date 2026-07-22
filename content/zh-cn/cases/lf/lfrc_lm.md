@@ -109,7 +109,7 @@ map <backspace> history-cmd
 map <backspace2> history-cmd
 
 cmd history-dir ${{
-  let hist = lf -remote `query $id jumps` | Into.table('jump','path') | .drop(1) | ui.pick "choose history:"
+  let hist = lf -remote `query $id jumps` | into.table('jump','path') | .drop(1) | ui.pick "choose history:"
   lf --remote `send $id cd ${$hist.path}`
 }}
 map <c-g> history-dir
@@ -698,7 +698,7 @@ map d<space> !dust
 
 
 cmd mount-dev ${{
-    let sel =  lsblk -rno 'name,type,size,mountpoint,label,fstype' | Into.table([name,'type',size,mountpoint,label,fstype]) \
+    let sel =  lsblk -rno 'name,type,size,mountpoint,label,fstype' | into.table([name,'type',size,mountpoint,label,fstype]) \
         | where($type!='disk' && !$mountpoint && $fstype !~: 'member') \
         | ui.pick "which to mount:" ?: { print 'no device'; exit 0 }
 
@@ -708,7 +708,7 @@ cmd mount-dev ${{
             exit 1
         }
         let src = $sel.type == 'part' ? `/dev/${$sel.name}` : `/dev/mapper/${$sel.name}`
-        let point = $sel.label==None ? $sel.name : $sel.label
+        let point = $sel.label==none ? $sel.name : $sel.label
         let dest = `$XDG_RUNTIME_DIR/media/$point`
         if !fs.exists($dest){ mkdir -p $dest }
         $lf_user_wheel mount -m -o 'defaults,noatime' $src $dest  ?: \
@@ -720,8 +720,8 @@ cmd mount-dev ${{
 map mm mount-dev
 
 cmd umount-dev ${{
-    let sel =  lsblk -rno 'name,type,size,mountpoint,label,fstype' | Into.table([name,'type',size,mountpoint,label,fstype])     \
-        | where(mountpoint != None) \
+    let sel =  lsblk -rno 'name,type,size,mountpoint,label,fstype' | into.table([name,'type',size,mountpoint,label,fstype])     \
+        | where(mountpoint != none) \
         | ui.pick() ?.
 
     if sel {

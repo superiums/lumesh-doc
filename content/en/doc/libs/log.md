@@ -42,7 +42,7 @@ These functions are used to control the log output level:
 
 **`set_level <level>`** - Set the log level  
 - **Parameters**: `level` (required): `Integer` - Log level (0-5)  
-- **Returns**: `None`  
+- **Returns**: `none`  
 - **Example**:
   ```bash
   log.set_level log.level.warn
@@ -53,7 +53,7 @@ These functions are used to control the log output level:
   ```
 
 **`get_level`** - Get the current log level  
-- **Parameters**: None  
+- **Parameters**: none  
 - **Returns**: `Integer` - Current log level  
 - **Example**:
   ```bash
@@ -64,8 +64,8 @@ These functions are used to control the log output level:
   ```
 
 **`disable`** - Disable all log output  
-- **Parameters**: None  
-- **Returns**: `None`  
+- **Parameters**: none  
+- **Returns**: `none`  
 - **Example**:
   ```bash
   log.disable
@@ -91,7 +91,7 @@ These functions are used to output log messages at different levels:
 
 **`info <message>...`** - Log an info level message  
 - **Parameters**: `message` (required): `Any` - Message to log (supports multiple parameters)  
-- **Returns**: `None`  
+- **Returns**: `none`  
 - **Color**: Green `[INFO]` prefix  
 - **Example**:
   ```bash
@@ -104,7 +104,7 @@ These functions are used to output log messages at different levels:
 
 **`warn <message>...`** - Log a warning level message  
 - **Parameters**: `message` (required): `Any` - Message to log (supports multiple parameters)  
-- **Returns**: `None`  
+- **Returns**: `none`  
 - **Color**: Yellow `[WARN]` prefix  
 - **Example**:
   ```bash
@@ -116,7 +116,7 @@ These functions are used to output log messages at different levels:
 
 **`debug <message>...`** - Log a debug level message  
 - **Parameters**: `message` (required): `Any` - Message to log (supports multiple parameters)  
-- **Returns**: `None`  
+- **Returns**: `none`  
 - **Color**: Blue `[DEBUG]` prefix  
 - **Example**:
   ```bash
@@ -128,7 +128,7 @@ These functions are used to output log messages at different levels:
 
 **`error <message>...`** - Log an error level message  
 - **Parameters**: `message` (required): `Any` - Message to log (supports multiple parameters)  
-- **Returns**: `None`  
+- **Returns**: `none`  
 - **Color**: Red `[ERROR]` prefix  
 - **Example**:
   ```bash
@@ -140,7 +140,7 @@ These functions are used to output log messages at different levels:
 
 **`trace <message>...`** - Log a trace level message  
 - **Parameters**: `message` (required): `Any` - Message to log (supports multiple parameters)  
-- **Returns**: `None`  
+- **Returns**: `none`  
 - **Color**: Magenta `[TRACE]` prefix  
 - **Example**:
   ```bash
@@ -154,7 +154,7 @@ These functions are used to output log messages at different levels:
 
 **`echo <message>...`** - Output without formatting  
 - **Parameters**: `message` (required): `Any` - Message to output (supports multiple parameters)  
-- **Returns**: `None`  
+- **Returns**: `none`  
 - **Example**:
   ```bash
   log.echo "Plain text output, no level prefix"

@@ -28,23 +28,23 @@ The Into module provides comprehensive data type conversion capabilities, suppor
 **`str <value>`** - Format an expression as a string
 - **Parameters**: `value` (required): `Any` - The value to convert
 - **Returns**: `String` - The formatted string representation
-- **Example**: `Into.str(123)` returns `"123"`
+- **Example**: `into.str(123)` returns `"123"`
 
 **`int <value>`** - Convert a float or string to an integer
 - **Parameters**: `value` (required): `Float|String` - The value to convert
 - **Returns**: `Integer` - The converted integer
 - **Error**: Throws an error if conversion fails
 - **Example**:
-  - `Into.int("123")` returns `123`
-  - `Into.int(3.14)` returns `3`
+  - `into.int("123")` returns `123`
+  - `into.int(3.14)` returns `3`
 
 **`float <value>`** - Convert an integer or string to a float
 - **Parameters**: `value` (required): `Integer|String` - The value to convert
 - **Returns**: `Float` - The converted float
 - **Error**: Throws an error if conversion fails
 - **Example**:
-  - `Into.float("3.14")` returns `3.14`
-  - `Into.float(123)` returns `123.0`
+  - `into.float("3.14")` returns `3.14`
+  - `into.float(123)` returns `123.0`
 
 **`boolean <value>`** - Convert a value to a boolean
 - **Parameters**: `value` (required): `Any` - The value to convert
@@ -56,8 +56,8 @@ The Into module provides comprehensive data type conversion capabilities, suppor
 - **Returns**: `Integer` - Corresponding byte count
 - **Supported Units**: B, KB, MB, GB, TB, PB
 - **Example**:
-  - `Into.filesize("1KB")` returns `1024`
-  - `Into.filesize("2.5MB")` returns `2621440`
+  - `into.filesize("1KB")` returns `1024`
+  - `into.filesize("2.5MB")` returns `2621440`
 
 ## Time Conversion Functions
 
@@ -67,8 +67,8 @@ The Into module provides comprehensive data type conversion capabilities, suppor
   - `datetime_template` (optional): `String` - Date-time format template
 - **Returns**: `DateTime` - The parsed date-time object
 - **Example**:
-  - `Into.time("2023-12-25")` - Parses ISO format date
-  - `Into.time("25/12/2023", "%d/%m/%Y")` - Uses custom format
+  - `into.time("2023-12-25")` - Parses ISO format date
+  - `into.time("25/12/2023", "%d/%m/%Y")` - Uses custom format
 
 ## Table Conversion Functions
 
@@ -80,8 +80,8 @@ The Into module provides comprehensive data type conversion capabilities, suppor
 - **Purpose**: Parse outputs from commands like `ps`, `ls`, `df` into structured data
 - **Example**:
   ```bash
-  ps aux | Into.table()
-  ls -l | Into.table("mode", "links", "owner", "group", "size", "date", "name")
+  ps aux | into.table()
+  ls -l | into.table("mode", "links", "owner", "group", "size", "date", "name")
   ```
 
 ## Serialization Functions
@@ -90,13 +90,13 @@ The Into module provides comprehensive data type conversion capabilities, suppor
 - **Parameters**: `expr` (required): `Any` - Expression to serialize
 - **Returns**: `String` - TOML format string
 - **Supported Types**: Maps, lists, basic types
-- **Example**: `Into.toml({"name": "Alice", "age": 30})`
+- **Example**: `into.toml({"name": "Alice", "age": 30})`
 
 **`json <expr>`** - Serialize a Lumesh expression to JSON
 - **Parameters**: `expr` (required): `Any` - Expression to serialize
 - **Returns**: `String` - JSON format string
 - **Supported Types**: Maps, lists, basic types
-- **Example**: `Into.json([1, 2, 3])` returns `"[1,2,3]"`
+- **Example**: `into.json([1, 2, 3])` returns `"[1,2,3]"`
 
 **`csv <expr>`** - Serialize a Lumesh expression to CSV
 - **Parameters**: `expr` (required): `List[Map]` - Table data to serialize
@@ -104,7 +104,7 @@ The Into module provides comprehensive data type conversion capabilities, suppor
 - **Requirements**: Input must be a list of maps (table format)
 - **Example**:
   ```bash
-  [{"name": "Alice", "age": 30}, {"name": "Bob", "age": 25}] | Into.csv()
+  [{"name": "Alice", "age": 30}, {"name": "Bob", "age": 25}] | into.csv()
   ```
 
 ## Highlight
@@ -113,10 +113,10 @@ The Into module provides comprehensive data type conversion capabilities, suppor
 - **Returns**: `String` - Highlighted string
 - **Example**:
   ```bash
-  Into.highlighted "let x = 10; print x"
+  into.highlighted "let x = 10; print x"
   # Returns a highlighted string with ANSI color codes
 
-  fs.read "script.lm" | Into.highlighted() | print
+  fs.read "script.lm" | into.highlighted() | print
   # Highlight and display the content of the script file
   ```
 
@@ -129,57 +129,57 @@ The Into module provides comprehensive data type conversion capabilities, suppor
 ### Basic Type Conversion
 ```bash
 # Number conversion
-Into.int("42")        # Returns 42
-Into.float("3.14")    # Returns 3.14
-Into.str(123)         # Returns "123"
+into.int("42")        # Returns 42
+into.float("3.14")    # Returns 3.14
+into.str(123)         # Returns "123"
 
 # Boolean conversion
-Into.boolean(1)       # Returns true
-Into.boolean("")      # Returns false
+into.boolean(1)       # Returns true
+into.boolean("")      # Returns false
 ```
 
 ### File Size Conversion
 ```bash
 # Parse file sizes
-Into.filesize("1KB")    # Returns 1024
-Into.filesize("2.5MB")  # Returns 2621440
-Into.filesize("1GB")    # Returns 1073741824
+into.filesize("1KB")    # Returns 1024
+into.filesize("2.5MB")  # Returns 2621440
+into.filesize("1GB")    # Returns 1073741824
 ```
 
 ### Data Serialization
 ```bash
 # JSON serialization
 let data = {"users": [{"name": "Alice"}, {"name": "Bob"}]}
-Into.json(data)
+into.json(data)
 
 # TOML serialization
 let config = {"database": {"host": "localhost", "port": 5432}}
-Into.toml(config)
+into.toml(config)
 
 # CSV serialization
-fs.ls("-l") | Into.csv()
+fs.ls("-l") | into.csv()
 ```
 
 ### Command Output Parsing
 ```bash
 # Parse system command output
-ps aux | Into.table() | where(cpu > 5.0)
-df -h | Into.table() | select("filesystem", "used", "available")
+ps aux | into.table() | where(cpu > 5.0)
+df -h | into.table() | select("filesystem", "used", "available")
 ```
 
 ## Pipeline Operation Examples
 
 ```bash
 # Data processing pipeline
-"123.45" | Into.float() | Math.round() | Into.str()
+"123.45" | into.float() | Math.round() | into.str()
 # Result: "123"
 
 # File size processing
-fs.ls("-l") | list.map((f) -> Into.filesize(f.size)) | list.sum()
+fs.ls("-l") | list.map((f) -> into.filesize(f.size)) | list.sum()
 # Calculate total size of the directory
 
 # Configuration file generation
-{"server": {"port": 8080, "host": "0.0.0.0"}} | Into.toml() | fs.write("config.toml")
+{"server": {"port": 8080, "host": "0.0.0.0"}} | into.toml() | fs.write("config.toml")
 ```
 
 ## Notes

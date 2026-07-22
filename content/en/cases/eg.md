@@ -37,7 +37,7 @@ ls -1 |> print "-->" _ "<--"
 
 - Structured pipeline
 ```bash
-df -H | Into.table() | pprint
+df -H | into.table() | pprint
 fs.ls -l | where(size > 5K) | select(name,size,modified)
 ```
 
@@ -113,12 +113,12 @@ let result = map.map(
 
 - Find user processes with CPU usage over 2% and display in a table
 ```bash
- ps u -u1000 | Into.table() | where(Into.float(CPU) > 2.0) | pprint
+ ps u -u1000 | into.table() | where(into.float(CPU) > 2.0) | pprint
 ```
 
 - Find processes using more than 10% of memory
 ```bash
-ps u -u1000 | Into.table() | where(Into.float(MEM) > 10.0) | pprint
+ps u -u1000 | into.table() | where(into.float(MEM) > 10.0) | pprint
 ```
 
 ### Network Operations
@@ -126,18 +126,18 @@ ps u -u1000 | Into.table() | where(Into.float(MEM) > 10.0) | pprint
 - Request JSON data and interpret it as a table
 ```bash
 # HTTP request
-curl 'https://jsonplaceholder.typicode.com/posts/1/comments' | From.json() | pprint
+curl 'https://jsonplaceholder.typicode.com/posts/1/comments' | from.json() | pprint
 
 # Further filtering
-curl 'https://jsonplaceholder.typicode.com/posts/1/comments' | From.json() | where(id < 3) | select(name,email) | pprint
+curl 'https://jsonplaceholder.typicode.com/posts/1/comments' | from.json() | where(id < 3) | select(name,email) | pprint
 ```
 
 - Request JSON data and save in other formats
 ```bash
-let a = curl 'https://jsonplaceholder.typicode.com/posts/1/comments' | From.json()
+let a = curl 'https://jsonplaceholder.typicode.com/posts/1/comments' | from.json()
 a >> data.json                         # JSON format
-a | Into.csv() >> data.csv         # CSV format
-a | Into.toml() >> data.toml       # TOML format
+a | into.csv() >> data.csv         # CSV format
+a | into.toml() >> data.toml       # TOML format
 
 # a is already a valid Lumesh expression
 type a     # List
@@ -148,13 +148,13 @@ len(a)     # Can perform other regular operations
 
 - Write a script to let users select mountable disks
 ```bash
-let sel = ( lsblk -rno 'name,type,size,mountpoint,label,fstype' | Into.table([name,'type',size,mountpoint,label,fstype]) \
+let sel = ( lsblk -rno 'name,type,size,mountpoint,label,fstype' | into.table([name,'type',size,mountpoint,label,fstype]) \
     | where($type != 'disk' && !$mountpoint && $fstype !~: 'member') \
     | ui.pick "which to mount:") ?: { print 'no device selected' }
 
 if $sel {
     let src = (sel.type == 'part' ? `/dev/${sel.name}` : `/dev/mapper/${sel.name}`)
-    let point = (sel.label == None ? sel.name : sel.label)
+    let point = (sel.label == none ? sel.name : sel.label)
     let dest = `/run/user/${id - u}/media/${point}`
     if !fs.exists($dest) { mkdir -p $dest }
     sudo mount -m -o 'defaults,noatime' $src $dest ?: \

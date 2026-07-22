@@ -27,7 +27,7 @@ The Fs module provides comprehensive file system operation capabilities, includi
 ## System Directory Functions
 
 **`dirs`** - Get standard system directories  
-- **Parameters**: None  
+- **Parameters**: none  
 - **Returns**: `Map` - A mapping containing system directory paths  
 - **Includes Directories**:
   - `home` - User home directory

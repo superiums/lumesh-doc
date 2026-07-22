@@ -28,7 +28,7 @@ The Regex module provides comprehensive regular expression operation capabilitie
 - **Parameters**:
   - `pattern` (required): `String|Regex` - Regular expression pattern  
   - `text` (required): `String` - Text to search  
-- **Returns**: `Map|None` - Match information mapping, containing `start`, `end`, and `found` fields; returns None if not found  
+- **Returns**: `Map|none` - Match information mapping, containing `start`, `end`, and `found` fields; returns none if not found  
 - **Example**: `regex.find(r'\d+', "abc123def")` returns `{start: 3, end: 6, found: "123"}`  
 
 **`find_all <pattern> <text>`** - Find all matches  
@@ -52,7 +52,7 @@ The Regex module provides comprehensive regular expression operation capabilitie
 - **Parameters**:
   - `pattern` (required): `String|Regex` - Regular expression containing capturing groups  
   - `text` (required): `String` - Text to match  
-- **Returns**: `List|None` - List of captured groups, index 0 is the full match, subsequent indices are each capturing group  
+- **Returns**: `List|none` - List of captured groups, index 0 is the full match, subsequent indices are each capturing group  
 - **Example**: `regex.capture(r'(\d{4})-(\d{2})-(\d{2})', "2023-12-25")` returns `["2023-12-25", "2023", "12", "25"]`  
 
 **`captures <pattern> <text>`** - Get all matching capturing groups  
@@ -65,7 +65,7 @@ The Regex module provides comprehensive regular expression operation capabilitie
 - **Parameters**:
   - `pattern` (required): `String|Regex` - Regular expression containing named capturing groups  
   - `text` (required): `String` - Text to match  
-- **Returns**: `Map|None` - Mapping of named capturing groups, with keys as group names and values as matched content  
+- **Returns**: `Map|none` - Mapping of named capturing groups, with keys as group names and values as matched content  
 - **Example**: `regex.capture_name(r'(?P<year>\d{4})-(?P<month>\d{2})', "2023-12")` returns `{year: "2023", month: "12"}`  
 
 ## Text Processing Functions
@@ -131,7 +131,7 @@ regex.replace(r'\b\w+@\w+\.\w+\b', "[EMAIL]", "Contact us at support@example.com
 ### Pipeline Operation Examples
 ```bash
 # Extract all numbers and sum them
-"Price: $123, Tax: $45, Total: $168" | regex.find_all(r'\d+') | list.map((m) -> Into.int(m.found)) | list.sum()
+"Price: $123, Tax: $45, Total: $168" | regex.find_all(r'\d+') | list.map((m) -> into.int(m.found)) | list.sum()
 # Result: 336
 
 # Clean and format text

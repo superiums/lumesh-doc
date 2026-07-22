@@ -128,7 +128,7 @@ The List module is one of the most important data processing modules in Lumesh, 
   - `item` (required): `Any|Function` - Element or function to search for
   - `start_index` (optional): `Integer` - Index to start searching from
   - `list` (required): `List` - Source list
-- **Returns**: `Integer|None` - Index of the element, returns None if not found
+- **Returns**: `Integer|none` - Index of the element, returns none if not found
 - **Example**: `list.find(3, [1, 2, 3, 4])` returns `2`
 
 **`find_last <item|fn> [start_index] <list>`** - Find the last index of an element
@@ -136,7 +136,7 @@ The List module is one of the most important data processing modules in Lumesh, 
   - `item` (required): `Any|Function` - Element or function to search for
   - `start_index` (optional): `Integer` - Index to start searching from
   - `list` (required): `List` - Source list
-- **Returns**: `Integer|None` - Last index of the element, returns None if not found
+- **Returns**: `Integer|none` - Last index of the element, returns none if not found
 
 ## List Modification Functions
 
@@ -244,7 +244,7 @@ The List module is one of the most important data processing modules in Lumesh, 
 
 **`filter_map <fn> <list>`** - Filter and map in one step
 - **Parameters**:
-    - `fn` (required): `Function|Lambda` - Transformation function, returns None to filter out
+    - `fn` (required): `Function|Lambda` - Transformation function, returns none to filter out
     - `list` (required): `List` - Source list
 - **Returns**: `List` - New list after transformation and filtering
 
@@ -274,7 +274,7 @@ The List module is one of the most important data processing modules in Lumesh, 
 - **Parameters**:
     - `fn` (required): `Function|Lambda` - Function to execute
     - `list` (required): `List` - Source list
-- **Returns**: `None` - No return value
+- **Returns**: `none` - No return value
 - **Purpose**: Perform side-effect operations, such as printing or modifying external state
 
 ## Conversion Operations

@@ -92,7 +92,7 @@ The Map module provides comprehensive key-value pair data structure operation fu
 - **Parameters**:
   - `predicate_fn` (required): `Function|Lambda` - Predicate function, accepts (key, value) parameters  
   - `map` (required): `Map` - Source map  
-- **Returns**: `List|None` - Matching key-value pair [key, value], returns None if not found  
+- **Returns**: `List|none` - Matching key-value pair [key, value], returns none if not found  
 
 **`filter <predicate_fn> <map>`** - Filter the map by condition  
 - **Parameters**:

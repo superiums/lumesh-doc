@@ -43,9 +43,9 @@ categories:
 | Integer       | `declare -i var=10`    | `let var = 10`               | Automatically assigns type        |
 | Float         | Not supported          | `let var = 10.0`             |                                   |
 | String        | `str="hello"`          | `let str = "hello"`          |                                   |
-| Array         | `arr=(1 2 3)`          | `let arr = [1, 2, 3]` or `1...<3` |                                   |
+| Array         | `arr=(1 2 3)`          | `let arr = [1, 2, 3]` or `1...=3` |                                   |
 | Dictionary    | `declare -A dict=([k]=v)` | `let dict = {k: v}`          |                                   |
-| Range         | `{1..10}`              | `1..10` or `1..<10`          | Basic data type, can participate in calculations |
+| Range         | `{1..10}`              | `1..10` or `1..=10`          | Basic data type, can participate in calculations |
 | File Size     | String                 | `200M`                        | Basic data type, can participate in calculations |
 | Time          | String                 | `fs.parse('2025-10-1')`    | Basic data type, can participate in calculations |
 
@@ -78,7 +78,7 @@ categories:
 | Feature        | Bash Syntax            | Lumesh Syntax                | Description                       |
 |----------------|------------------------|------------------------------|-----------------------------------|
 | Function Definition | `func() { cmds; }`   | `fn func() {...}`            |                                   |
-| Anonymous Function | None                 | `let f = (x,y) -> x + y`    | Lambda expression                 |
+| Anonymous Function | none                 | `let f = (x,y) -> x + y`    | Lambda expression                 |
 | Function Parameters | `func() { $1,$2... }` | `fn func(a,b) { a,b...}`    | Parameter list                    |
 | Default Parameters | Not supported        | `fn f(a=1) {...}`           | Default parameters                 |
 | Rest Parameters | `"$@"`                | `fn f(*args) {...}`         | Collects rest parameters           |
@@ -126,7 +126,7 @@ categories:
 ------
 
 1.  Lumesh's array indexing starts from 0 (same as Bash).
-2.  The range expression `a..<b` does not include `b`, while `a..b` includes `b`.
+2.  The range expression `a..b` does not include `b`, while `a..=b` includes `b`.
 3.  Function calls require `()` or `!` suffix.
 4.  In strict mode, the `$` prefix must be used to reference variables.
 5.  Operator precedence differs from Bash.

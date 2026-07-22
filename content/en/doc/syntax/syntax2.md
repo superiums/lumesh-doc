@@ -17,12 +17,12 @@ categories:
 ### 1. Ranges
 
 - Range expressions
-    Ranges use `..<` (left-closed, right-open) or `..` (closed range), with no spaces on either side.
+    Ranges use `..` (left-closed, right-open) or `..=` (closed range), with no spaces on either side.
     Variable expansion is supported.
 
     ```bash
-    0..<10        # does not include 10
-    0..10         # includes 10
+    0..10        # does not include 10
+    0..=10         # includes 10
     a..b
     ```
 
@@ -43,7 +43,7 @@ categories:
 
 ### 2. Lists (Arrays)
 - Lists are represented with `[ ]`. The internal elements are ordered.
-- They can also be created directly from ranges using `...` or `...<`
+- They can also be created directly from ranges using `...` or `...=`
 
     ```bash
     0...5               # outputs [0,1,2,3,4]
@@ -51,7 +51,7 @@ categories:
     list.from(0..5)
     ```
 
-*Two dots `..` `..<` create ranges, while three dots `...` `...<` create arrays.*
+*Two dots `..` `..=` create ranges, while three dots `...` `...=` create arrays.*
 
 - Indexing is represented with `.` or `[i]`.
     ```bash

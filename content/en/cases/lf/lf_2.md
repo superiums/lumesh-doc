@@ -164,8 +164,8 @@ fi
 **Code Comparison**:  
 - **Lumesh**: Uses structured data and optional chaining  
 ```bash
-let sel = lsblk -rno 'name,type,size,mountpoint,label,fstype' | Into.table([name,'type',size,mountpoint,label,fstype]) \
-| where(mountpoint != None)
+let sel = lsblk -rno 'name,type,size,mountpoint,label,fstype' | into.table([name,'type',size,mountpoint,label,fstype]) \
+| where(mountpoint != none)
 | ui.pick() ?.
 if sel {
     if $PWD ~: $sel.mountpoint {
@@ -189,7 +189,7 @@ fi
 - **Bash**: Awk regex processing is flexible, pipeline combinations are efficient, string matching is mature  
 
 ### 16. on-cd Command  
-**Key Binding**: None (automatically triggered)
+**Key Binding**: none (automatically triggered)
 
 **Code Comparison**:  
 - **Lumesh**: Uses system functions  

@@ -38,13 +38,13 @@ cmd all-cmd ${{
 
 ```bash
 cmd history-dir ${{
-  let hist = lf -remote `query $id jumps` | Into.table('jump','path') | .drop(1) | ui.pick "choose history:"
+  let hist = lf -remote `query $id jumps` | into.table('jump','path') | .drop(1) | ui.pick "choose history:"
   lf --remote `send $id cd ${$hist.path}`
 }}
 ```
 
 - `lf -remote `query $id jumps`` retrieves the history directories in lf.
-- `Into.table()` converts data into a table structure.
+- `into.table()` converts data into a table structure.
 - String interpolation `${$hist.path}` syntax.
 - Object property access `$hist.path`.
 

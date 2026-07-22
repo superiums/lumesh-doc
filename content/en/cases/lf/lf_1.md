@@ -275,7 +275,7 @@ done
 **Syntax Comparison**:
 - **lumesh**: Uses structured data processing
 ```bash
-let sel = lsblk -rno 'name,type,size,mountpoint,label,fstype' | Into.table([name,'type',size,mountpoint,label,fstype])
+let sel = lsblk -rno 'name,type,size,mountpoint,label,fstype' | into.table([name,'type',size,mountpoint,label,fstype])
 | where($type!='disk' && !$mountpoint && $fstype !~: 'member')
 | ui.pick "which to mount:"
 let src = $sel.type == 'part' ? `/dev/${$sel.name}` : `/dev/mapper/${$sel.name}`
