@@ -99,6 +99,22 @@ set LUME_IFS_MODE = 2    # 仅在命令参数中分割，其他场景不受影�
 | `1<<4` | `IFS_CSV` | CSV 解析 |
 | `1<<5` | `IFS_PCK` | `ui.pick` 选项分割 |
 
+#### 变量展开暗藏杀机
+```bash
+input='$(rm -rf /)'
+eval "echo $input"   # 炸
+```
+
+**Lume 的轻松：**
+
+引入`StringSafe`类型，保证eval时不会意外炸雷：
+
+```bash
+let input = '(rm -rf /)'
+let safe = sys.safe $input
+eval_str `echo $safe`   # 打印出安全字符串 s'(rm -rf /)'
+```
+
 #### 字符串类型
 
 Bash 只有双引号（变量展开）和单引号（原始字符串），没有模板字符串：
@@ -327,6 +343,9 @@ fs.ls -l | select name size modified
 let config = {db: {host: "localhost", port: 5432}}
 config | get "db.host"    # → "localhost"
 get config "db.port"      # → 5432
+
+# 字面量随意嵌套
+[1,24,5,[5,6,8]][3][1]     # 显示6
 ```
 
 ---
@@ -337,6 +356,8 @@ Bash 中范围、正则、时间均以字符串表示，无专用类型。
 
 **Lume 的轻松：**
 
+所有类型均可参加运算
+
 #### 范围类型
 
 ```bash
@@ -344,6 +365,8 @@ Bash 中范围、正则、时间均以字符串表示，无专用类型。
 1..=10      # 闭区间 [1, 10]
 1..10:2     # 步长为 2：1, 3, 5, 7, 9
 _..5        # 从 Int::MIN 到 5
+
+1..10 ~: 3  # true
 ```
 
 #### 文件大小与百分比字面量
@@ -362,6 +385,8 @@ filesize.b(1K)  # → 1024
 ```bash
 r'\d+'
 t'2026-7-23'
+
+t'08:10' - t'08:09'  # 时间差(ms)：60000
 ```
 
 ---
@@ -549,11 +574,15 @@ command time   # 强制调用外部命令
 
 **Lume 的轻松：**
 
-函数支持具名参数、默认值、可变参数，调用使用括号，不与命令冲突：
+lume的函数
+- 支持具名参数、默认值、可变参数
+- 支持装饰器
+- 支持任意返回值
+- 调用使用括号，不与命令冲突
 
 ```bash
 fn greet(name, greeting="Hello") {
-    println greeting + ", " + name + "!"
+    println greeting ", "  name "!"
 }
 greet("Alice")        # Hello, Alice!
 greet("Bob", "Hi")    # Hi, Bob!
@@ -564,15 +593,20 @@ fn sum(*nums) {
 sum(1, 2, 3, 4, 5)   # 15
 
 time()   # 调用函数，不影响外部命令 time
+time _   # 调用外部命令
 ```
 
 ---
 
 ### Lambda、闭包与柯里化
 
-Bash 不支持 Lambda、闭包和柯里化。
+Bash 不支持 Lambda
 
 **Lume 的轻松：**
+
+- 支持 Lambda
+- 支持闭包捕获
+- 支持柯里化
 
 ```bash
 # Lambda
@@ -705,43 +739,49 @@ echo "$a"   # 空（子 Shell 中的修改丢失）
 
 ✅ 子 Shell 改不了父 Shell 变量，这是 Bash 的铁律。
 
-**Lume 的轻松：**
+### 数据传递必须echo
 
-管道与命令捕获均不启动子进程，数据不会丢失：
+bash的管道
+- 只能从`stdout/stdin`传递数据流，因此必须`echo`打印到`stdout`才能传递出去。
+- 只能传递文本字节流
 
 ```bash
-[1,2,3,4,5] | .filter(x -> x > 2) | .map(x -> x * x)
-
-(a=1)
-print $a    # 1
+echo "hello" | wc
 ```
 
 ---
 
 ### Lume 的管道系统
 
-Bash 管道只能传递文本流，无法传递结构化数据，且管道右侧只能通过 stdin 接收数据。
-
 **Lume 的轻松：**
 
-四种管道类型，支持结构化数据：
+四种管道类型，支持结构化数据，无需`echo`：
 
 ```bash
 data | process              # 标准管道：支持结构化数据（List/Map 直接传递）
 data | positional a _ c     # 位置管道：_ 为占位符，数据注入指定位置
 data |> transform           # 分发管道：对集合每个元素分别应用右侧函数
 data |^ interactive         # PTY 管道：用于 vi/ssh/htop 等交互式程序
+
+"hello" | wc
 ```
 
 管道不启动子进程，结构化数据直接流动：
 
 ```bash
+# 结构化数据
 fs.ls -lh | where(size > 5K)
 [1,2,3,4,5] | .filter(x -> x > 2) | .map(x -> x * x)
+
+# 数据不丢失
+(a=1)
+print $a    # 1
+
+# 循环派发
 ls -1 |> cp -r _ /tmp/     # 对每个文件执行 cp
 ```
 
-链式调用：
+链式调用(比管道更方便的数据流动)：
 
 ```bash
 "hello world".split(' ').join(',')    # → "hello,world"
@@ -871,7 +911,7 @@ source utils.sh
 # 使用模块，拥有清晰的命名空间，干净利落
 use myutils as utils
 utils::my_function()
-utils::MY_CONSTANT
+
 
 # 17个内置模块，按需加载，绝不污染全局环境
 list.map(...)       # 列表操作
@@ -926,7 +966,8 @@ bash: syntax error near unexpected token '('   # 不知道是哪一行
 
 **Lume 的轻松：**
 
-调试专用语句：`debug`、`ddebug`、`typeof`、`assert`、`condition`；日志模块：`log`。
+调试专用语句：`debug`、`ddebug`、`typeof`、`assert`、`condition`；
+日志模块：`log`。
 
 `tap` 是管道调试利器，打印中间结果但不打断数据流：
 
@@ -1020,8 +1061,9 @@ Bash 颜色显示需要手写 ANSI 转义码，交互依赖文本问答。
 内置颜色函数与 COLOR 常量，集成交互式 UI：
 
 ```bash
-'hi lume'.green()
+'hi lume'.green().bold()
 COLOR.red + 'hello'
+STYLE.BOLD + 'lume'
 
 fs.ls -lh | ui.pick 'select a file'
 ```
@@ -1042,7 +1084,7 @@ set LUME_ABBREVIATIONS = {
 ```
 
 **可编程热键**
-
+热键可修改当前行输入，但不修改env
 ```bash
 set LUME_HOT_BINDINGS = {
     CTRL_q: 'exit',
@@ -1052,7 +1094,7 @@ set LUME_HOT_BINDINGS = {
 ```
 
 **可编程斜杠命令**
-
+可修改env，但不可修改输入行
 ```bash
 set LUME_SLASH_BINDINGS = {
     sm: save_cmdmark,
