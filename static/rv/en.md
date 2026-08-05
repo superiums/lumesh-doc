@@ -392,7 +392,7 @@ let a = $argv[0] ?: 0                        # Provide default value
 
 - More Types
 ```bash
-let p = r'\w+'          # Regex type
+let p = g'\w+'          # Regex type
 let day = t'2025-7-20'  # Date type
 let s = 3000M           # File size type
 let range = 0..10       # Interval

@@ -269,8 +269,8 @@ match value {
     1 => "one",
     2, 3 => "two or three",
     xx => "is symbol/string xx",
-    r'\w' => "is word",
-    r'\d+' => "is digit",
+    g'\w' => "is word",
+    g'\d+' => "is digit",
     _ => "default case"
 }
 ```
@@ -292,7 +292,7 @@ fn add(a, b = 0) {
 
 # 可变参数函数
 fn sum(a, *numbers) {
-    numbers | list.foldl((x,acc) -> acc + x, 0)
+    numbers | list.fold((x,acc) -> acc + x, 0)
 }
 ```
 

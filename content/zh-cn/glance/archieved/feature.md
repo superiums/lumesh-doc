@@ -189,12 +189,3 @@ fs.ls("/path")      # 使用内置模块
 Lumesh 的语法设计融合了现代编程语言的特性与 shell 的实用性。其独特的管道操作符、错误处理机制和链式调用语法是与传统 shell 最大的区别。
 
 解析器采用 Pratt 算法实现，支持复杂的表达式嵌套和优先级处理。
-
-Wiki pages you might want to explore:
-- [Lume vs Bash, ppt](/rv/zh.html)
-- [语法概览 (superiums/lumesh)](/zh-cn/glance)
-- [特性概览 (superiums/lumesh)](/zh-cn/feature)
-- [日常用举例 (superiums/lumesh)](/zh-cn/cases)
-- [使用Lumesh编写lf配置文件的语法演示](/zh-cn/cases/case_lf)
-- [语法手册 (superiums/lumesh)](/zh-cn/doc/syntax)
-- [内置函数 (superiums/lumesh)](/zh-cn/doc/libs/)

@@ -1,8 +1,8 @@
 ---
 title: 配置文件
-date: 2025-07-20 15:16:45
+date: 2026-07-20 15:16:45
 highlight: True
-weight: 3
+weight: 13
 tags:
  - syntax
 categories:
@@ -39,8 +39,7 @@ if IS_INTERACTIVE {
 |------|------|--------|--------|
 | `LUME_KNOCK_VALIDATOR` | Function | 无 | 登录 |
 | `LUME_WELCOME` | String | 内置欢迎语 | 交互 |
-| `LUME_PROMPT_SETTINGS` | Map | `{MODE:0, TTL_SECS:2}` | 交互 |
-| `LUME_PROMPT_TEMPLATE` | String/Lambda | 无 | 交互 |
+| `LUME_PROMPT_SETTINGS` | Map | `{starship:0, ttl:2}` | 交互 |
 | `LUME_THEME` | String | `"one_dark"` | 交互 |
 | `LUME_THEME_CONFIG` | Map | 无 | 交互 |
 | `LUME_STRICT` | Boolean | `false` | 全局 |
@@ -81,50 +80,42 @@ set LUME_WELCOME = 'Welcome to my shell!'
 #### `LUME_PROMPT_SETTINGS`
 - **类型**：Map
 - **字段**：
-  - `MODE`：提示符模式
-    - `0`：默认内置提示符
-    - `1`：使用 `LUME_PROMPT_TEMPLATE`
-    - `2`：使用 [starship](https://starship.rs/) 提示符
-  - `TTL_SECS`：提示符缓存时间（秒），默认 `2`
+  - `starship`：是否启用starship
+    - `0`：禁用
+    - `1`：启用 [starship](https://starship.rs/) 提示符
+  - `ttl`：提示符缓存时间（秒），默认 `2`
+  - `prompt_template`: 模板渲染，可以是函数或字符串
+  - `prompt_continuation`: 续行符号，字符串
 
-```bash
-set LUME_PROMPT_SETTINGS = {
-    MODE: 1,
-    TTL_SECS: 2
-}
-```
----
-
-#### `LUME_PROMPT_TEMPLATE`
-- **类型**：String 或 Lambda
-- **说明**：当 `LUME_PROMPT_SETTINGS.MODE = 1` 时生效。
+- **说明**：prompt_template在禁用starship时生效。
   - **字符串模式**：支持以下占位符：
     - `$CWD`：当前完整路径
     - `$CWD_SHORT`：缩短的路径
     - `$CFM_TAG`：CFM 模式标记（`"CFM"` 或空）
     - `$STRICT_TAG`：严格模式标记（`"S"` 或空）
-  - **Lambda 模式**：接收 `(dir, ctx)` 两个参数，`ctx` 包含 `ctx.cfm` 和 `ctx.strict` 布尔字段，每次渲染提示符时都会调用。
+    - `$STATUS`：状态标记（`"OK"` 或"Fail"）
+    - `$DUARATION`：命令执行时长（ms）
+    - `$JOBS`：后台任务数量
+  - **Lambda 模式**：接收 `(dir, ctx)` 两个参数，`ctx` 包含 `cfm` 和 `strict` 两个布尔字段，以及`status`/`duration`/`jobs`三个整数字段，每次渲染提示符时都会调用。
 
 ```bash
 # 字符串模板
-set LUME_PROMPT_TEMPLATE = '$CWD_SHORT|$CFM_TAG> '
+set prompt_template = '$CWD_SHORT|$CFM_TAG> '
 
 # Lambda 模板（动态，支持 git 分支等）
-set LUME_PROMPT_TEMPLATE = (dir, ctx) -> {
+set prompt_template = (dir, ctx) -> {
     string.blue($dir) + ' |'.green().bold()
     + ($ctx.cfm ? 'CFM'.green() + '|' : '')
     + (if (fs.exists '.git') { git branch --show-current | .cyan() } else '')
     + '> '.green().bold()
 }
-```
----
 
-#### `LUME_CONTINUATION_PROMPT`
-- **类型**：String
-- **说明**：多行输入时的续行提示符，默认为 `"... "`。
-
-```bash
-set LUME_CONTINUATION_PROMPT = '... '
+set LUME_PROMPT_SETTINGS = {
+    starship: 0,
+    ttl: 2
+    prompt_template,
+    prompt_continuation: '... '
+}
 ```
 
 ---
@@ -172,6 +163,7 @@ set LUME_THEME = 'ayu_dark'
 set LUME_THEME_CONFIG = {
     keyword: "\x1b[38;5;82m",   # 亮绿色
     comment: "\x1b[38;5;244m",  # 灰色
+    operator: COLOR.orange
 }
 ```
 

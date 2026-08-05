@@ -1,6 +1,6 @@
 ---
 title: Bash中的泥泞人生
-date: 2026-07-27 21:00
+date: 2026-07-27 21:00:00
 ---
 
 > 本文系统梳理 Bash 的常见陷阱与反直觉设计，并对比 Lume 的解决思路。
@@ -111,7 +111,7 @@ eval "echo $input"   # 炸
 
 ```bash
 let input = '(rm -rf /)'
-let safe = sys.safe $input
+let safe = into.safe $input
 eval_str `echo $safe`   # 打印出安全字符串 s'(rm -rf /)'
 ```
 
@@ -155,13 +155,14 @@ curl -X POST -d "{\"name\":\"$name\",\"msg\":\"Hello '$msg'\"}" http://example.c
 
 **Lume 的轻松：**
 
-使用反引号进行插值，内部引号直接书写，无嵌套转义问题：
+使用 *反引号进行插值* 和 *#包裹row string*，内部引号直接书写，无嵌套转义问题：
 
 ```bash
 print `Today is {date '+%Y-%m-%d'}`
 sed `s/foo/bar "$var"/g` file.txt
 let data = {name, msg: `Hello '$msg'`}
 curl -X POST -d into.json($data) http://example.com
+curl -X POST -d r#`{"name":"{name}", "msg": "Hello '$msg'"}`# http://example.com
 ```
 #### 多行文本
 2. Heredoc 与多行字符串
@@ -193,7 +194,7 @@ Bash 大小写转换语法晦涩：
 **Lume 的轻松：**
 
 ```bash
-a.to_lower() == b.to_lower()
+a.lower() == b.lower()
 ```
 
 ---
@@ -383,7 +384,7 @@ filesize.b(1K)  # → 1024
 #### 正则与时间字面量
 
 ```bash
-r'\d+'
+g'\d+'
 t'2026-7-23'
 
 t'08:10' - t'08:09'  # 时间差(ms)：60000
@@ -419,7 +420,7 @@ t'08:10' - t'08:09'  # 时间差(ms)：60000
 无需任何括号，表达式直接书写，`==` 统一比较所有类型：
 
 ```bash
-a ~: r'\d+'     # 正则匹配
+a ~: g'\d+'     # 正则匹配
 a > 0 && b < 0  # 逻辑运算
 a == b          # 统一比较
 ```
@@ -588,7 +589,7 @@ greet("Alice")        # Hello, Alice!
 greet("Bob", "Hi")    # Hi, Bob!
 
 fn sum(*nums) {
-    nums | list.foldl((acc, x) -> acc + x, 0)
+    nums | list.fold((acc, x) -> acc + x, 0)
 }
 sum(1, 2, 3, 4, 5)   # 15
 
@@ -823,12 +824,16 @@ print "-n"
 
 ```bash
 cmd > out.txt
+#✅ 防止误操作：
+set -o noclobber
 ```
 
-✅ 防止误操作：
-
+错误重定向，符号密集，语义反直觉
 ```bash
-set -o noclobber
+command > all.log 2>&1
+command > /dev/null 2>&1
+# 错误
+ommand 2>&1 > out.log
 ```
 
 **Lume 的轻松：**
@@ -839,6 +844,12 @@ set -o noclobber
 cmd _ >! out.txt
 ```
 
+lume的错误重定向，简单直接
+```bash
+command &+ > all.log     # 合并
+command &.               # 忽略
+
+```
 ---
 
 ## 九、通配符与文件操作
@@ -919,7 +930,7 @@ string.split(...)   # 字符串操作
 fs.read(...)        # 文件操作
 time.now()          # 时间操作
 math.sqrt(16)       # 数学函数
-regex.find(r'\d+', text)  # 正则操作
+regex.find(g'\d+', text)  # 正则操作
 ui.pick("选择一个:", options)  # 交互式选择
 ```
 
@@ -987,19 +998,21 @@ Bash 依赖退出码判断成败，错误处理粗糙。
 7 种后缀错误捕获操作符：
 
 ```bash
-cmd ?.          # 忽略错误，返回 none
-cmd ?: handler  # 将错误信息（Map）传给 handler 函数
-cmd ?+          # 打印错误到 stdout，返回 none
-cmd ??          # 打印错误到 stderr（红色），返回 none
-cmd ?>          # 合并错误到 stdout
-cmd ?!          # 遇错终止管道
-cmd ?~          # 成功→true，失败→false（用于条件判断）
+cmd ?.            # 忽略错误，返回 none
+cmd ?: handler    # 将错误信息（Map）传给 handler 函数
+cmd &: onsuccess  # 成功后执行
+cmd ?+            # 打印错误到 stdout，返回 none
+cmd ??            # 打印错误到 stderr（红色），返回 none
+cmd ?>            # 合并错误到 stdout
+cmd ?!            # 遇错终止管道
+cmd ?~            # 成功→true，失败→false（用于条件判断）
 ```
 
 实用模式：
 
 ```bash
 # 类 bash 的 && ||
+validate() &: process() ?: cleanup()
 validate() ?~ ? process() : cleanup()
 
 # 捕获错误信息，编程式处理
@@ -1045,7 +1058,10 @@ trap 'kill $(jobs -p)' EXIT
 
 ```bash
 sleep 1000 &
-exit   # sleep 随之退出
+exit        # sleep 随之退出
+
+jobs        # 查看后台任务
+jobs -k id  # 终止后台任务
 ```
 
 ---

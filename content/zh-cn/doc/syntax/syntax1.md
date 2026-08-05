@@ -84,7 +84,7 @@ categories:
   "abc" ~: "a"    # true
   0..8 ~: 8      # false
   0..=8 ~: 8       # true
-  "abc" ~: r'\d'  # false
+  "abc" ~: g'\d'  # false
 
   ```
 

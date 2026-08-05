@@ -1,0 +1,428 @@
+{{ define "main" }}
+<section id="features" class="lume-section lume-features py-20 px-6 lg:px-16">
+    <div class="w-full my-3">
+        <div class="text-center mb-6">
+        <img src="{{ "images/ban.svg" | relURL }}" alt="Lumesh" class="block w-full h-auto">
+    </div>
+    </div>
+    <div class="mx-auto max-w-7xl">
+        <div class="text-center max-w-2xl my-3 p-6 mx-auto">
+            <p class="lume-eyebrow text-sm my-3 font-medium">Why Lume</p>
+            <h2 class="text-2xl lg:text-3xl font-extrabold text-white">
+                每一处 Bash 的陷阱，都是 Lume 的设计起点
+            </h2>
+            <p class="mt-4 text-neutral-400 text-sm lg:text-base">
+                安全默认，显式优于隐式——11 个维度，逐一击破 Bash 的历史包袱
+            </p>
+        </div>
+
+        <div class="mt-14 flex flex-wrap gap-4">
+            <div class="lume-feature-card rounded-2xl p-6 flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="lume-feature-icon flex items-center justify-center rounded-lg text-lg"
+                        >⌨</span
+                    >
+                    <h3 class="text-white font-semibold text-base">语法</h3>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-bash"
+                        >Bash</span
+                    >
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        空格敏感、<code class="lume-inline-code">[ ]</code
+                        >/<code class="lume-inline-code">[[ ]]</code>/<code
+                            class="lume-inline-code"
+                            >(( ))</code
+                        >
+                        混乱、赋值不能有空格
+                    </p>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-lume"
+                        >Lume</span
+                    >
+                    <p class="text-neutral-200 text-sm leading-relaxed">
+                        空格可选，<code class="lume-inline-code">==</code>
+                        统一比较所有类型，无需括号魔法
+                    </p>
+                </div>
+            </div>
+
+            <div class="lume-feature-card rounded-2xl p-6 flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="lume-feature-icon flex items-center justify-center rounded-lg text-lg"
+                        >🔢</span
+                    >
+                    <h3 class="text-white font-semibold text-base">类型系统</h3>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-bash"
+                        >Bash</span
+                    >
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        一切皆字符串，算术要用
+                        <code class="lume-inline-code">$(( ))</code
+                        >，无浮点、溢出不报错
+                    </p>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-lume"
+                        >Lume</span
+                    >
+                    <p class="text-neutral-200 text-sm leading-relaxed">
+                        完整类型：整数/浮点/数组/映射/范围/正则/时间/文件大小字面量，运算直接书写
+                    </p>
+                </div>
+            </div>
+
+            <div class="lume-feature-card rounded-2xl p-6 flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="lume-feature-icon flex items-center justify-center rounded-lg text-lg"
+                        >❝</span
+                    >
+                    <h3 class="text-white font-semibold text-base">字符串</h3>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-bash"
+                        >Bash</span
+                    >
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        隐式分割+glob 展开容易埋雷，插值嵌套转义地狱
+                    </p>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-lume"
+                        >Lume</span
+                    >
+                    <p class="text-neutral-200 text-sm leading-relaxed">
+                        三种字符串（原始/转义/模板插值），<code
+                            class="lume-inline-code"
+                            >StringSafe</code
+                        >
+                        类型防注入
+                    </p>
+                </div>
+            </div>
+
+            <div class="lume-feature-card rounded-2xl p-6 flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="lume-feature-icon flex items-center justify-center rounded-lg text-lg"
+                        >🗂</span
+                    >
+                    <h3 class="text-white font-semibold text-base">数据结构</h3>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-bash"
+                        >Bash</span
+                    >
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        数组/关联数组语法繁琐，不支持嵌套访问
+                    </p>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-lume"
+                        >Lume</span
+                    >
+                    <p class="text-neutral-200 text-sm leading-relaxed">
+                        直观的数组/映射字面量，支持
+                        <code class="lume-inline-code">select</code>（类 SQL）与
+                        <code class="lume-inline-code">get</code> 点路径访问
+                    </p>
+                </div>
+            </div>
+
+            <div class="lume-feature-card rounded-2xl p-6 flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="lume-feature-icon flex items-center justify-center rounded-lg text-lg"
+                        >⤳</span
+                    >
+                    <h3 class="text-white font-semibold text-base">流程控制</h3>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-bash"
+                        >Bash</span
+                    >
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        <code class="lume-inline-code">case</code>
+                        陷阱多，仅支持通配符匹配
+                    </p>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-lume"
+                        >Lume</span
+                    >
+                    <p class="text-neutral-200 text-sm leading-relaxed">
+                        <code class="lume-inline-code">match</code>
+                        支持多值/范围/正则匹配；<code class="lume-inline-code"
+                            >if</code
+                        >/<code class="lume-inline-code">for</code>
+                        可作为表达式返回值
+                    </p>
+                </div>
+            </div>
+
+            <div class="lume-feature-card rounded-2xl p-6 flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="lume-feature-icon flex items-center justify-center rounded-lg text-lg"
+                        >ƒ</span
+                    >
+                    <h3 class="text-white font-semibold text-base">函数</h3>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-bash"
+                        >Bash</span
+                    >
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        只有位置参数，返回值只能是 0-255 退出码
+                    </p>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-lume"
+                        >Lume</span
+                    >
+                    <p class="text-neutral-200 text-sm leading-relaxed">
+                        具名参数、默认值、可变参数、任意返回值、Lambda/闭包/柯里化、装饰器
+                    </p>
+                </div>
+            </div>
+
+            <div class="lume-feature-card rounded-2xl p-6 flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="lume-feature-icon flex items-center justify-center rounded-lg text-lg"
+                        >🔒</span
+                    >
+                    <h3 class="text-white font-semibold text-base">作用域</h3>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-bash"
+                        >Bash</span
+                    >
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        变量默认全局污染
+                    </p>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-lume"
+                        >Lume</span
+                    >
+                    <p class="text-neutral-200 text-sm leading-relaxed">
+                        函数默认隔离作用域，改父级需显式
+                        <code class="lume-inline-code">set</code>
+                    </p>
+                </div>
+            </div>
+
+            <div class="lume-feature-card rounded-2xl p-6 flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="lume-feature-icon flex items-center justify-center rounded-lg text-lg"
+                        >🔀</span
+                    >
+                    <h3 class="text-white font-semibold text-base">
+                        管道 / 子进程
+                    </h3>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-bash"
+                        >Bash</span
+                    >
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        管道右侧运行在子 Shell，变量修改丢失；只能传文本流
+                    </p>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-lume"
+                        >Lume</span
+                    >
+                    <p class="text-neutral-200 text-sm leading-relaxed">
+                        四种管道（标准/位置/分发/PTY），结构化数据直接流动，不启动子进程
+                    </p>
+                </div>
+            </div>
+
+            <div class="lume-feature-card rounded-2xl p-6 flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="lume-feature-icon flex items-center justify-center rounded-lg text-lg"
+                        >⚠</span
+                    >
+                    <h3 class="text-white font-semibold text-base">错误处理</h3>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-bash"
+                        >Bash</span
+                    >
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        靠退出码，需手动
+                        <code class="lume-inline-code">set -euo pipefail</code>
+                    </p>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-lume"
+                        >Lume</span
+                    >
+                    <p class="text-neutral-200 text-sm leading-relaxed">
+                        编译器级报错提示 + 7 种错误捕获操作符
+                    </p>
+                </div>
+            </div>
+
+            <div class="lume-feature-card rounded-2xl p-6 flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="lume-feature-icon flex items-center justify-center rounded-lg text-lg"
+                        >📦</span
+                    >
+                    <h3 class="text-white font-semibold text-base">模块化</h3>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-bash"
+                        >Bash</span
+                    >
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        <code class="lume-inline-code">source</code>
+                        全局命名空间污染，无模块系统
+                    </p>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-lume"
+                        >Lume</span
+                    >
+                    <p class="text-neutral-200 text-sm leading-relaxed">
+                        <code class="lume-inline-code">use ... as</code>
+                        模块导入 + 17 个按需加载内置模块
+                    </p>
+                </div>
+            </div>
+
+            <div class="lume-feature-card rounded-2xl p-6 flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="lume-feature-icon flex items-center justify-center rounded-lg text-lg"
+                        >⚡</span
+                    >
+                    <h3 class="text-white font-semibold text-base">性能</h3>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-bash"
+                        >Bash</span
+                    >
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        百万次循环约 2200ms
+                    </p>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-lume"
+                        >Lume</span
+                    >
+                    <p class="text-neutral-200 text-sm leading-relaxed">
+                        约 200ms，快 10 倍以上
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section
+    id="more-features"
+    class="lume-section lume-more-features py-20 px-6 lg:px-16"
+>
+    <div class="mx-auto max-w-7xl">
+        <div class="text-center max-w-2xl mx-auto mb-3">
+            <p class="lume-eyebrow text-sm mb-3 font-medium">
+                Beyond the shell
+            </p>
+            <h2 class="text-2xl lg:text-3xl font-extrabold text-white">
+                不止于替代 Bash
+            </h2>
+        </div>
+
+        <div class="mt-14 flex flex-wrap gap-4">
+            <div class="lume-more-card rounded-2xl p-6 flex flex-col gap-3">
+                <span
+                    class="lume-more-icon rounded-xl flex items-center justify-center text-xl"
+                    >✨</span
+                >
+                <h3 class="text-white font-semibold">现代交互体验</h3>
+                <p class="text-neutral-400 text-sm leading-relaxed">
+                    缩写展开、可编程热键/斜杠命令、可编程提示符、语法高亮主题、自动补全，
+                    以及
+                    <strong class="text-neutral-200 font-medium"
+                        >AI 助手</strong
+                    >
+                    辅助命令补全和智能建议。
+                </p>
+            </div>
+
+            <div class="lume-more-card rounded-2xl p-6 flex flex-col gap-3">
+                <span
+                    class="lume-more-icon rounded-xl flex items-center justify-center text-xl"
+                    >⏻</span
+                >
+                <h3 class="text-white font-semibold">后台任务自动清理</h3>
+                <p class="text-neutral-400 text-sm leading-relaxed">
+                    主进程结束时，所有后台任务自动跟随退出，无需
+                    <code class="lume-inline-code">trap</code> 手动清理。
+                </p>
+            </div>
+
+            <div class="lume-more-card rounded-2xl p-6 flex flex-col gap-3">
+                <span
+                    class="lume-more-icon rounded-xl flex items-center justify-center text-xl"
+                    >🌐</span
+                >
+                <h3 class="text-white font-semibold">跨平台</h3>
+                <p class="text-neutral-400 text-sm leading-relaxed">
+                    在任何地方拥有一致的体验，无需为不同系统重写脚本。
+                </p>
+            </div>
+
+            <div class="lume-more-card rounded-2xl p-6 flex flex-col gap-3">
+                <span
+                    class="lume-more-icon rounded-xl flex items-center justify-center text-xl"
+                    >🔧</span
+                >
+                <h3 class="text-white font-semibold">兼容日常习惯</h3>
+                <p class="text-neutral-400 text-sm leading-relaxed">
+                    提供
+                    <strong class="text-neutral-200 font-medium">CFM</strong
+                    >（命令优先模式）方便日常命令行场景， 同时兼容
+                    <code class="lume-inline-code">include</code>
+                    简单并入的写法。
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center max-w-2xl mx-auto mb-3 py-6">
+      <a href="/zh-cn/glance/why" class="lume-btn lume-btn-outline rounded-lg px-6 py-3 font-semibold text-sm inline-flex items-center gap-2">
+        更多对比
+        <span class="lume-btn-arrow">→</span>
+      </a>
+    </div>
+
+    <div class="p-6 flex flex-col gap-4">
+        <div class="flex items-center gap-4 m-2">
+            <a href="/zh-cn/glance/why" class="lume-btn lume-btn-outline rounded-lg px-6 py-3 font-semibold text-sm inline-flex items-center gap-2">
+              简单对比
+              <span class="lume-btn-arrow">→</span>
+            </a>
+        </div>
+        <div class="flex items-center gap-4 m-2">
+            <a href="/zh-cn/topics/bashlife" class="lume-btn lume-btn-outline rounded-lg px-6 py-3 font-semibold text-sm inline-flex items-center gap-2">
+              详细对比
+              <span class="lume-btn-arrow">→</span>
+            </a>
+        </div>
+
+    </div>
+</section>
+{{ end }}

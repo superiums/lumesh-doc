@@ -2,7 +2,7 @@
 title: 如何安装
 date: 2025-12-11 19:16:45
 highlight: true
-weight: 1
+weight: 11
 tags:
  - install
 categories:

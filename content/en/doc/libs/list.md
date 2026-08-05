@@ -26,7 +26,7 @@ The List module is one of the most important data processing modules in Lumesh, 
 | **Creation Operations** | `concat`, `from` | List creation and combination |
 | **Functional Operations** | `map`, `filter`, `filter_map`, `reduce`, `any`, `all`, `each` | Higher-order function processing |
 | **Conversion Operations** | `join`, `to_map`, `items` | Data format conversion |
-| **Structural Operations** | `transpose`, `chunk`, `zip`, `unzip`, `foldl`, `foldr` | Complex structure transformations |
+| **Structural Operations** | `transpose`, `chunk`, `zip`, `unzip`, `foldl`, `rfold` | Complex structure transformations |
 
 ## Print Output Functions
 
@@ -340,15 +340,15 @@ The List module is one of the most important data processing modules in Lumesh, 
     - `init` (required): `Any` - Initial accumulated value
     - `list` (required): `List` - Source list
 - **Returns**: `Any` - Final accumulated result
-- **Example**: `list.foldl((acc, x) -> acc + x, 0, [1, 2, 3])` returns `6`
+- **Example**: `list.fold((acc, x) -> acc + x, 0, [1, 2, 3])` returns `6`
 
-**`foldr <fn> <init> <list>`** - Fold a list from right to left
+**`rfold <fn> <init> <list>`** - Fold a list from right to left
 - **Parameters**:
     - `fn` (required): `Function|Lambda` - Accumulator function, accepts (current element, accumulated value)
     - `init` (required): `Any` - Initial accumulated value
     - `list` (required): `List` - Source list
 - **Returns**: `Any` - Final accumulated result
-- **Example**: `list.foldr((x, acc) -> acc + x, 0, [1, 2, 3])` returns `6`
+- **Example**: `list.rfold((x, acc) -> acc + x, 0, [1, 2, 3])` returns `6`
 
 ## Usage Examples
 

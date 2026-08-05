@@ -76,7 +76,7 @@ categories:
   match fruit {
     pea,cherry => print "is my favor"
     "*pple" => print "is my love"
-    r'\d' => print "is number"
+    g'\d' => print "is number"
       _  => print "is others"
   }
   ```

@@ -19,7 +19,7 @@ regex 模块提供了全面的正则表达式操作功能，支持模式匹配�
 |---------|---------|------|
 | **匹配定位** | `find`, `find_all` | 查找匹配位置和内容 |
 | **匹配验证** | `match` | 验证整个文本是否匹配模式 |
-| **捕获组操作** | `capture`, `captures`, `capture_name` | 提取捕获组内容 |
+| **捕获组操作** | `capture`, `captures`, `named_captures` | 提取捕获组内容 |
 | **文本处理** | `split`, `replace` | 文本分割和替换 |
 
 ## 匹配定位函数
@@ -29,14 +29,14 @@ regex 模块提供了全面的正则表达式操作功能，支持模式匹配�
   - `pattern` (必需): `string|regex` - 正则表达式模式
   - `text` (必需): `string` - 要搜索的文本
 - **返回**：`Map|none` - 匹配信息映射，包含 `start`、`end`、`found` 字段，未找到时返回 none
-- **示例**：`regex.find(r'\d+', "abc123def")` 返回 `{start: 3, end: 6, found: "123"}`
+- **示例**：`regex.find(g'\d+', "abc123def")` 返回 `{start: 3, end: 6, found: "123"}`
 
 **`find_all <pattern> <text>`** - 查找所有匹配项
 - **参数**：
   - `pattern` (必需): `string|regex` - 正则表达式模式
   - `text` (必需): `string` - 要搜索的文本
 - **返回**：`List[Map]` - 所有匹配项的列表，每个元素包含 `start`、`end`、`found` 字段
-- **示例**：`regex.find_all(r'\d+', "abc123def456")` 返回匹配所有数字的列表
+- **示例**：`regex.find_all(g'\d+', "abc123def456")` 返回匹配所有数字的列表
 
 ## 匹配验证函数
 
@@ -63,12 +63,12 @@ regex 模块提供了全面的正则表达式操作功能，支持模式匹配�
 - **返回**：`List[List]` - 所有匹配的捕获组列表
 - **示例**：多次匹配时返回每次匹配的捕获组
 
-**`capture_name <pattern> <text>`** - 获取命名捕获组
+**`named_captures <pattern> <text>`** - 获取命名捕获组
 - **参数**：
   - `pattern` (必需): `string|regex` - 包含命名捕获组的正则表达式
   - `text` (必需): `string` - 要匹配的文本
 - **返回**：`Map|none` - 命名捕获组的映射，键为组名，值为匹配内容
-- **示例**：`regex.capture_name(r'(?P<year>\d{4})-(?P<month>\d{2})', "2023-12")` 返回 `{year: "2023", month: "12"}`
+- **示例**：`regex.named_captures(r'(?P<year>\d{4})-(?P<month>\d{2})', "2023-12")` 返回 `{year: "2023", month: "12"}`
 
 ## 文本处理函数
 
@@ -77,7 +77,7 @@ regex 模块提供了全面的正则表达式操作功能，支持模式匹配�
   - `pattern` (必需): `string|regex` - 分割模式
   - `text` (必需): `string` - 要分割的文本
 - **返回**：`List[string]` - 分割后的字符串列表
-- **示例**：`regex.split(r'\s+', "hello   world  test")` 返回 `["hello", "world", "test"]`
+- **示例**：`regex.split(g'\s+', "hello   world  test")` 返回 `["hello", "world", "test"]`
 
 **`replace <pattern> <replacement> <text>`** - 替换所有匹配项
 - **参数**：
@@ -85,7 +85,7 @@ regex 模块提供了全面的正则表达式操作功能，支持模式匹配�
   - `replacement` (必需): `string` - 替换内容
   - `text` (必需): `string` - 目标文本
 - **返回**：`string` - 替换后的文本
-- **示例**：`regex.replace(r'\d+', "X", "abc123def456")` 返回 `"abcXdefX"`
+- **示例**：`regex.replace(g'\d+', "X", "abc123def456")` 返回 `"abcXdefX"`
 
 ## 参数处理机制
 
@@ -100,7 +100,7 @@ regex 模块的函数支持灵活的参数类型处理。支持处理不同的�
 ### 基础匹配操作
 ```bash
 # 查找数字
-regex.find(r'\d+', "Price: $123.45")
+regex.find(g'\d+', "Price: $123.45")
 # 返回: {start: 8, end: 11, found: "123"}
 
 # 验证邮箱格式
@@ -115,7 +115,7 @@ regex.capture(r'(\d{4})-(\d{2})-(\d{2})', "Today is 2023-12-25")
 # 返回: ["2023-12-25", "2023", "12", "25"]
 
 # 使用命名捕获组
-regex.capture_name(r'(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})', "2023-12-25")
+regex.named_captures(r'(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})', "2023-12-25")
 # 返回: {year: "2023", month: "12", day: "25"}
 ```
 
@@ -126,18 +126,18 @@ regex.split(r'[,;]\s*', "apple, banana; cherry")
 # 返回: ["apple", "banana", "cherry"]
 
 # 替换操作
-regex.replace(r'\b\w+@\w+\.\w+\b', "[EMAIL]", "Contact us at support@example.com")
+regex.replace(g'\b\w+@\w+\.\w+\b', "[EMAIL]", "Contact us at support@example.com")
 # 返回: "Contact us at [EMAIL]"
 ```
 
 ### 管道操作示例
 ```bash
 # 提取所有数字并求和
-"Price: $123, Tax: $45, Total: $168" | regex.find_all(r'\d+') | list.map((m) -> into.int(m.found)) | list.sum()
+"Price: $123, Tax: $45, Total: $168" | regex.find_all(g'\d+') | list.map((m) -> into.int(m.found)) | list.sum()
 # 结果: 336
 
 # 清理和格式化文本
-"  Hello,   World!  " | regex.replace(r'\s+', " ") | string.trim()
+"  Hello,   World!  " | regex.replace(g'\s+', " ") | string.trim()
 # 结果: "Hello, World!"
 ```
 

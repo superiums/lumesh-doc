@@ -1,8 +1,13 @@
-+++
-date = '2026-07-25T14:45:13+08:00'
-title = '为什么你需要Lume'
-+++
-
+---
+title : '为什么你需要Lume'
+date : '2026-07-25T14:45:13+08:00'
+weight: 1
+highlight: true
+tags:
+ - glance
+ - bash
+categories:
+ - bash
 ---
 
 ## 序：那些被 Bash 折磨到怀疑人生的日子
@@ -26,6 +31,15 @@ title = '为什么你需要Lume'
 ### Bash 的折磨
 在 Bash 的世界里，一切皆字符串。你以为你在操作变量，实际上你在玩一场随时会走火的游戏。
 
+
+引号是必须的护身符，忘了它，你可能就会在 production 环境里删库跑路。每个新手都血淋淋地踩过这些坑，而可悲的是，每个老手也依然在心惊胆战地踩。
+
+### Lume 的轻松
+告别猜忌，让代码回归直觉。
+
+
+
+{{% flex gap=3 wrap=true direction="column" %}}
 ```bash
 # 你以为这会输出 15，但实际上...
 x=10
@@ -39,10 +53,6 @@ filename="my file.txt"
 rm $filename    # 实际执行: rm my file.txt  → 瞬间删错两个文件！
 rm "$filename"  # 这才是唯一的保命符
 ```
-引号是必须的护身符，忘了它，你可能就会在 production 环境里删库跑路。每个新手都血淋淋地踩过这些坑，而可悲的是，每个老手也依然在心惊胆战地踩。
-
-### Lume 的轻松
-告别猜忌，让代码回归直觉。
 
 ```bash
 let x = 10
@@ -61,6 +71,8 @@ increment()
 let filename = "my file.txt"
 fs.rm filename   # 绝对安全，filename 是一个完整的值，不是两个词
 ```
+
+{{% /flex %}}
 
 ---
 
@@ -347,7 +359,7 @@ double(7)    # 14
 
 # 可变参数，灵活自如
 fn sum(*nums) {
-    nums | list.foldl((acc, x) -> acc + x, 0)
+    nums | list.fold((acc, x) -> acc + x, 0)
 }
 sum(1, 2, 3, 4, 5)   # 15
 ```
@@ -394,12 +406,12 @@ let numbers = 1..100
 numbers 
     | list.filter(x -> x % 2 == 0)    # 筛选偶数
     | list.map(x -> x * x)             # 计算平方
-    | list.foldl((acc, x) -> acc + x, 0)  # 求和
+    | list.fold((acc, x) -> acc + x, 0)  # 求和
 # 一气呵成，每一步都清晰得像在写诗
 
 # 管道里的变量不再丢失（没有子 shell 的幽灵）
 let total = 0
-[1, 2, 3, 4, 5] | list.foldl((acc, x) -> acc + x, 0)
+[1, 2, 3, 4, 5] | list.fold((acc, x) -> acc + x, 0)
 # 直接得到结果，不需要任何绕弯子的技巧
 
 # 分发管道：对每个元素执行命令，直观高效
@@ -494,7 +506,7 @@ string.split(...)   # 字符串操作
 fs.read(...)        # 文件操作
 time.now()          # 时间操作
 math.sqrt(16)       # 数学函数
-regex.find(r'\d+', text)  # 正则操作
+regex.find(g'\d+', text)  # 正则操作
 ui.pick("选择一个:", options)  # 交互式选择
 ```
 
@@ -650,7 +662,7 @@ Lume 的出现，不是为了傲慢地替代所有工具，而是为了让你**�
 # 这就是 lume 的日常，简单，强大，优雅
 fs.ls -lh \
     | where(size > 5M) \
-    | .sortby('modified') \
+    | .sort_by('modified') \
     | pprint 
 ```
 

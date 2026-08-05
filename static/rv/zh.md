@@ -399,7 +399,7 @@ let a = $argv[0] ?: 0                        # 提供默认值
 
 - 更多类型
 ```bash
-let p = r'\w+'          # 正则类型
+let p = g'\w+'          # 正则类型
 let day = t'2025-7-20'  # 日期类型
 let s = 3000M           # 文件大小类型
 let range = 0..10       # 区间

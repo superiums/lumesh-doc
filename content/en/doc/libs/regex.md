@@ -29,14 +29,14 @@ The Regex module provides comprehensive regular expression operation capabilitie
   - `pattern` (required): `String|Regex` - Regular expression pattern  
   - `text` (required): `String` - Text to search  
 - **Returns**: `Map|none` - Match information mapping, containing `start`, `end`, and `found` fields; returns none if not found  
-- **Example**: `regex.find(r'\d+', "abc123def")` returns `{start: 3, end: 6, found: "123"}`  
+- **Example**: `regex.find(g'\d+', "abc123def")` returns `{start: 3, end: 6, found: "123"}`  
 
 **`find_all <pattern> <text>`** - Find all matches  
 - **Parameters**:
   - `pattern` (required): `String|Regex` - Regular expression pattern  
   - `text` (required): `String` - Text to search  
 - **Returns**: `List[Map]` - List of all matches, each element contains `start`, `end`, and `found` fields  
-- **Example**: `regex.find_all(r'\d+', "abc123def456")` returns a list of all matched numbers  
+- **Example**: `regex.find_all(g'\d+', "abc123def456")` returns a list of all matched numbers  
 
 ## Matching Validation Functions
 
@@ -75,7 +75,7 @@ The Regex module provides comprehensive regular expression operation capabilitie
   - `pattern` (required): `String|Regex` - Splitting pattern  
   - `text` (required): `String` - Text to split  
 - **Returns**: `List[String]` - List of split strings  
-- **Example**: `regex.split(r'\s+', "hello   world  test")` returns `["hello", "world", "test"]`  
+- **Example**: `regex.split(g'\s+', "hello   world  test")` returns `["hello", "world", "test"]`  
 
 **`replace <pattern> <replacement> <text>`** - Replace all matches  
 - **Parameters**:
@@ -83,7 +83,7 @@ The Regex module provides comprehensive regular expression operation capabilitie
   - `replacement` (required): `String` - Replacement content  
   - `text` (required): `String` - Target text  
 - **Returns**: `String` - Text after replacement  
-- **Example**: `regex.replace(r'\d+', "X", "abc123def456")` returns `"abcXdefX"`  
+- **Example**: `regex.replace(g'\d+', "X", "abc123def456")` returns `"abcXdefX"`  
 
 ## Parameter Handling Mechanism
 
@@ -98,7 +98,7 @@ The functions in the Regex module support flexible parameter type handling. They
 ### Basic Matching Operations
 ```bash
 # Find numbers
-regex.find(r'\d+', "Price: $123.45")
+regex.find(g'\d+', "Price: $123.45")
 # Returns: {start: 8, end: 11, found: "123"}
 
 # Validate email format
@@ -124,18 +124,18 @@ regex.split(r'[,;]\s*', "apple, banana; cherry")
 # Returns: ["apple", "banana", "cherry"]
 
 # Replacement operation
-regex.replace(r'\b\w+@\w+\.\w+\b', "[EMAIL]", "Contact us at support@example.com")
+regex.replace(g'\b\w+@\w+\.\w+\b', "[EMAIL]", "Contact us at support@example.com")
 # Returns: "Contact us at [EMAIL]"
 ```
 
 ### Pipeline Operation Examples
 ```bash
 # Extract all numbers and sum them
-"Price: $123, Tax: $45, Total: $168" | regex.find_all(r'\d+') | list.map((m) -> into.int(m.found)) | list.sum()
+"Price: $123, Tax: $45, Total: $168" | regex.find_all(g'\d+') | list.map((m) -> into.int(m.found)) | list.sum()
 # Result: 336
 
 # Clean and format text
-"  Hello,   World!  " | regex.replace(r'\s+', " ") | string.trim()
+"  Hello,   World!  " | regex.replace(g'\s+', " ") | string.trim()
 # Result: "Hello, World!"
 ```
 

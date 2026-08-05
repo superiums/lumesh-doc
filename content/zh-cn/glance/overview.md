@@ -63,7 +63,7 @@ set LUME_HOT_BINDINGS = {
 
 2. 支持自定义/xxx命令
 ```bash
-let open_file = (b) -> {fd -t file | ui.pick('select file:') ?! | handlr open -- _}
+let open_file = (b) -> {fd -t file | ui.pick('select file:') ?! | xdg-open -- _}
 
 set LUME_SLASH_BINDINGS = {
     sm: save_cmdmark,
@@ -132,6 +132,7 @@ _由于fish无法完成百万次任务，我们取值它完成一半任务的时
 ```bash
 let a = (2+3)*5
 print "a=" a
+print `a={a}`
 
 let b,c = 1,2     # 支持多变量赋值
 println b c
@@ -144,11 +145,10 @@ let arr = [10, "a", true]
 let arr_b = 0...10
 
 arr[0]       # → 10
-arr_b[1]
 
 # 切片操作
 arr[1:3]     # → ["a", true]（左闭右开）
-arr[::2]     # → [10, true]（步长2）
+arr[:2]     # → [10, true]（步长2）
 arr[-1:]      # → true（切片支持负数索引）
 
 # 复杂嵌套

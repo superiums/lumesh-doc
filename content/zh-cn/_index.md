@@ -18,3 +18,8 @@ date: 2025-12-25 19:16:45
 > 
 
 {{% /flex %}}
+
+一键安装：
+```bash
+curl -fsSL https://www.lumesh.cc.cd/install.sh | bash
+```

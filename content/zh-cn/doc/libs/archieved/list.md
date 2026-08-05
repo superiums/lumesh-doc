@@ -26,7 +26,7 @@ list 模块是 Lumesh 中最重要的数据处理模块之一，提供了丰富�
 | **创建操作** | `concat`, `from` | 列表创建和组合 |
 | **函数式操作** | `map`, `filter`, `filter_map`, `any`, `all`, `each` | 高阶函数处理 |
 | **转换操作** | `join`, `to_map`, `items` | 数据格式转换 |
-| **结构操作** | `transpose`, `chunk`, `zip`, `unzip`, `foldl`, `foldr` | 复杂结构变换 |
+| **结构操作** | `transpose`, `chunk`, `zip`, `unzip`, `foldl`, `rfold` | 复杂结构变换 |
 
 ## 打印输出函数
 
@@ -402,17 +402,17 @@ list 模块是 Lumesh 中最重要的数据处理模块之一，提供了丰富�
     - `init` (必需): `Any` - 初始累加值
     - `list` (必需): `list` - 源列表
   - **返回**：`Any` - 折叠结果
-  - **示例**：`list.foldl((acc, x) -> acc + x, 0, [1, 2, 3])` 返回 `6`
+  - **示例**：`list.fold((acc, x) -> acc + x, 0, [1, 2, 3])` 返回 `6`
 
 
 
-  **`foldr <fn> <init> <list>`** - 从右到左折叠列表
+  **`rfold <fn> <init> <list>`** - 从右到左折叠列表
   - **参数**：
     - `fn` (必需): `Function|Lambda` - 折叠函数，接受 (当前元素, 累加值)
     - `init` (必需): `Any` - 初始累加值
     - `list` (必需): `list` - 源列表
   - **返回**：`Any` - 折叠结果
-  - **示例**：`list.foldr((x, acc) -> acc + x, 0, [1, 2, 3])` 返回 `6`
+  - **示例**：`list.rfold((x, acc) -> acc + x, 0, [1, 2, 3])` 返回 `6`
 
 
 

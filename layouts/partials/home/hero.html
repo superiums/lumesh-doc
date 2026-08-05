@@ -1,0 +1,139 @@
+<header class="lume-hero relative overflow-hidden">
+  <div class="lume-hero-glow pointer-events-none absolute -z-10"></div>
+
+  <nav class="relative z-10 flex items-center justify-between px-6 py-6 lg:px-16">
+    <div class="lume-logo font-bold text-lg tracking-tight">
+      <span class="lume-logo-mark">⚡</span> LUME<span class="text-neutral-400 font-normal">sh</span>
+    </div>
+    <!--<div class="hidden md:flex items-center gap-8 text-sm text-neutral-300">
+      <a href="#compare" class="hover:text-primary-400 transition-colors">对比</a>
+      <a href="#metrics" class="hover:text-primary-400 transition-colors">性能</a>
+      <a href="#philosophy" class="lume-anchor">了解设计理念 →</a>
+    </div>-->
+  </nav>
+
+  <div class="relative z-10 mx-auto max-w-7xl flex flex-col lg:flex-row gap-4 items-center px-6 py-16 lg:px-16 lg:py-24">
+    <div class="flex-1">
+      <p class="lume-eyebrow text-sm mb-4 font-medium">
+        Write as js · works as Bash · run as light
+      </p>
+      <h1 class="text-3xl sm:text-4xl lg:text-4xl font-extrabold leading-tight tracking-tight text-white">
+        像<span class="lume-glow-text">光</span> 一样运行的<br>
+        现代 Shell 与脚本语言
+      </h1>
+      <p class="mt-5 text-base text-neutral-300 max-w-md">
+        为高性能与现代编程体验而生 ——
+        终结 Bash 的引号地狱、隐式陷阱与文本流管道。
+      </p>
+
+      <div class="lume-install-box mt-8 flex items-center gap-3 rounded-full px-5 py-3 max-w-xl">
+        <span class="text-primary-400 font-bold">$</span>
+        <code id="lume-install-cmd" class="flex-1 text-sm overflow-x-auto whitespace-nowrap">
+          {{ with .Site.Params.installCmd }}{{ . }}{{ else }}curl -fsSL https://www.lumesh.cc.cd/install.sh | bash{{ end }}
+        </code>
+        <button type="button" class="lume-copy-btn rounded-full px-4 py-1.5 text-sm font-semibold" onclick="lumeCopyInstall(this)">复制</button>
+      </div>
+
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a href="#compare" class="lume-btn lume-btn-primary rounded-lg px-6 py-3 font-semibold text-sm">
+          查看一行代码对比
+        </a>
+        <a href="https://github.com/superiums/lumesh" class="lume-btn lume-btn-ghost rounded-lg px-6 py-3 font-semibold text-sm">
+          GitHub ⭐
+        </a>
+      </div>
+
+      <p class="mt-8 text-xs text-neutral-500">
+        <strong class="text-neutral-300">LUME</strong> = <em class="text-neutral-300 not-italic">Light</em>weight ·
+        <em class="text-neutral-300 not-italic">U</em>ltimate ·
+        <em class="text-neutral-300 not-italic">M</em>odern ·
+        <em class="text-neutral-300 not-italic">E</em>fficient
+        &nbsp;|&nbsp;
+        <a href="features/" class="lume-anchor">了解更多特性</a>
+      </p>
+    </div>
+
+    <div class="flex-1">
+      <div class="lume-terminal rounded-2xl overflow-hidden shadow-2xl">
+        <div class="flex items-center gap-2 px-4 py-3 border-b border-white/10">
+          <span class="lume-dot lume-dot-red"></span>
+          <span class="lume-dot lume-dot-yellow"></span>
+          <span class="lume-dot lume-dot-green"></span>
+          <span class="ml-2 text-xs text-neutral-500">lume — bash vs lumesh</span>
+        </div>
+
+        <img src="{{ "images/demo.gif" | relURL }}" alt="Lumesh 结构化管道演示" class="block w-full h-auto">
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="compare" class="lume-section py-20 px-6 lg:px-16">
+  <h2 class="text-center text-2xl lg:text-3xl font-extrabold text-white">同一个任务，天壤之别</h2>
+  <p class="text-center mt-3 text-neutral-400">筛选大于 1MB 的 .log 文件，取体积最大的 5 个</p>
+
+  <div class="mt-12 mx-auto max-w-7xl flex flex-col lg:flex-row gap-6 items-stretch">
+    <div class="lume-code-card lume-code-card-bash grow rounded-2xl p-6 overflow-x-auto lg:flex-1">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="lume-tag lume-tag-bash rounded px-2.5 py-1 text-xs font-bold">bash</span>
+        <span class="text-neutral-500 text-sm">awk + sort + 管道拼接</span>
+      </div>
+      <pre class="text-sm leading-7"><code>ls -la *.log 2&gt;/dev/null \
+    | awk '$5 &gt; 1048576 {print $5, $9}' \
+    | sort -n | tail -5 | \
+    | awk '{print $2, $1}'</code></pre>
+    </div>
+
+    <div class="flex items-center justify-center font-bold text-neutral-500 p-6 text-sm">VS</div>
+
+    <div class="lume-code-card lume-code-card-lume grow rounded-2xl p-6 overflow-x-auto lg:flex-1">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="lume-tag lume-tag-lume rounded px-2.5 py-1 text-xs font-bold">lumesh</span>
+        <span class="text-neutral-500 text-sm">结构化管道，一气呵成</span>
+      </div>
+      <pre class="text-sm leading-7"><code>fs.ls -lh \
+    | where(name ~: '.log' &amp;&amp; size &gt; 1M)
+    | .sort('size') \
+    | .last(5)</code></pre>
+    </div>
+  </div>
+</section>
+
+<section id="metrics" class="lume-section py-20 px-6 lg:px-16">
+  <h2 class="text-center text-2xl lg:text-3xl font-extrabold text-white">轻量，且高效</h2>
+
+  <div class="mt-12 mx-auto max-w-7xl lume-metrics-flex">
+    <div class="lume-metric-card lume-metric-item rounded-2xl p-6 text-center">
+      <div class="lume-metric-value text-3xl font-extrabold">224<span class="text-base text-neutral-500 ml-1">ms</span></div>
+      <div class="mt-2 text-sm text-white">100 万次循环求和</div>
+      <div class="mt-1 text-xs text-neutral-500">bash 约 2200ms，快 10 倍+</div>
+    </div>
+    <div class="lume-metric-card lume-metric-item rounded-2xl p-6 text-center">
+      <div class="lume-metric-value text-3xl font-extrabold">3.9<span class="text-base text-neutral-500 ml-1">MB</span></div>
+      <div class="mt-2 text-sm text-white">lume 完整 Shell 体积</div>
+      <div class="mt-1 text-xs text-neutral-500">REPL / 补全 / 高亮全带</div>
+    </div>
+    <div class="lume-metric-card lume-metric-item rounded-2xl p-6 text-center">
+      <div class="lume-metric-value text-3xl font-extrabold">2.7<span class="text-base text-neutral-500 ml-1">MB</span></div>
+      <div class="mt-2 text-sm text-white">lume-se 脚本执行器</div>
+      <div class="mt-1 text-xs text-neutral-500">极速启动，最小依赖</div>
+    </div>
+    <div class="lume-metric-card lume-metric-item rounded-2xl p-6 text-center">
+      <div class="lume-metric-value text-3xl font-extrabold">17</div>
+      <div class="mt-2 text-sm text-white">内置模块</div>
+      <div class="mt-1 text-xs text-neutral-500">fs / string / time / math / ui ...</div>
+    </div>
+  </div>
+</section>
+
+<script>
+function lumeCopyInstall(btn) {
+  var el = document.getElementById('lume-install-cmd');
+  var text = el.innerText.trim();
+  navigator.clipboard.writeText(text).then(function () {
+    var old = btn.innerText;
+    btn.innerText = '已复制 ✓';
+    setTimeout(function () { btn.innerText = old; }, 1500);
+  });
+}
+</script>
