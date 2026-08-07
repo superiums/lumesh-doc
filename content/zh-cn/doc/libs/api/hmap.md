@@ -1,73 +1,73 @@
 ---
-title: 内置库hmap
-date: 2026-08-05 21:50:50
+title: 内置库 hmap
+date: 2026-08-07 16:42:00
 ---
 	
 ## Builtin Functions for Lib: hmap
 
-- contains_key <map> <key>
+- `contains_key <map> <key>`
 	has key?
 
-- contains_value <map> <value>
+- `contains_value <map> <value>`
 	has value?
 
-- difference <map1> <map2>
+- `difference <map1> <map2>`
 	keys in map1 not in map2
 
-- dig <map|list|range> <path>
+- `dig <map|list|range> <path>`
 	get nested value by dot path. e.g. dig m 'a.b.0'
 
-- filter <map> <fn>
+- `filter <map> <fn>`
 	keep pairs where fn(k,v)->bool
 
-- find <map> <fn>
+- `find <map> <fn>`
 	first pair matching fn(k,v)->bool, returns [k,v]
 
-- flatten <map>
+- `flatten <map>`
 	flatten nested structure
 
-- from_list <list>
+- `from_list <list>`
 	create map from list of [k,v] pairs
 
-- get <map> <key>
+- `get <map> <key>`
 	value by key
 
-- insert <map> <key> <value>
+- `insert <map> <key> <value>`
 	insert key-value, returns new map
 
-- intersection <map1> <map2>
+- `intersection <map1> <map2>`
 	keys in both, values from map1
 
-- is_empty <map>
+- `is_empty <map>`
 	is empty?
 
-- keys <map>
+- `keys <map>`
 	list of keys
 
-- len <map>
+- `len <map>`
 	map size
 
-- map <map> <entry_fn>
+- `map <map> <entry_fn>`
 	transform keys/values, fn(k,v)->[k,v]
 
-- merge <map1> <map2> [<map3>...]
+- `merge <map1> <map2> [<map3>...]`
 	deep merge maps, recurse on nested maps
 
-- remove <map> <key>
+- `remove <map> <key>`
 	remove key, returns new map
 
-- set <map> <key> <value>
+- `set <map> <key> <value>`
 	set existing key's value, returns new map
 
-- to_bmap <map>
+- `to_bmap <map>`
 	to BtreeMap (ordered)
 
-- to_list <map>
+- `to_list <map>`
 	to list of [k,v] pairs
 
-- union <map1> <map2>
+- `union <map1> <map2>`
 	combine maps, map2 wins on conflict
 
-- values <map>
+- `values <map>`
 	list of values
 

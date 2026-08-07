@@ -1,52 +1,52 @@
 ---
-title: 内置库into
-date: 2026-08-05 21:50:50
+title: 内置库 into
+date: 2026-08-07 16:42:00
 ---
 	
 ## Builtin Functions for Lib: into
 
-- boolean "<value>
-"	to bool
+- `boolean <value>`
+	to bool
 
-- caesar "<string> [shift=13]"
+- `caesar <string> [shift=13]`
 	caesar cipher
 
-- csv "<expr>"
+- `csv <expr>`
 	to CSV
 
-- filesize "<size_str|int>"
+- `filesize <size_str|int>`
 	to filesize. e.g. 1.5GB, 500K
 
-- float "<str|num|bool>"
+- `float <str|num|bool>`
 	to float. % as /100, _ as sep. e.g. 12.5% -> 0.125
 
-- highlight "<script>"
+- `highlight <script>`
 	ANSI highlight script
 
-- int "<str|num|bool>"
+- `int <str|num|bool>`
 	to int. radix ok(0x/0o/0b), _ as sep. e.g. 0xff_80
 
-- json "<expr>"
+- `json <expr>`
 	to JSON
 
-- pretty "<expr>"
+- `pretty <expr>`
 	to pretty string
 
-- safe "<str>"
+- `safe <str>`
 	wrap str, never eval
 
-- string "<value>"
+- `string <value>`
 	to string
 
-- strip "<string>"
+- `strip <string>`
 	remove ANSI codes
 
-- table "<output> [split_regex] [headers...]"
+- `table <output> [split_regex] [headers...]`
 	parse cmd output to table
 
-- time "<str> [fmt]"
+- `time <str> [fmt]`
 	to datetime
 
-- toml "<expr>"
+- `toml <expr>`
 	to TOML
 

@@ -1,82 +1,82 @@
 ---
 title: Builtin Lib CONSOLE
-date: 2026-08-07 12:34:52
+date: 2026-08-07 16:40:11
 ---
 	
 ## Builtin Functions for Lib: console
 
-- alt_screen <bool>
+- `alt_screen <bool>`
 	enter/leave alternate screen
 
-- bell 
+- `bell `
 	ring terminal bell
 
-- clear 
+- `clear `
 	clear console
 
-- cursor_down <n>
+- `cursor_down <n>`
 	move cursor down n rows
 
-- cursor_hide 
+- `cursor_hide `
 	hide cursor
 
-- cursor_left <n>
+- `cursor_left <n>`
 	move cursor left n cols
 
-- cursor_restore 
+- `cursor_restore `
 	restore cursor position
 
-- cursor_right <n>
+- `cursor_right <n>`
 	move cursor right n cols
 
-- cursor_save 
+- `cursor_save `
 	save cursor position
 
-- cursor_show 
+- `cursor_show `
 	show cursor
 
-- cursor_to <x> <y>
+- `cursor_to <x> <y>`
 	move cursor to position
 
-- cursor_up <n>
+- `cursor_up <n>`
 	move cursor up n rows
 
-- discard <args>...
+- `discard <args>...`
 	no-op, discards args
 
-- flush 
+- `flush `
 	flush stdout
 
-- height 
+- `height `
 	console height
 
-- keys 
+- `keys `
 	list special key names
 
-- line_wrap <bool>
+- `line_wrap <bool>`
 	enable/disable line wrap
 
-- print_tty <text>
+- `print_tty <text>`
 	write raw text directly to tty, bypass pipes
 
-- raw_mode [bool]
+- `raw_mode [bool]`
 	get/set raw mode
 
-- read_key 
+- `read_key `
 	read one key, enters raw mode temporarily. e.g. 'enter','f1','a'
 
-- read_line [prompt]
+- `read_line [prompt]`
 	read line from stdin
 
-- read_password [prompt]
+- `read_password [prompt]`
 	read password, masked
 
-- title <string>
+- `title <string>`
 	set console title
 
-- width 
+- `width `
 	console width
 
-- write <text> <x> <y>
+- `write <text> <x> <y>`
 	write text at position
 

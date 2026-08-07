@@ -1,52 +1,52 @@
 ---
 title: Builtin Lib SYS
-date: 2026-08-07 12:34:52
+date: 2026-08-07 16:40:11
 ---
 	
 ## Builtin Functions for Lib: sys
 
-- defined <var>
+- `defined <var>`
 	defined in scope chain?
 
-- dirs 
+- `dirs `
 	system directories map
 
-- ecodes_lm 
+- `ecodes_lm `
 	list Lmerror codes
 
-- ecodes_rt 
+- `ecodes_rt `
 	list runtime error codes
 
-- env [var]
+- `env [var]`
 	root env map, or var value
 
-- has <var>
+- `has <var>`
 	defined in current scope?
 
-- info 
+- `info `
 	os info
 
-- max_runtime [depth]
+- `max_runtime [depth]`
 	get/set max runtime recursion depth
 
-- max_syntax [depth]
+- `max_syntax [depth]`
 	get/set max syntax recursion depth
 
-- max_usemode [depth]
+- `max_usemode [depth]`
 	get/set max use-mode recursion depth
 
-- modes 
+- `modes `
 	current mode flags {cfm,strict,pdm}
 
-- set_cfm <boolean|none>
+- `set_cfm <boolean|none>`
 	set Cmd First Mode
 
-- set_pdm <boolean>
+- `set_pdm <boolean>`
 	enable/disable print direct mode
 
-- set_strict <boolean>
+- `set_strict <boolean>`
 	enable/disable strict mode
 
-- vars 
+- `vars `
 	vars defined in current scope
 

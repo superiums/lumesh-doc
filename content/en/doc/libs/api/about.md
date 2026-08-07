@@ -1,22 +1,22 @@
 ---
 title: Builtin Lib ABOUT
-date: 2026-08-07 12:34:52
+date: 2026-08-07 16:40:11
 ---
 	
 ## Builtin Functions for Lib: about
 
-- bin 
+- `bin `
 	bin path
 
-- history 
+- `history `
 	history path
 
-- info 
+- `info `
 	all info
 
-- prelude 
+- `prelude `
 	prelude path
 
-- version 
+- `version `
 	version
 

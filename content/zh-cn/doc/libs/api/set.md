@@ -1,79 +1,79 @@
 ---
-title: 内置库set
-date: 2026-08-05 21:50:50
+title: 内置库 set
+date: 2026-08-07 16:42:00
 ---
 	
 ## Builtin Functions for Lib: set
 
-- all <set> <fn>
+- `all <set> <fn>`
 	all items pass fn(item)->bool?
 
-- any <set> <fn>
+- `any <set> <fn>`
 	any item passes fn(item)->bool?
 
-- contains <set> <item>
+- `contains <set> <item>`
 	contains item?
 
-- difference <set1> <set2>
+- `difference <set1> <set2>`
 	items in set1 not in set2
 
-- filter <set> <fn>
+- `filter <set> <fn>`
 	keep items where fn(item)->bool
 
-- find <set> <fn>
+- `find <set> <fn>`
 	first item matching fn(item)->bool
 
-- first <set>
+- `first <set>`
 	smallest item
 
-- from_list <list>
+- `from_list <list>`
 	create set from list
 
-- get <set> <index>
+- `get <set> <index>`
 	nth element, negative index from end
 
-- insert <set> <item>
+- `insert <set> <item>`
 	add item, returns new set
 
-- intersection <set1> <set2>
+- `intersection <set1> <set2>`
 	intersection
 
-- is_disjoint <set1> <set2>
+- `is_disjoint <set1> <set2>`
 	no common items?
 
-- is_empty <set>
+- `is_empty <set>`
 	is empty?
 
-- is_subset <set1> <set2>
+- `is_subset <set1> <set2>`
 	set1 ⊆ set2?
 
-- is_superset <set1> <set2>
+- `is_superset <set1> <set2>`
 	set1 ⊇ set2?
 
-- last <set>
+- `last <set>`
 	largest item
 
-- len <set>
+- `len <set>`
 	set size
 
-- map <set> <fn>
+- `map <set> <fn>`
 	apply fn(item)->new_item to each
 
-- remove <set> <item>
+- `remove <set> <item>`
 	remove item, returns new set
 
-- split_first <set>
+- `split_first <set>`
 	pop smallest, returns [item,rest]
 
-- split_last <set>
+- `split_last <set>`
 	pop largest, returns [item,rest]
 
-- symmetric_difference <set1> <set2>
+- `symmetric_difference <set1> <set2>`
 	items in either but not both
 
-- to_list <set>
+- `to_list <set>`
 	to list, sorted order
 
-- union <set1> <set2>
+- `union <set1> <set2>`
 	union
 

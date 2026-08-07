@@ -1,175 +1,175 @@
 ---
 title: Builtin Lib MATH
-date: 2026-08-07 12:34:52
+date: 2026-08-07 16:40:11
 ---
 	
 ## Builtin Functions for Lib: math
 
-- abs <number>
+- `abs <number>`
 	absolute value
 
-- acos <value>
+- `acos <value>`
 	inverse cosine
 
-- acosh <value>
+- `acosh <value>`
 	inverse hyperbolic cosine
 
-- asin <value>
+- `asin <value>`
 	inverse sine
 
-- asinh <value>
+- `asinh <value>`
 	inverse hyperbolic sine
 
-- atan <value>
+- `atan <value>`
 	inverse tangent
 
-- atanh <value>
+- `atanh <value>`
 	inverse hyperbolic tangent
 
-- average <num1> <num2>... | <array>
+- `average <num1> <num2>... | <array>`
 	average of numbers
 
-- bit_and <int1> <int2>
+- `bit_and <int1> <int2>`
 	bitwise AND
 
-- bit_not <integer>
+- `bit_not <integer>`
 	bitwise NOT
 
-- bit_or <int1> <int2>
+- `bit_or <int1> <int2>`
 	bitwise OR
 
-- bit_shl <integer> <bits>
+- `bit_shl <integer> <bits>`
 	shift left, bits 0-63
 
-- bit_shr <integer> <bits>
+- `bit_shr <integer> <bits>`
 	shift right, bits 0-63
 
-- bit_xor <int1> <int2>
+- `bit_xor <int1> <int2>`
 	bitwise XOR
 
-- cbrt <number>
+- `cbrt <number>`
 	cube root
 
-- ceil <number>
+- `ceil <number>`
 	round up
 
-- clamp <value> <min> <max>
+- `clamp <value> <min> <max>`
 	clamp value into [min,max]
 
-- cos <radians>
+- `cos <radians>`
 	cosine
 
-- cos_pi <x>
+- `cos_pi <x>`
 	cos(x*π)
 
-- cosh <value>
+- `cosh <value>`
 	hyperbolic cosine
 
-- eq <a> <b>
+- `eq <a> <b>`
 	a == b?
 
-- exp <x>
+- `exp <x>`
 	e^x
 
-- exp2 <x>
+- `exp2 <x>`
 	2^x
 
-- floor <number>
+- `floor <number>`
 	round down
 
-- gcd <int1> <int2>
+- `gcd <int1> <int2>`
 	greatest common divisor
 
-- ge <a> <b>
+- `ge <a> <b>`
 	a >= b?
 
-- gt <a> <b>
+- `gt <a> <b>`
 	a > b?
 
-- hypot <x> <y>
+- `hypot <x> <y>`
 	sqrt(x^2+y^2)
 
-- is_even <integer>
+- `is_even <integer>`
 	is even?
 
-- is_odd <integer>
+- `is_odd <integer>`
 	is odd?
 
-- lcm <int1> <int2>
+- `lcm <int1> <int2>`
 	least common multiple
 
-- le <a> <b>
+- `le <a> <b>`
 	a <= b?
 
-- ln <number>
+- `ln <number>`
 	natural log
 
-- log <number> <base>
+- `log <number> <base>`
 	log base of number
 
-- log10 <number>
+- `log10 <number>`
 	log base 10
 
-- log2 <number>
+- `log2 <number>`
 	log base 2
 
-- lt <a> <b>
+- `lt <a> <b>`
 	a < b?
 
-- max <num1> <num2>... | <array>
+- `max <num1> <num2>... | <array>`
 	max value
 
-- min <num1> <num2>... | <array>
+- `min <num1> <num2>... | <array>`
 	min value
 
-- ne <a> <b>
+- `ne <a> <b>`
 	a != b?
 
-- pow <base> <exponent>
+- `pow <base> <exponent>`
 	base^exponent
 
-- rem <a> <b>
+- `rem <a> <b>`
 	euclidean remainder
 
-- round <number>
+- `round <number>`
 	round to nearest
 
-- signum <number>
+- `signum <number>`
 	sign: -1, 0, or 1
 
-- sin <radians>
+- `sin <radians>`
 	sine
 
-- sin_pi <x>
+- `sin_pi <x>`
 	sin(x*π)
 
-- sinh <value>
+- `sinh <value>`
 	hyperbolic sine
 
-- sqrt <number>
+- `sqrt <number>`
 	square root
 
-- sum <num1> <num2>... | <array>
+- `sum <num1> <num2>... | <array>`
 	sum of numbers
 
-- tan <radians>
+- `tan <radians>`
 	tangent
 
-- tan_pi <x>
+- `tan_pi <x>`
 	tan(x*π)
 
-- tanh <value>
+- `tanh <value>`
 	hyperbolic tangent
 
-- to_degrees <radians>
+- `to_degrees <radians>`
 	radians to degrees
 
-- to_radians <degrees>
+- `to_radians <degrees>`
 	degrees to radians
 
-- to_string <number>
+- `to_string <number>`
 	to string
 
-- trunc <number>
+- `trunc <number>`
 	truncate decimal
 

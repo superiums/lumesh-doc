@@ -1,28 +1,28 @@
 ---
-title: 内置库filesize
-date: 2026-08-05 21:50:50
+title: 内置库 filesize
+date: 2026-08-07 16:42:00
 ---
 	
 ## Builtin Functions for Lib: filesize
 
-- b <filesize>
+- `b <filesize>`
 	bytes
 
-- from <size_str|byte_int>
+- `from <size_str|byte_int>`
 	to Filesize
 
-- gb <filesize>
+- `gb <filesize>`
 	gigabytes
 
-- kb <filesize>
+- `kb <filesize>`
 	kilobytes (integer, truncated)
 
-- mb <filesize>
+- `mb <filesize>`
 	megabytes
 
-- tb <filesize>
+- `tb <filesize>`
 	terabytes
 
-- to_string <filesize>
+- `to_string <filesize>`
 	to human readable string
 
