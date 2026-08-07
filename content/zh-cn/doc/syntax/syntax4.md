@@ -59,7 +59,7 @@ categories:
    区分函数调用和执行命令的方式，有助于避免同名函数覆盖命令，如：
   ```bash
   # 测试用例6：函数与命令同名覆盖
-  fn ls() { echo "My ls" }
+  fn ls() { print "Lume" }
   ls -l                # 执行系统命令ls
   ls()                 # 调用函数
   ls!                  # 使用!后缀时,调用函数,这是一个将括号扁平化的语法糖。
@@ -82,7 +82,7 @@ categories:
 
   "hello world"
       .split(' ')
-      .map(s -> s.to_upper())
+      .map(s -> s.upper()())
       .join('-')
       .green()
   ```
@@ -183,13 +183,12 @@ fn test(){
 
 | 任务         |  lumesh  | bash               |
 |--------------|----------|--------------------|
-| 后台运行     |   cmd &  |cmd &               |
 | 关闭标准输出 |   cmd &- |cmd 1> /dev/null    |
 | 关闭错误输出 |   cmd &? |cmd 2> /dev/null    |
 | 关闭所有输出 |   cmd &. |cmd 2>&1 > /dev/null|
-| 输出错误到标准* |   cmd &+ |cmd 2>&1      |
+| *附加错误到标准* |   cmd &+ |cmd 2>&1      |
+| 后台运行     |   cmd &  |cmd &               |
 
-[^1]: *todo
 
 ### 输出通道
 
@@ -197,7 +196,7 @@ fn test(){
 - 错误输出 （定义和bash一样，可以用`&?`关闭标准输出，可以用错误处置符处理错误）
 - 结构化数据通道 （lumesh特有，可以在配置中关闭）
 
-  在配置文件中设置 `let LUME_PRINT_DIRECT= False` 可关闭结构化数据通道
+  在配置文件中设置 `let LUME_PRINT_DIRECT= false` 可关闭结构化数据通道
 
   ```bash
   ❯ ls
@@ -207,6 +206,8 @@ fn test(){
   ❯ ls /x
   ls: cannot access '/x': No such file or directory    # 错误输出
   [ERROR] command `ls` failed: "exit status: 2"        # Lumesh错误捕获，错误处置符处理的目标
+
+  ❯ rsync -av src/ dest/ &+ | grep "error"             # 附加错误到标准输出
 
   ❯ 3 + 5
   8                           # 标准输出
@@ -235,7 +236,7 @@ fn test(){
 ## 八、内置函数库
 
 Lumesh内置大量实用的函数库, 以实现便捷的函数式编程，如
-- **集合操作**: `list.reduce, list.map`
+- **集合操作**: `list.fold, list.map`
 - **文件系统**: `fs.ls, fs.read, fs.write`
 - **字符串处理**: `string.split, string.join`、正则模块、格式化模块
 - **时间操作**: `fs.now, fs.format`

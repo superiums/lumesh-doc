@@ -1,7 +1,5 @@
 ---
-
-title: Comparison of lf File Manager Configurations
-subtitle: lumesh vs bash
+title: LF File Manager Configuration Comparison (Lumesh vs Bash)
 date: 2025-07-15 10:16:45
 highlight: true
 tags:
@@ -9,66 +7,67 @@ tags:
 categories:
  - wiki
  - case
-
 ---
 
-# Comparison of lf File Manager Configurations A
+LF filemanager configuration comparison A
 
-The **lumesh version** uses modern syntax and built-in functions, while the **bash version** employs traditional shell syntax and external tools.
-- [Complete Configuration File in Lume](/data/lfrc_lm)
-- [Complete Configuration File in Dash](/data/lfrc_sh)
+**Lumesh version** uses modern syntax and built-in functions, while **Bash version** uses traditional shell syntax and external tools.
+- [Complete config file lume](/zh-cn/cases/lfrc_lm)
+- [Complete config file dash](/zh-cn/cases/lfrc_sh)
 
 ## Overview
 
-### General Function Commands
-- `all-cmd`, `history-cmd`, `history-dir` - Command history and selection
-- `toggle-preview`, `toggle-selmode`, `toggle-super` - Interface toggles
-- `zox/z`, `zoxide-query`, `cd-usermedia` - Directory navigation
+
+### Common Command Functions
+- `all-cmd`, `history-cmd`, `history-dir` - command history and selection
+- `toggle-preview`, `toggle-selmode`, `toggle-super` - interface toggles
+- `zox/z`, `zoxide-query`, `cd-usermedia` - directory navigation
 
 ### File Operation Commands
-- `select-files` series - File selection and filtering
-- `yank-path`, `yank-name`, `yank-basename` - Copy operations
-- `delete`, `trash`, `paste/mpaste`, `link` - File management
-- `rename-to`, `bulk-rename` - Renaming operations
-- `chmod`, `chown`, `mkfile`, `mkdirs` - Permissions and creation
+- `select-files` series - file selection and filtering
+- `yank-path`, `yank-name`, `yank-basename` - copy operations
+- `delete`, `trash`, `paste/mpaste`, `link` - file management
+- `rename-to`, `bulk-rename` - rename operations
+- `chmod`, `chown`, `mkfile`, `mkdirs` - permissions and creation
 
 ### Search and Preview Commands
-- `fzf-edit`, `fzf-file`, `fzf-folder`, `fzf-content` - Fuzzy search
-- `filter` series - File filtering
+- `fzf-edit`, `fzf-file`, `fzf-folder`, `fzf-content` - fuzzy search
+- `filter` series - file filtering
 
-### Compression and Mounting Commands
-- `extract-to`, `compress-to`, `archive-mount` - Archive handling
-- `mount-dev`, `umount-dev` - Device mounting
+### Compress and Mount Commands
+- `extract-to`, `compress-to`, `archive-mount` - archive handling
+- `mount-dev`, `umount-dev` - device mounting
 
-### Comparison and Verification Commands
-- `diff`, `delta`, `diff-md5`, `check-sum` - File comparison
+### Compare and Verify Commands
+- `diff`, `delta`, `diff-md5`, `check-sum` - file comparison
 
-### External Integration
-- `cmus-play`, `open-handlr`, `open-with-gui/cli` - Program launching
-- `drag-in`, `drag-out` - Drag-and-drop operations
+### External Program Integration
+- `cmus-play`, `open-handlr`, `open-with-gui/cli` - program launching
+- `drag-in`, `drag-out` - drag and drop operations
 - Editor launch commands (`En`, `Ec`, `Ep`, etc.)
 
 ### System Commands
-- `on-cd` - Automatically triggered commands
+- `on-cd` - automatic trigger commands
 
-Both implementations are functionally equivalent, with identical key bindings. The choice mainly depends on the user's preference for modern syntax versus reliance on traditional Unix tools.
 
-## Enabling Shell in lf
+Both implementations are functionally equivalent, with identical key bindings. The choice mainly depends on user preference for modern syntax and dependency on traditional Unix tools.
 
-- To enable Lumesh in lf:
+## Enable Shell in LF
+
+- Enable Lumesh in LF
 ```bash
-set shell lumesh      # Required
-set shellopts '-s'    # Optional
-set ifs "\n"          # Optional
-set filesep "\n"      # Optional
+set shell lumesh      # required
+set shellopts '-s'    # optional
+set ifs "\n"          # optional
+set filesep "\n"      # optional
 ```
 
-- To enable bash in lf:
+- Enable bash in LF
 ```bash
-set shell bash        # Required
-set shellopts '-eu'   # Optional
-set ifs "\n"          # Optional
-set filesep "\n"      # Optional
+set shell bash        # required
+set shellopts '-eu'   # optional
+set ifs "\n"          # optional
+set filesep "\n"      # optional
 ```
 
 ## Main Command Comparison A
@@ -76,44 +75,44 @@ set filesep "\n"      # Optional
 ### 1. all-cmd Command
 **Key Binding**: `<c-e>`
 
-**Syntax Comparison**:
-- **lumesh**: Uses a chained pipeline method and built-in functions
+**Comparison**:
+- **Lumesh**: Uses chain pipe methods and built-in functions
 ```bash
-let cmd = lf -remote `query $id cmds` | .lines() | .sort() | .drop(1) | .map(x -> {x.split("\t\t") | .first()}) | ui.pick "select cmd:"
+let cmd = lf -remote `query $id cmds` | .lines() | .sort() | .skip(1) | .map(x -> {x.split("\t\t") | .first()}) | ui.pick "select cmd:"
 ```
 
-- **bash**: Uses pipelines and external tools
+- **Bash**: Uses pipes and external tools
 ```bash
 cmd=$( lf -remote "query $id cmds" | awk -F'\t' 'NR > 1 { print $NF}' | sort -u | fzf --reverse --prompt='Execute command: ' --preview='' )
 ```
 
 **Advantages**:
-- **lumesh**: More intuitive syntax, readable chained calls, eliminates external application startup and data conversion time, built-in `ui.pick` provides a unified interaction experience.
-- **bash**: Uses standard Unix tools, good compatibility, `awk` offers more flexible text processing.
+- **Lumesh**: More intuitive syntax, chain calls are readable, completely avoids external application startup time and data conversion time, built-in `ui.pick` provides unified interaction experience
+- **Bash**: Uses standard Unix tools, good compatibility, `awk` handles text more flexibly
 
 ### 2. history-cmd Command
 **Key Binding**: `<backspace>`, `<backspace2>`
 
-**Syntax Comparison**:
-- **lumesh**:
+**Comparison**:
+- **Lumesh**:
 ```bash
 let cmd = lf -remote `query $id history` | .lines() | .sort() | ui.pick "history command:" | .split("\t\t") | .last()
 ```
 
-- **bash**:
+- **Bash**:
 ```bash
 cmd=$( lf -remote "query $id history" | awk -F'\t' 'NR > 1 { print $NF}' | sort -u | fzf --reverse --prompt='Execute command: ' --preview='' )
 ```
 
 **Advantages**:
-- **lumesh**: Built-in method chain is more concise, `.last()` is semantically clear.
-- **bash**: `awk`'s `$NF` efficiently handles the last column.
+- **Lumesh**: Built-in method chain is more concise, `.last()` semantics are clear
+- **Bash**: `awk`'s `$NF` efficiently handles the last column
 
 ### 3. toggle-preview Command
 **Key Binding**: `zp`
 
-**Syntax Comparison**:
-- **lumesh**: Uses pattern matching
+**Comparison**:
+- **Lumesh**: Uses pattern matching
 ```bash
 match $lf_preview {
     'true' => lf -remote `send $id :set nopreview; set ratios 1:5`
@@ -121,7 +120,7 @@ match $lf_preview {
 }
 ```
 
-- **bash**: Uses conditional statements
+- **Bash**: Uses conditional statements
 ```bash
 if [ "$lf_preview" = "true" ]; then
     lf -remote "send $id :set nopreview; set ratios 1:5"
@@ -131,20 +130,20 @@ fi
 ```
 
 **Advantages**:
-- **lumesh**: `match` syntax is more modern, powerful pattern matching; variables do not require quotes.
-- **bash**: Traditional `if-else` structure is clear and easy to debug.
+- **Lumesh**: `match` syntax is more modern, pattern matching is powerful; variables don't need quotes
+- **Bash**: Traditional `if-else` structure is clear, easy to debug
 
 ### 4. select-files Command
-**Key Binding**: `Sf` (files), `Sd` (directories), `SF` (empty files), `SD` (empty directories), `Sl` (symbolic links), `Sx` (executable files)
+**Key Binding**: `Sf` (files), `Sd` (directories), `SF` (empty files), `SD` (empty directories), `Sl` (symlinks), `Sx` (executables)
 
-**Syntax Comparison**:
-- **lumesh**: Uses a ternary operator and built-in functions
+**Comparison**:
+- **Lumesh**: Uses ternary operator and built-in functions
 ```bash
 let htag= $lf_hidden ? '-H' : ''
 let r=fd --exact-depth 1 $argv $htag -c never -j 1 | .lines() | .join(' ')
 ```
 
-- **bash**: Uses functions and conditional statements
+- **Bash**: Uses functions and conditional statements
 ```bash
 get_files() {
     if [ "$lf_hidden" = 'false' ]; then
@@ -156,14 +155,14 @@ get_files() {
 ```
 
 **Advantages**:
-- **lumesh**: Ternary operator is concise, variable scope is clear.
-- **bash**: Function encapsulation provides clear logic and good reusability.
+- **Lumesh**: Ternary operator is concise, variable scope is clear
+- **Bash**: Function encapsulates logic clearly, good reusability
 
 ### 5. fzf-content Command
 **Key Binding**: `fc<space>`, `fct` (txt), `fcm` (md), `fcs` (sh), `fcy` (py), `fcj` (js)
 
-**Syntax Comparison**:
-- **lumesh**: Uses modern syntax and string interpolation
+**Comparison**:
+- **Lumesh**: Uses modern syntax and string interpolation
 ```bash
 let file_type = len($argv)>0 ? $argv[0] : 'sh'
 let RG_PREFIX = `$lf_user_wheel rg --type $file_type --column --line-number --no-heading --color=always --smart-case --max-filesize 50K`
@@ -173,7 +172,7 @@ if $res {
 }
 ```
 
-- **bash**: Uses traditional shell syntax
+- **Bash**: Uses traditional shell syntax
 ```bash
 RG_PREFIX="$lf_user_wheel rg --column --line-number --no-heading --color=always --smart-case --max-filesize 50K"
 [ -n ${1:-''} ] && RG_PREFIX="$RG_PREFIX --type $1"
@@ -181,20 +180,20 @@ RG_PREFIX="$lf_user_wheel rg --column --line-number --no-heading --color=always 
 ```
 
 **Advantages**:
-- **lumesh**: String method chaining is more intuitive, conditional expressions are concise.
-- **bash**: Parameter expansion is flexible, `cut` command efficiently handles delimiters.
+- **Lumesh**: String method chaining is more intuitive, conditional expressions are concise
+- **Bash**: Parameter expansion is flexible, `cut` command handles delimiters efficiently
 
 ### 6. yank Series Commands
-**Key Binding**: `yp` (path), `yn` (filename), `yb` (basename), `yu` (clear)
+**Key Binding**: `yp` (paths), `yn` (filenames), `yb` (basenames), `yu` (clear)
 
-**Syntax Comparison**:
-- **lumesh**: Uses functional programming style
+**Comparison**:
+- **Lumesh**: Uses functional programming style
 ```bash
 $fx.lines() | .map(fs.base_name) | .join("\n") | wl-copy
-$fx.lines() | .map(x -> {fs.base_name(True,$x) | .first()}) | .join("\n") | wl-copy
+$fx.lines() | .map(x -> {fs.base_name(true,$x) | .first()}) | .join("\n") | wl-copy
 ```
 
-- **bash**: Uses traditional Unix tools
+- **Bash**: Uses traditional Unix tools
 ```bash
 basename -a -- "$fx" | head -c-1 | wl-copy
 echo $fx | tr ' ' '\n' | wl-copy
@@ -202,18 +201,18 @@ basename -a -- "$fx" | cut -d. -f1 | head -c-1 | wl-copy
 ```
 
 **Advantages**:
-- **lumesh**: Consistent functional style, rich built-in filesystem functions.
-- **bash**: Mature and stable Unix tools, `basename`, `cut`, etc., are professional and efficient.
+- **Lumesh**: Consistent functional style, built-in filesystem functions are feature-rich
+- **Bash**: Unix tools are mature and stable, `basename`, `cut` etc. are professional and efficient
 
 ### 7. paste/mpaste Command
 **Key Binding**: `pp` (paste), `po` (force), `pb` (backup), `pO` (force overwrite)
 
-**Syntax Comparison**:
-- **lumesh**: Uses modern collection operations
+**Comparison**:
+- **Lumesh**: Uses modern collection operations
 ```bash
 let load=fs.read ~/.local/share/lf/files | .lines()
 let mode=$load.at(0)
-let files = $load.drop(1)
+let files = $load.skip(1)
 let base_names = $files.map(fs.base_name)
 match $mode {
     copy => { $lf_user_wheel cp -r $argv -- $files '.' }
@@ -221,7 +220,7 @@ match $mode {
 }
 ```
 
-- **bash**: Uses traditional text processing
+- **Bash**: Uses traditional text processing
 ```bash
 load=$(cat ~/.local/share/lf/files)
 mode=$(echo "$load" | sed -n '1p')
@@ -235,14 +234,14 @@ fi
 ```
 
 **Advantages**:
-- **lumesh**: Collection operations are intuitive, pattern matching is elegant, built-in file functions are type-safe.
-- **bash**: Powerful text processing with `sed`, clear conditional branches.
+- **Lumesh**: Collection operations are intuitive, pattern matching is elegant, built-in file functions are type-safe
+- **Bash**: `sed` text processing is powerful, conditional branching is clear
 
 ### 8. bulk-rename Command
 **Key Binding**: `cb`
 
-**Syntax Comparison**:
-- **lumesh**: Uses modern data structures
+**Comparison**:
+- **Lumesh**: Uses modern data structures
 ```bash
 let old_files = $fs.lines()
 let new_files = fs.read $new | .lines()
@@ -253,7 +252,7 @@ for pair in list.zip($old_files,$new_files){
 }
 ```
 
-- **bash**: Uses traditional text processing
+- **Bash**: Uses traditional text processing
 ```bash
 paste "$old" "$new" | while IFS= read -r names; do
     src="$(printf '%s' "$names" | cut -f1)"
@@ -266,14 +265,14 @@ done
 ```
 
 **Advantages**:
-- **lumesh**: `list.zip` functional operation is elegant, array access is intuitive.
-- **bash**: `paste` command is professional, pipeline processing is memory efficient.
+- **Lumesh**: `list.zip` functional operation is elegant, array access is intuitive
+- **Bash**: `paste` command is professional, pipe processing has high memory efficiency
 
 ### 9. mount-dev Command
 **Key Binding**: `mm`
 
-**Syntax Comparison**:
-- **lumesh**: Uses structured data processing
+**Comparison**:
+- **Lumesh**: Uses structured data processing
 ```bash
 let sel = lsblk -rno 'name,type,size,mountpoint,label,fstype' | into.table([name,'type',size,mountpoint,label,fstype])
 | where($type!='disk' && !$mountpoint && $fstype !~: 'member')
@@ -281,7 +280,7 @@ let sel = lsblk -rno 'name,type,size,mountpoint,label,fstype' | into.table([name
 let src = $sel.type == 'part' ? `/dev/${$sel.name}` : `/dev/mapper/${$sel.name}`
 ```
 
-- **bash**: Uses text processing and field extraction
+- **Bash**: Uses text processing and field extraction
 ```bash
 sel=$(lsblk -rno 'name,type,size,label,mountpoint,fstype' |
 awk -F'[ ]' '$2!="disk" && $5=="" && $6!~/member/ { print $1,$2,$3,$4 }' |
@@ -291,27 +290,27 @@ typ=$(echo $sel | cut -d' ' -f2)
 ```
 
 **Advantages**:
-- **lumesh**: Powerful structured data processing, type-safe field access, intuitive `where` filtering.
-- **bash**: Flexible and efficient text processing with `awk`, mature and stable field extraction.
+- **Lumesh**: Structured data processing is powerful, field access is type-safe, `where` filtering is intuitive
+- **Bash**: `awk` text processing is flexible and efficient, field extraction is mature and stable
 
 ## Overall Advantages Comparison
 
-**Advantages of Lumesh**:
-- Modern syntax, intuitive chained calls
+**Lumesh Advantages**:
+- Modern syntax, chain calls are intuitive
 - Rich built-in functions, type-safe
 - Consistent functional programming style
-- Strong structured data processing capabilities
-- Improved debugging and error handling mechanisms
-- Minimizes reliance on third-party tools, saving resources
+- Strong structured data processing capability
+- Better debugging and error handling mechanisms
+- Can reduce dependency on third-party tools, saving resources
 
-**Advantages of Bash**:
+**Bash Advantages**:
 - Mature Unix tool ecosystem
 - Good compatibility and portability
 - Professional and efficient third-party text processing tools
 
 ## Notes
 
-Both implementations achieve the same functionality of the lf file manager, with identical key bindings. The Lumesh version showcases the advantages of modern shell languages, while the bash version reflects the stability of traditional Unix philosophy. The choice primarily depends on the user's preference for syntax style and reliance on tool ecosystems.
+Both implementations achieve the same LF file manager functionality, with completely identical key bindings. The Lumesh version demonstrates the advantages of modern shell languages, while the Bash version reflects the stability of traditional Unix philosophy. Which one to choose mainly depends on user preference for syntax style and dependency on tool ecosystem.
 
 Read more
-- [lf Configuration File Comparison (lumesh vs bash) B](lf_2)
+- [LF configuration comparison (Lumesh vs Bash) B](/zh-cn/cases/lf_2)

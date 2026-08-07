@@ -11,7 +11,7 @@ date: 2025-12-25 19:16:45
 ```bash
 # 定义
 let __! = x -> Math.sum(x)
-let __+ = x -> x.to_upper()
+let __+ = x -> x.upper()()
 
 # 使用
 [5,6,7]  __!              # 18

@@ -78,7 +78,7 @@ set filesep "\n"      # 可选
 **写法对比**:
 - **lumesh**: 使用链式管道方法和内置函数
 ```bash
-let cmd = lf -remote `query $id cmds` | .lines() | .sort() | .drop(1) | .map(x -> {x.split("\t\t") | .first()}) | ui.pick "select cmd:"
+let cmd = lf -remote `query $id cmds` | .lines() | .sort() | .skip(1) | .map(x -> {x.split("\t\t") | .first()}) | ui.pick "select cmd:"
 ```
 
 - **bash**: 使用管道和外部工具
@@ -190,7 +190,7 @@ RG_PREFIX="$lf_user_wheel rg --column --line-number --no-heading --color=always 
 - **lumesh**: 使用函数式编程风格
 ```bash
 $fx.lines() | .map(fs.base_name) | .join("\n") | wl-copy
-$fx.lines() | .map(x -> {fs.base_name(True,$x) | .first()}) | .join("\n") | wl-copy
+$fx.lines() | .map(x -> {fs.base_name(true,$x) | .first()}) | .join("\n") | wl-copy
 ```
 
 - **bash**: 使用传统Unix工具
@@ -212,7 +212,7 @@ basename -a -- "$fx" | cut -d. -f1 | head -c-1 | wl-copy
 ```bash
 let load=fs.read ~/.local/share/lf/files | .lines()
 let mode=$load.at(0)
-let files = $load.drop(1)
+let files = $load.skip(1)
 let base_names = $files.map(fs.base_name)
 match $mode {
     copy => { $lf_user_wheel cp -r $argv -- $files '.' }

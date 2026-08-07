@@ -58,7 +58,7 @@ categories:
 
 - 索引用`.` 或 `[i]`表示。
     ```bash
-    let arr = [10, "a", True]
+    let arr = [10, "a", true]
     ```
 
 - 索引和切片
@@ -69,9 +69,9 @@ categories:
     arr[0]       # → 10
 
     # 切片操作
-    arr[1..3]     # → ["a", True]（左闭右开）
-    arr[_.._:2]     # → [10, True]（步长2）
-    arr[-1.._]      # → True（切片支持负数索引）
+    arr[1..3]     # → ["a", true]（左闭右开）
+    arr[_.._:2]     # → [10, true]（步长2）
+    arr[-1.._]      # → true（切片支持负数索引）
     ```
 
 **占位符`_`在切片中表示不关闭区间**
@@ -125,7 +125,7 @@ categories:
     data.user.age # → 100
     ```
 - 高级操作
-参考 [map](/zh-cn/doc/libs/map) 模块。
+参考 [map](/zh-cn/doc/libs/api/map) 模块。
 
 **边缘情况**：
 | 场景                          | 行为                           |

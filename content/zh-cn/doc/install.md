@@ -1,5 +1,5 @@
 ---
-title: 如何安装
+title: 安装与更新
 date: 2025-12-11 19:16:45
 highlight: true
 weight: 11
@@ -76,13 +76,13 @@ cargo install lumesh
 并将其中的mods数据解压到共享数据目录。
 
 - 如需设置为登录shell（仅linux和macos)
-运行lume后执行`use lman; lman::chsh()`函数
-- 如需升级
-运行lume后执行`use lman; lman::update()`函数
+运行lume后执行`use lman; lman::chsh()`函数。（依赖共享库中的mods/lman.lm文件）
 
 
 ## 更新
-在lume中运行`use lman; lman::update()`函数
+在lume中运行`use lman; lman::update()`函数。（依赖共享库中的mods/lman.lm文件）
+
+或者手动下载。
 
 ## 查看帮助
 在lume中运行`help`命令查看函数相关帮助；

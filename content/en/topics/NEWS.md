@@ -1,152 +1,162 @@
-# lumesh Recent Release Update (0.16.13 → 0.17.5)
+---
+title: Latest Updates
+date: 2025-06-11 19:16:45
+highlight: true
+weight: 90
+tags:
+ - news
+categories:
+ - topics
+ - news
+---
+
+# Recent Lumesh Version Updates (0.16.13 → 0.17.5)
+
+Following the previous report (0.14.x–0.16.12: editor rewrite, tokenizer refactoring, History/Slash Commands, AI integration), this issue focuses on the language core layer—**deep refactoring of the string/quoting system**, **introduction of the `Bytes` type**, **establishment of the background task management system**, and a series of performance refinements throughout.
 
 ---
 
-Following up on the previous report (0.14.x–0.16.12: editor rewrite, tokenizer refactor, History/Slash Commands, AI integration), this release shifts focus to the core language layer — a **deep refactor of the string/quoting system**, the **introduction of the `Bytes` type**, the **establishment of a background job management system**, and a series of performance refinements throughout.
+### String and Quoting Semantics: Major Change This Issue
 
----
+This is the most significant set of changes in this release, evolved over three versions (0.16.13 → 0.17.0 → 0.17.5), finally converging into a complete and self-consistent escaping semantics system:
 
-### Strings and Quote Semantics: The Core Change of This Release
-
-This is the heaviest-weight set of changes in this release, spanning three versions (0.16.13 → 0.17.0 → 0.17.5) of continuous evolution, ultimately converging into a complete and self-consistent escaping semantics system:
-
-- **0.16.13**: `rewrite unescape for all string` — rewrote the unescaping logic for all string types, paving the way for the subsequent fine-grained differentiation of quote semantics.
-- **0.17.0**: **Introduced `StringSafe`** (`s'...'`), purpose-built for command-concatenation scenarios, eliminating injection risk at the language level:
+- **0.16.13**: `rewrite unescape for all string`—Rewrote the escaping logic for all string types, paving the way for refined quotation semantics in subsequent versions.
+- **0.17.0**: **Introduced `StringSafe` (`s'...'`)**, designed specifically for command concatenation scenarios, eliminating injection risks at the language level:
   ```bash
   let s = s'(rm -rf /)'
   let s2 = into.safe 'mkfs /dev/sda'
   eval_str(`echo $s $s2`)  # never unsafe eval
   ```
-  In the same release, **`SymbolRaw` was introduced**, extending the applicability of the `^` escape character from command position to argument position as well.
-- **0.17.5**: **Introduced hashed raw quotes** (the `#`-delimited syntax), formally establishing a multi-tier escaping gradient:
+  In the same release, **introduced `SymbolRaw`**, extending the `^` escape character's scope from command positions to argument positions.
+- **0.17.5**: **Introduced hashed raw quotes (`#`-wrapped syntax)**, formally establishing a multi-level escaping gradient:
   ```rust
-  r#'....'#        // fully unescaped
-  r##'....'##      // supports any number of #'s (for content that itself contains #)
+  r#'....'#        // No escaping at all
+  r##'....'#′      // Supports any number of # (for content containing #)
 
-  r#"...."#        // quotes are not escaped, but ansi and unicode sequences are
-  t#"...."#        // no escaping for the g/t/s/b prefixes
+  r#"...."#        // Escapes quotes, but not ANSI and unicode
+  t#"...."#        # Prefixes g/t/s/b are not escaped
   ```
-  **Breaking change**: `r'....'` no longer serves as the regex prefix — it is now narrowed to a purely **raw string** semantic; the former **regex prefix has been officially renamed to `g'....'`**.
+  **Breaking Change**: `r'....'` no longer carries the responsibility as a regex prefix, now narrowed to a pure **raw string** semantics; the original **regex prefix is now renamed to `g'....'`**.
 
-  This design cleverly uses the `#` delimiter to resolve the inherent conflict between "boundary character vs. quote characters appearing in content," while decoupling "whether to escape ANSI/unicode" from "whether to escape quotes" into two independent, composable dimensions — ultimately producing a clean semantic gradient: from `"..."` (fully escaped), through `r#"..."#` (partially escaped — quotes left raw, ANSI/unicode still escaped), to `r#'...'#` (fully unescaped), each with a clearly defined role.
+  This design cleverly resolves the natural conflict between "boundary character and content containing quotes" using the `#` separator, while decoupling "whether to escape ANSI/unicode" from "whether to escape quotes" into two independent, combinable dimensions—ultimately presenting a complete semantic gradient from `"..."` (fully escaped) through `r#"..."#` (half-escaped, quotes not escaped, ANSI/unicode still escaped) to `r#'...'#` (fully unescaped), with clear hierarchy and distinct responsibilities.
 
 ---
 
-### `Bytes` Type Introduced (0.17.0)
+### `Bytes` Type Introduction (0.17.0)
 
 - Literal support: `b'\x41'`
-- Supports slicing, comparison, and operator overloading
+- Supports slicing, comparison, operator overloading
 - Supports printing, piping, and use as command arguments
-- **0.17.5**: Syntax further expanded with `b"..."` (double-quote form) and `b#"..."#` (`#`-delimited form), keeping the writing style consistent with the escaping semantics of the string system.
+- **0.17.5**: Syntax further enriched with `b"..."` (double-quoted form) and `b#"..."#` (`#`-wrapped form), maintaining consistent writing style with the string system's escaping semantics.
 
 ---
 
-### Numeric Literal Enhancements (0.17.0)
+### Enhanced Numeric Literals (0.17.0)
 
-- Introduced **radix numbers**: `0b100_100`, `0o170`, `0xff`
+- Introduced **Radix numbers**: `0b100_100`, `0o170`, `0xff`
 - All numeric types now uniformly support `_` separators: `999_999`, `999_999.999_999`
-- **0.17.5**: Further optimized radix number parsing performance.
+- **0.17.5**: Radix number parsing performance further optimized.
 
 ---
 
-### Background Jobs and Terminal Integration (from 0.17.3)
+### Background Tasks and Terminal Integration (from 0.17.3)
 
-- **0.17.3**: Added the `jobs` command for unified management of background tasks.
+- **0.17.3**: Added `jobs` command for unified background task management.
 - **0.17.5**:
-  - Performance and stability improvements related to PTY (pseudo-terminal)
-  - Fixed leftover screen artifacts when piping output to `vi`
+  - PTY (pseudo-terminal) performance and stability optimizations
+  - Fixed display residue issues when piping output to `vi`
   - Added `Ctrl+Z` support for non-PTY scenarios
 
 ---
 
-### Syntax/Tokenizer Refinements (0.17.3)
+### Grammar/Tokenizer Refinement (0.17.3)
 
-- Adjusted the categorization of custom unary operators
+- Adjusted categorization for custom unary operators
 - Improved tokenization precision for `.`, `^`, `+`
-- Removed the index operator `@`
-- Unified tokenization logic for `-`/`!` prefixes
-- Improved `<<`, adding byte-stream support
-- **`?&` renamed to `&:`**, continuing the short-circuit logic writing style introduced in 0.16.2
-- **`let` disables CFM by default**: prevents statements like `let a=1` from being misparsed as commands under CFM, while preserving genuine CFM usage such as `dd if=/dev/sda`
-- Improved whitespace recognition around `^` and `:`
+- Removed index operator `@`
+- Unified prefix marker tokenization logic for `-`/`!`
+- Improved `<<`, added byte stream support
+- **`?&` renamed to `&:``, continuing the short-circuit logic writing style introduced in 0.16.2
+- **`let` default CFM disabled**: Prevents statements like `let a=1` from being mistakenly parsed as commands by CFM, while preserving idiomatic CFM styles like `dd if=/dev/sda`
+- Improved `^` and `:` whitespace detection before/after
 - Fixed `symof`: `assert(symof(1+2), 'BinaryOp')`
 
 ---
 
-### Standard Library Enhancements (0.17.3)
+### Standard Library Enhancement (0.17.3)
 
-- `fs.ls` supports specifying files directly (`fs.ls file(s)`)
-- Built-in libraries now support wildcard expansion
+- `fs.ls` supports directly specifying files (`fs.ls file(s)`)
+- Built-in libraries support wildcard expansion
 
 ### Prompt Integration (0.17.3)
 - Integrated with starship, improving shell prompt customizability
 
 ---
 
-### Release Cadence Summary
+### Version Rhythm Summary
 
-| Phase | Core Focus |
+| Phase | Core Direction |
 |------|----------|
-| 0.16.13 | Full rewrite of string escaping logic; CFM/custom operator fixes |
-| 0.17.0 | `Bytes` type, `StringSafe`/`SymbolRaw`, radix numbers, function renames (Breaking Change) |
-| 0.17.1–0.17.2 | Library function/hint optimizations, `cfm auto` mode, `&:` short-circuit syntax |
-| 0.17.3 | `jobs` background task management, starship integration, tokenizer refinements (Breaking Change: `?&` → `&:`) |
-| 0.17.5 | **Hashed raw quote system landed** (`r#'..'#`/`r#"..."#`/`g#'..'#`, etc.), PTY/signal handling optimizations (**Breaking Change: `r'..'` narrowed to raw string; regex prefix changed to `g'..'`**) |
+| 0.16.13 | Complete string escaping logic rewrite, CFM/custom operator fixes |
+| 0.17.0 | `Bytes` type, `StringSafe`/`SymbolRaw`, Radix numbers, function renaming (Breaking Change) |
+| 0.17.1–0.17.2 | Library functions/prompt optimizations, `cfm auto` mode, `&:` short-circuit syntax |
+| 0.17.3 | `jobs` background task management, starship integration, tokenizer refinement (Breaking Change: `?&` → `&:`) |
+| 0.17.5 | **hashed raw quote system implementation** (`r#'..'#`/`r#"..."#`/`g#'..'#` etc.), PTY/signal processing optimizations (**Breaking Change**: `r'..'` semantics narrowed to raw string, regex changed to `g'..'`) |
 
 ---
 
-# lumesh Recent Updates (0.14.x → 0.16.x)
+## Recent Lumesh Version Updates (0.14.x → 0.16.x)
 
-### Complete Editor Rewrite (0.15.0)
+### Editor Complete Rewrite (0.15.0)
 
-Version 0.15.0 was a major milestone: **migrated from rustyline to crossterm, editor rewritten from scratch**. Subsequent versions continued refinement:
+0.15.0 is the most important milestone recently: **migration from rustyline to crossterm, editor rewritten from scratch**. Subsequent versions continued refinement:
 
 - **0.15.1**: Editor themes, buffer optimization, custom hotkey bindings
-- **0.15.2**: Multi-line editing mode, input validation, cursor and hint position fixes
-- **0.16.0**: Fixed ONLCR issue, path completion sorting optimization
-- **0.16.2**: Added `ui.editor`, `ui.date_pick`, fixed CapsLock recognition, hotkey modifier mapping, and other bugs
-- **0.16.10**: Editor scrolling support
+- **0.15.2**: Multi-line editing mode, input validation, cursor and prompt position fixes
+- **0.16.0**: Fixed ONLCR issues, path completion sorting optimization
+- **0.16.2**: Added `ui.editor`, `ui.date_pick`, fixed CapsLock recognition, hotkey modifier mapping bugs
+- **0.16.10**: Editor supports scrolling
 
 ---
 
-### Tokenizer Refactoring (0.15.5 onwards)
+### Tokenizer Refactoring (from 0.15.5)
 
-- **0.15.5**: **Restructured tokenizer with dispatch mechanism**, dispatching token parsing by priority for clearer and more maintainable parsing logic
+- **0.15.5**: **Refactored tokenizer, introduced dispatch mechanism**, prioritizing mark parsing for clearer, more maintainable logic
 - **0.15.6**: Improved CFM (Command First Mode) symbol handling, unified highlighting logic
-- **0.15.7**: Fixed tokenizer handling of trailing `&`
+- **0.15.7**: Fixed trailing `&` tokenization issues
 - **0.16.2**: Fixed module call tokenizer
-- **0.16.7**: CFM mode enhanced to take whole words (avoiding misparsing `1.1.1.1` as float)
+- **0.16.7**: Enhanced CFM mode, takes whole word (avoiding `1.1.1.1` being misparsed as float)
 - **0.16.8**: Switched to static regex for improved tokenization performance
 
 ---
 
-### History System Evolution
+### History System Continuous Evolution
 
-- **0.16.5**: Added history hint, ESC moves to end in multiline mode and clears hint
+- **0.16.5**: Added history hints (history hint), ESC moved to end of multi-line mode and clears hints
 - **0.16.8**: **Introduced slash commands** (`/h`, `/hh`, `/hm` and other slash command system)
 - **0.16.9**: Smarter history weighting and sorting, added `/q` quick exit command
 - **0.16.10**:
-  - Optimized `Ctrl+R` long history display
-  - Multi-line commands automatically ignored from `/h...` history (avoiding screen clutter)
+  - Optimized `Ctrl+R` display of long history records
+  - Multi-line commands automatically ignore `/h...` history records (avoiding screen flooding)
   - `/h`, `/hh`, `/hm`, `/history` support prefix filtering
 
 ---
 
-### Completion System Enhancements (0.15.3–0.16.3)
+### Completion System Major Enhancement (0.15.3–0.16.3)
 
-- Path completion, external command completion, parameter-aware completion progressively improved
-- Support for lumesh scripts as completion data sources
-- Completion colors and context awareness
-- `ui.pick`/`ui.multi_pick` support `table`/`map` type input
+- Path completion, external command completion, parameter-aware completion gradually refined
+- Supports Lumesh scripts as completion data source
+- Completion colors and context-aware
+- `ui.pick`/`ui.multi_pick` support `table`/`map` type inputs
 - `ui.float` supports custom decimal places
 
 ---
 
 ### AI Integration Deepening
 
-- **0.15.9**: `ALT+i` triggers AI hint
+- **0.15.9**: `ALT+i` triggers AI prompt
 - **0.16.0**: `ALT+Enter` / `ALT+o` triggers AI generation
-- **0.16.3**: ai-tls enabled by default, ai-https separated as optional feature
+- **0.16.3**: Default AI-TLS enabled, separated AI-HTTPS as optional feature
 - **0.16.8**: Updated AI skill configuration
 - **0.16.10**: Updated AI documentation
 
@@ -155,29 +165,29 @@ Version 0.15.0 was a major milestone: **migrated from rustyline to crossterm, ed
 ### Language Features
 
 - **0.14.0**: Introduced `table` expression and built-in `table` library
-- **0.14.3**: Improved quote semantics (`''` raw string / `""` normal escape / ` `` ` full escape + variable interpolation)
-- **0.16.5**: Added `continue` statement; `match` arrow supports line breaks; **Breaking change: only allow single value in declarations**
-- **0.16.7**: `~` auto-expands in symbols, normal mode supports prefix matching
+- **0.14.3**: Improved quoting semantics (`''` raw string / `""` normal escaped / `` ` `` fully escaped + variable interpolation)
+- **0.16.5**: Added `continue` statement; `match` arrow supports line breaks; **Breaking Change: only single values allowed in declarations**
+- **0.16.7**: `~` auto-expands in symbols, prefix matching support in normal mode
 
 ---
 
-### Standard Library Restructuring (0.16.10)
+### Standard Library Structure Reorganization (0.16.10)
 
 Module responsibilities reorganized:
 
 | Change | Description |
-|--------|-------------|
+|------|------|
 | `fs.dirs` → `sys` | Directory-related functions moved to system library |
 | `sys.print_tty` / `sys.discard` → `console` | Terminal output control moved to console library |
-| Delete `sys.cds` | Cleaned up redundant interfaces |
-| Fix float file size display | `float filesize` formatting fix |
+| Deleted `sys.cds` | Cleaned up redundant interfaces |
+| Fixed float filesize display | Float `filesize` formatting fix |
 
 ---
 
-### Phase Summary
+### Summary by Phase
 
 | Phase | Core Direction |
-|-------|----------------|
-| 0.14.x | Language feature refinement (table, quotes, bug fixes) |
-| 0.15.x | Editor rewrite + tokenizer refactoring + completion system |
+|------|----------|
+| 0.14.x | Language feature refinement (table, quoting, bug fixes) |
+| 0.15.x | Editor rewrite + tokenizer refactoring + completion system construction |
 | 0.16.x | Slash commands system + History intelligence + AI integration + module reorganization |

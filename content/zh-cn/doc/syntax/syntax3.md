@@ -59,7 +59,7 @@ categories:
   不使用 `then` 关键字，代码块用 `{}` 包裹。
 
   ```bash
-  if True {1} else {if False {2} else {3}}
+  if true {1} else {if false {2} else {3}}
 
   if x > 10 {
       print("Large")

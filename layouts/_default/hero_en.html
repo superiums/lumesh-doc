@@ -1,0 +1,183 @@
+{{ define "main" }}
+<header class="lume-hero relative overflow-hidden">
+  <div class="lume-hero-glow pointer-events-none absolute -z-10"></div>
+
+  <nav class="relative z-10 flex items-center justify-between px-6 py-6 lg:px-16">
+    <div class="lume-logo font-bold text-lg tracking-tight">
+      <span class="lume-logo-mark">⚡</span> LUME<span class="text-neutral-400 font-normal">sh</span>
+    </div>
+    <!--<div class="hidden md:flex items-center gap-8 text-sm text-neutral-300">
+      <a href="#compare" class="hover:text-primary-400 transition-colors">对比</a>
+      <a href="#metrics" class="hover:text-primary-400 transition-colors">性能</a>
+      <a href="#philosophy" class="lume-anchor">了解设计理念 →</a>
+    </div>-->
+  </nav>
+
+  <div class="relative z-10 mx-auto max-w-7xl flex flex-col lg:flex-row gap-4 items-center px-6 py-16 lg:px-16 lg:py-24">
+    <div class="flex-1">
+      <p class="lume-eyebrow text-sm mb-4 font-medium">
+        Write as js · works as Bash · run as light
+      </p>
+      <h1 class="text-3xl sm:text-4xl lg:text-4xl font-extrabold leading-tight tracking-tight text-white">
+        A modern shell and scripting language that runs as light as a photon
+      </h1>
+      <p class="mt-5 text-base text-neutral-300 max-w-md">
+        Born for high performance and modern programming experience --
+        end the quote hell, implicit traps, and text stream pipelining of Bash.
+      </p>
+
+      <div class="lume-install-box mt-8 flex items-center gap-3 rounded-full px-5 py-3 max-w-xl">
+        <span class="text-primary-400 font-bold">$</span>
+        <code id="lume-install-cmd" class="flex-1 text-sm overflow-x-auto whitespace-nowrap">
+          {{ with .Site.Params.installCmd }}{{ . }}{{ else }}curl -fsSL https://www.lumesh.cc.cd/install.sh | bash{{ end }}
+        </code>
+        <button type="button" class="lume-copy-btn rounded-full px-4 py-1.5 text-sm font-semibold" onclick="lumeCopyInstall(this)">复制</button>
+      </div>
+
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a href="#compare" class="lume-btn lume-btn-primary rounded-lg px-6 py-3 font-semibold text-sm">
+          See one-line comparison
+        </a>
+        <a href="https://github.com/superiums/lumesh" class="lume-btn lume-btn-ghost rounded-lg px-6 py-3 font-semibold text-sm">
+          GitHub ⭐
+        </a>
+      </div>
+
+      <p class="mt-8 text-xs text-neutral-500">
+        <strong class="text-neutral-300">LUME</strong> = <em class="text-neutral-300 not-italic">Light</em>weight ·
+        <em class="text-neutral-300 not-italic">U</em>ltimate ·
+        <em class="text-neutral-300 not-italic">M</em>odern ·
+        <em class="text-neutral-300 not-italic">E</em>fficient
+        &nbsp;|&nbsp;
+        <a href="features/" class="lume-anchor">Learn more</a>
+      </p>
+    </div>
+
+    <div class="flex-1">
+      <div class="lume-terminal rounded-2xl overflow-hidden shadow-2xl">
+        <div class="flex items-center gap-2 px-4 py-3 border-b border-white/10">
+          <span class="lume-dot lume-dot-red"></span>
+          <span class="lume-dot lume-dot-yellow"></span>
+          <span class="lume-dot lume-dot-green"></span>
+          <span class="ml-2 text-xs text-neutral-500">lume — bash vs lumesh</span>
+        </div>
+
+        <img src="{{ "images/demo.gif" | relURL }}" alt="Lumesh structured pipeline demo" class="block w-full h-auto">
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="compare" class="lume-section py-20 px-6 lg:px-16">
+  <h2 class="text-center text-2xl lg:text-3xl font-extrabold text-white">Same task, world of difference</h2>
+  <p class="text-center mt-3 text-neutral-400">Filter .log files larger than 1MB, get the top 5 by size</p>
+
+  <div class="mt-12 mx-auto max-w-7xl flex flex-col lg:flex-row gap-6 items-stretch">
+    <div class="lume-code-card lume-code-card-bash grow rounded-2xl p-6 overflow-x-auto lg:flex-1">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="lume-tag lume-tag-bash rounded px-2.5 py-1 text-xs font-bold">bash</span>
+        <span class="text-neutral-500 text-sm">awk + sort + pipe concatenation</span>
+      </div>
+      <pre class="text-sm leading-7"><code>ls -la *.log 2>/dev/null \
+    | awk '$5 > 1048576 {print $5, $9}' \
+    | sort -n | tail -5 | \
+    | awk '{print $2, $1}'</code></pre>
+    </div>
+
+    <div class="flex items-center justify-center font-bold text-neutral-500 p-6 text-sm">VS</div>
+
+    <div class="lume-code-card lume-code-card-lume grow rounded-2xl p-6 overflow-x-auto lg:flex-1">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="lume-tag lume-tag-lume rounded px-2.5 py-1 text-xs font-bold">lumesh</span>
+        <span class="text-neutral-500 text-sm">structured pipeline, complete in one go</span>
+      </div>
+      <pre class="text-sm leading-7"><code>fs.ls -lah *.log ?. \
+    | where(size > 1M) \
+    | .sort('-size') \
+    | .first(5)</code></pre>
+    </div>
+  </div>
+</section>
+
+<section id="metrics" class="lume-section py-20 px-6 lg:px-16">
+  <h2 class="text-center text-2xl lg:text-3xl font-extrabold text-white">Lightweight and efficient</h2>
+
+  <div class="mt-12 mx-auto max-w-7xl lume-metrics-flex">
+    <div class="lume-metric-card lume-metric-item rounded-2xl p-6 text-center">
+      <div class="lume-metric-value text-3xl font-extrabold">224<span class="text-base text-neutral-500 ml-1">ms</span></div>
+      <div class="mt-2 text-sm text-white">1 million loop summation</div>
+      <div class="mt-1 text-xs text-neutral-500">bash ~2200ms, 10x faster</div>
+    </div>
+    <div class="lume-metric-card lume-metric-item rounded-2xl p-6 text-center">
+      <div class="lume-metric-value text-3xl font-extrabold">3.9<span class="text-base text-neutral-500 ml-1">MB</span></div>
+      <div class="mt-2 text-sm text-white">lume full shell size</div>
+      <div class="mt-1 text-xs text-neutral-500">includes REPL / completion / highlighting</div>
+    </div>
+    <div class="lume-metric-card lume-metric-item rounded-2xl p-6 text-center">
+      <div class="lume-metric-value text-3xl font-extrabold">2.7<span class="text-base text-neutral-500 ml-1">MB</span></div>
+      <div class="mt-2 text-sm text-white">lume-se script executor</div>
+      <div class="mt-1 text-xs text-neutral-500">instant startup, minimal dependencies</div>
+    </div>
+    <div class="lume-metric-card lume-metric-item rounded-2xl p-6 text-center">
+      <div class="lume-metric-value text-3xl font-extrabold">22</div>
+      <div class="mt-2 text-sm text-white">built-in modules</div>
+      <div class="mt-1 text-xs text-neutral-500">fs / string / time / math / ui ...</div>
+    </div>
+  </div>
+</section>
+
+<section id="metrics" class="lume-section py-20 px-6 lg:px-16">
+<h2 class="text-center text-2xl lg:text-3xl font-extrabold text-white">Modern, and Natural</h2>
+
+<div class="mt-12 mx-auto max-w-7xl lume-metrics-flex">
+<div class="lume-metric-card lume-metric-item rounded-2xl p-6">
+<div class="lume-metric-value text-3xl font-extrabold">Interaction<span class="block text-base text-neutral-500 ml-1">More Convenient</span></div>
+<div class="mt-4 text-sm text-white">Slash commands</div>
+<div class="mt-2 text-sm text-white">Programmable hotkeys</div>
+<div class="mt-2 text-sm text-white">Abbreviation auto-expansion</div>
+<div class="mt-2 text-sm text-white">Auto-suggestions and completion</div>
+<div class="mt-4 text-xs text-neutral-500 text-center">Programmable, extensible
+<a href="glance/" class="lume-anchor">Learn more features</a>
+</div>
+</div>
+<div class="lume-metric-card lume-metric-item rounded-2xl p-6">
+<div class="lume-metric-value text-3xl font-extrabold">Interface<span class="block text-base text-neutral-500 ml-1">More Freedom</span></div>
+<div class="mt-4 text-sm text-white">Programmable prompt</div>
+<div class="mt-2 text-sm text-white">Starship support</div>
+<div class="mt-2 text-sm text-white">Custom syntax highlighting</div>
+<div class="mt-2 text-sm text-white">Integrated UI modules</div>
+<div class="mt-4 text-xs text-neutral-500 text-center">Programmable, extensible
+<a href="glance/features/" class="lume-anchor">Learn more highlights</a>
+</div>
+</div>
+<div class="lume-metric-card lume-metric-item rounded-2xl p-6">
+<div class="lume-metric-value text-3xl font-extrabold">Syntax<span class="block text-base text-neutral-500 ml-1">More Natural</span></div>
+<div class="mt-4 text-sm text-white">More natural data structures</div>
+<div class="mt-2 text-sm text-white">More natural flow control</div>
+<div class="mt-2 text-sm text-white">More powerful error handling</div>
+<div class="mt-2 text-sm text-white">More powerful data pipelines</div>
+<div class="mt-4 text-xs text-neutral-500 text-center">Designed to reduce cognitive load
+<a href="features/" class="lume-anchor">Learn more comparisons</a>
+</div>
+</div>
+</div>
+
+<div class="text-center max-w-2xl mx-auto mb-3 py-6">
+<a href="doc/quickstart" class="lume-btn lume-btn-outline rounded-lg px-6 py-3 font-semibold text-sm inline-flex items-center gap-2">
+Quick Start
+<span class="lume-btn-arrow">→</span>
+</a>
+</div></section>
+
+<script>
+function lumeCopyInstall(btn) {
+  var el = document.getElementById('lume-install-cmd');
+  var text = el.innerText.trim();
+  navigator.clipboard.writeText(text).then(function () {
+    var old = btn.innerText;
+    btn.innerText = '已复制 ✓';
+    setTimeout(function () { btn.innerText = old; }, 1500);
+  });
+}
+</script>
+{{ end }}

@@ -1,5 +1,5 @@
 ---
-title: Lumesh 用户指南：语法和空格规则
+title: Lume 是什么，是否值得一试
 date: 2026-07-31 14:31:00
 highlight: true
 weight: 2
@@ -10,9 +10,9 @@ categories:
  - feature
 ---
 
-# Lume 是什么，值不值得一试？
 
-一句话概括：**Lume（Lumesh）是一门"像 JS 一样写、像 Bash 一样用、像光一样快"的现代 Shell 与脚本语言**，用来替代 Bash，专治各种 Bash 的历史包袱和反直觉设计。
+一句话概括：
+> **Lume（Lumesh）是一门"像 JS 一样写、像 Bash 一样用、像光一样快"的现代 Shell 与脚本语言**，用来替代 Bash，专治各种 Bash 的历史包袱和反直觉设计。
 
 ## 亮点（对比 Bash）
 

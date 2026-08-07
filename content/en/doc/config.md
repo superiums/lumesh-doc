@@ -1,263 +1,532 @@
 ---
 title: Configuration Files
-date: 2025-06-11 19:16:45
+date: 2026-07-20 15:16:45
 highlight: true
-weight: 3
+weight: 13
 tags:
- - syntax
+  - syntax
 categories:
- - wiki
- - syntax
+  - wiki
+  - syntax
 ---
 
-## Configuration File Paths
-- To view the configuration file path, type `About` and check the prelude item, or use `:About.prelude`.
+## Configuration File Location
 
-- **Default Path:**
+Lumesh automatically loads configuration files on startup, in the following order:
 
-If no configuration file path is specified in the command line, Lume will read the default configuration file located at `lumesh/config.lm` under the default path.
+1. Path specified via command-line argument `-p <path>`
+2. Path specified by environment variable `LUME_PROFILE`
+3. System config directory: `$config_dir/lumesh/config.lm` (Linux: `~/.config/lumesh/config.lm`, macOS: `~/Library/Application Support/lumesh/config.lm`)
+4. `.lume_config` in current directory
 
-| Platform | Path                                 | Example                                  |
-|----------|--------------------------------------|------------------------------------------|
-| Linux    | `$XDG_CONFIG_HOME` or `$HOME/.config` | /home/alice/.config                      |
-| macOS    | `$HOME/Library/Application Support`   | /Users/Alice/Library/Application Support |
-| Windows  | `{FOLDERID_RoamingAppData}`           | C:\Users\Alice\AppData\Roaming           |
+Configuration files are standard lumesh scripts that support conditional statements:
 
-You can execute `fs.dirs()` to view your default paths.
+```bash
+if IS_LOGIN {
+    # Execute only in login shell
+}
+if IS_INTERACTIVE {
+    # Execute only in interactive mode
+}
+# Execute in all modes
+```
+
+---
+
+## Variable Quick Reference
+
+| Variable | Type | Default Value | Scope |
+|----------|------|---------------|-------|
+| `LUME_KNOCK_VALIDATOR` | Function | None | Login |
+| `LUME_WELCOME` | String | Built-in welcome message | Interactive |
+| `LUME_PROMPT_SETTINGS` | Map | `{starship:0, ttl:2}` | Interactive |
+| `LUME_THEME` | String | `"one_dark"` | Interactive |
+| `LUME_THEME_CONFIG` | Map | None | Interactive |
+| `LUME_STRICT` | Boolean | `false` | Global |
+| `LUME_CFM` | Boolean | `false` | Global |
+| `LUME_NO_HISTORY` | Boolean | `false` | Interactive |
+| `LUME_HISTORY_FILE` | String | System cache directory | Interactive |
+| `LUME_COMPLETION_DIR` | String | System data directory | Interactive |
+| `LUME_SUDO_CMD` | String | `"sudo"` | Interactive |
+| `LUME_HOT_BINDINGS` | Map | None | Interactive |
+| `LUME_ABBREVIATIONS` | Map | None | Interactive |
+| `LUME_AI_CONFIG` | Map | None | Interactive |
+| `LUME_SLASH_BINDINGS` | Map | None | Interactive |
+| `LUME_SLASH_MENU` | Any | None | Interactive |
+| `LUME_EDITOR_THEME` | Map | None | Interactive |
+| `LUME_CONTINUATION_PROMPT` | String | `"..."` | Interactive |
+| `LUME_PRINT_DIRECT` | Boolean | `true` | Global |
+| `LUME_IFS_MODE` | Integer | `2` | Global |
+| `LUME_MODULES_PATH` | String | System data directory | Global |
+| `LUME_MAX_SYNTAX_RECURSION` | Integer | `100` | Global |
+| `LUME_MAX_RUNTIME_RECURSION` | Integer | `800` | Global |
+
+---
+
+## Detailed Description
+
+### Appearance and Prompt
+
+#### `LUME_WELCOME`
+- **Type**: String
+- **Description**: Welcome message displayed on startup. Displays default version welcome if not set.
+
+```bash
+set LUME_WELCOME = 'Welcome to my shell!'
+```
+
+---
+
+#### `LUME_PROMPT_SETTINGS`
+- **Type**: Map
+- **Fields**:
+  - `starship`: Whether to enable starship
+    - `0`: Disable
+    - `1`: Enable [starship](https://starship.rs/) prompt
+  - `ttl`: Prompt cache time (seconds), default `2`
+  - `prompt_template`: Template rendering, can be function or string
+  - `prompt_continuation`: Continuation symbol, string
+
+- **Description**: `prompt_template` takes effect when starship is disabled.
+  - **String mode**: Supports the following placeholders:
+    - `$CWD`: Full current path
+    - `$CWD_SHORT`: Shortened path
+    - `$CFM_TAG`: CFM mode marker (`"CFM"` or empty)
+    - `$STRICT_TAG`: Strict mode marker (`"S"` or empty)
+    - `$STATUS`: Status marker (`"OK"` or "Fail")
+    - `$DUARATION`: Command execution duration (ms)
+    - `$JOBS`: Number of background tasks
+  - **Lambda mode**: Receives `(dir, ctx)` two parameters, `ctx` contains `cfm` and `strict` two boolean fields, and `status`/`duration`/`jobs` three integer fields, called every time a prompt is rendered.
+
+```bash
+# String template
+set prompt_template = '$CWD_SHORT|$CFM_TAG> '
+
+# Lambda template (dynamic, supports git branches, etc.)
+set prompt_template = (dir, ctx) -> {
+    string.blue($dir) + ' |'.green().bold()
+    + ($ctx.cfm ? 'CFM'.green() + '|' : '')
+    + (if (fs.exists '.git') { git branch --show-current | .cyan() } else '')
+    + '> '.green().bold()
+}
+
+set LUME_PROMPT_SETTINGS = {
+    starship: 0,
+    ttl: 2
+    prompt_template,
+    prompt_continuation: '... '
+}
+```
+
+---
+
+#### `LUME_THEME`
+- **Type**: String
+- **Optional values**: `'one_dark'`, `'ayu_dark'`, `'light'`
+- **Default value**: `'one_dark'` (if not set)
+- **Description**: Base theme for syntax highlighting.
+
+```bash
+set LUME_THEME = 'ayu_dark'
+```
+
+---
+
+#### `LUME_THEME_CONFIG`
+- **Type**: Map (key is theme element name, value is ANSI color string)
+- **Description**: Override specific colors on top of base theme. Keys that can be overridden include:
+
+| Key | Description |
+|-----|-------------|
+| `mode` | Mode prompt (`>` `:`) |
+| `keyword` | Keywords |
+| `value_symbol` | Value symbol (`$var`) |
+| `operator` | Operators |
+| `operator_prefix` | Prefix operators |
+| `operator_infix` | Infix operators |
+| `operator_postfix` | Postfix operators |
+| `string_raw` | Raw string |
+| `string_template` | Template string |
+| `string_literal` | String literal |
+| `number_literal` | Number literal |
+| `integer_literal` | Integer literal |
+| `float_literal` | Float literal |
+| `symbol` | Regular symbol |
+| `builtin_cmd` | Built-in command |
+| `builtin_lib` | Built-in library |
+| `comment` | Comments |
+| `punctuation` | Punctuation |
+| `command_valid` | Valid command |
+| `regex` | Regular expressions |
+| `time` | Time literal |
+
+```bash
+set LUME_THEME_CONFIG = {
+    keyword: "\x1b[38;5;82m",   # Bright green
+    comment: "\x1b[38;5;244m",  # Gray
+    operator: COLOR.orange
+}
+```
+
+---
+
+#### `LUME_EDITOR_THEME`
+- **Type**: Map
+- **Description**: Editor (auto-completion and prompt) color theme, independent from syntax highlighting theme.
+Available colors:
+```
+"reset"
+"black"
+"dark_grey"
+"red"
+"dark_red"
+"green"
+"dark_green"
+"yellow"
+"dark_yellow"
+"blue"
+"dark_blue"
+"magenta"
+"dark_magenta"
+"cyan"
+"dark_cyan"
+"white"
+"grey"
+```
+
+```bash
+set LUME_EDITOR_THEME = {
+    hint : "grey",
+    completion_bg : "black",
+    completion_fg : "dark_yellow",
+    completion_selected_bg : "red",
+    completion_selected_fg : "white"
+}
+```
+
+---
+
+### Interactive Mode
+
+#### `LUME_CFM`
+- **Type**: Boolean
+- **Default value**: `false`
+- **Description**: Enables Command First Mode (CFM), where input lines are parsed as external commands rather than expressions. Can also be enabled via command-line `-m` parameter.
+
+```bash
+set LUME_CFM = true
+```
+
+---
+
+### History
+
+#### `LUME_NO_HISTORY`
+- **Type**: Boolean
+- **Default value**: `false`
+- **Description**: Disables history reading and writing (private mode). Can also be enabled via command-line `-H` parameter.
+
+```bash
+set LUME_NO_HISTORY = true
+```
+
+---
+
+#### `LUME_HISTORY_FILE`
+- **Type**: String
+- **Default value**:
+  `~/.cache/lume/history`
+- **Description**: History file path.
+
+```bash
+set LUME_HISTORY_FILE = '/tmp/lume_history'
+```
+
+---
+
+### Auto-completion
+
+#### `LUME_COMPLETION_DIR`
+- **Type**: String
+- **Default value**:
+  - Linux: `/usr/share/lumesh/completions`
+  - macOS: `~/Library/Application Support/lumesh/completions`
+  - Windows: `C:\Program Files\lumesh\completions`
+- **Description**: Directory containing auto-completion data files (CSV format).
+
+```bash
+set LUME_COMPLETION_DIR = '~/.local/share/lumesh/completions'
+```
+
+---
+
+### Shortcuts
+
+#### `LUME_SUDO_CMD`
+- **Type**: String
+- **Default value**: `"sudo"`
+- **Description**: `Alt+s` shortcut inserts at line beginning.
+
+```bash
+set LUME_SUDO_CMD = 'doas'
+```
+
+---
+
+#### `LUME_ABBREVIATIONS`
+- **Type**: Map (key is abbreviation, value is expanded string)
+- **Description**: Automatically expands to full command when pressing space after typing abbreviation.
+
+```bash
+set LUME_ABBREVIATIONS = {
+    xi:  'doas pacman -S',
+    xup: 'doas pacman -Syu',
+    xq:  'pacman -Q',
+}
+```
+
+---
+
+### Slash Commands
+
+#### `LUME_SLASH_BINDINGS`
+- **Type**: Map (key is slash command name, value is **function that receives one parameter** or lambda)
+- **Description**: Bindings for custom slash commands (`/xxx`). Built-in slash commands (`/history`, `/h`, `/hh`, `/hm`, `/cds`, `/q`, etc.) are not affected by this variable.
+
+```bash
+let open_file = (b) -> {fd -t file | ui.pick('select file:') ?! | handlr open -- _}
+set LUME_SLASH_BINDINGS = {
+    o: open_file,
+}
+```
+
+---
+
+#### `LUME_SLASH_MENU`
+- **Type**: Function (receives no parameters)
+- **Description**: Data source for slash command menu, used for interactive selection menu triggered by `/`.
+```bash
+fn LUME_SLASH_MENU(){
+    let m = {
+        open_file,
+        edit_file,
+    }
+    let ex = { ui.pick $m.keys() 'Fuzzy Execute' ?! | $m.at() }
+    if ex {ex('')}
+} ?: e -> print e.msg
 
 
-## History File Paths
-If not specified in the configuration file, history will be saved in the default path.
 
-On Linux/macOS, the filename is `.lume_history`. On Windows, the filename is `lume_history.log`.
+```
 
-Default paths:
+---
 
-| Platform | Path                               | Example                      |
-|----------|------------------------------------|------------------------------|
-| Linux    | `$XDG_CACHE_HOME` or `$HOME/.cache` | /home/alice/.cache           |
-| macOS    | `$HOME/Library/Caches`              | /Users/Alice/Library/Caches  |
-| Windows  | `{FOLDERID_LocalAppData}`           | C:\Users\Alice\AppData\Local |
+#### `LUME_HOT_BINDINGS`
+- **Type**: Map
+- **Description**:
+> Key format: "MODIFIER_key" (order CTRL_ALT_SHIFT: e.g., "CTRL_ALT_k", "CTRL_q", "ALT_h")
+> Value type:
+>   String -> inserts text into current line
+>   lambda/function -> executes immediately with environment access
+>         fn receive one arg as current buffer.
 
-You can execute `into.dirs()` to view your default paths.
+
+Similar to SLASH_BINDINGS, but acts before the end of current input line;
+
+Key-value can be string or function, function executes in isolated environment variables, can access copy of current environment variables, but any env modifications will not affect existing environment.
+
+Function also receives one parameter (text user has already typed in current line), function's return value if string is used to replace current line input.
+
+```bash
+set LUME_HOT_BINDINGS = {
+    CTRL_q: 'exit',
+    ALT_m: save_cmdmark,
+    'CTRL_/': menu,
+}
+
+```
 
 
-## Configuration Items
+---
 
-1. Support for configuring different modes separately.
-   By checking `IS_LOGIN` and `IS_INTERACTIVE`, different configurations can be applied for different modes.
+### AI Integration
 
-2. AI Interface Configuration.
- ```bash
- # ====== default AI Helper settings. following is default.
- let LUME_AI_CONFIG = {
-     host: "localhost:11434",
-     complete_url: "/completion",
-     chat_url: "/v1/chat/completions",
-     complete_max_tokens: 10,
-     chat_max_tokens: 100,
-     model: "",
-     system_prompt: "you're a lumesh shell script helper",
- }
- ```
+#### `LUME_AI_CONFIG`
+- **Type**: Map
+- **Description**: Configure local AI assistant (e.g., Ollama). `Alt+i` triggers AI prompt, `Alt+Enter` / `Alt+o` triggers AI generation.
 
-3. Key Binding Command Configuration.
- ```bash
- # ====== key bindings
- # NONE:0, SHIFT:2, ALT:4, CTRL:8,
- # ALT_SHIFT:6, CTRL_SHIFT: 10, CTRL_ALT:12, CTRL_ALT_SHIFT:14
- let LUME_HOT_MODIFIER = 4
- let LUME_HOT_KEYS = {
-     q: "exit",
-     c: "clear",
-     h: "fs.read ~/.cache/.lume_history | string.lines() | ui.pick('select history:') ?! | exec_str()",
-     x: "fs.read ~/.cache/bookmark | string.lines() | ui.pick('select bookmark:') ?! | exec_str()",
-     m: 'let cmd := "$CMD_CURRENT";let s = into.str(cmd); if s {s+"\n" >> /tmp/bookmark;println "\t[MARKED]"}',
- }
- ```
+| Field | Type | Default Value | Description |
+|-------|------|---------------|-------------|
+| `host` | String | `"localhost:11434"` | AI service address |
+| `chat_url` | String | `"/v1/chat/completions"` | Chat interface path |
+| `complete_max_tokens` | Integer | `10` | Maximum completion tokens |
+| `chat_max_tokens` | Integer | `100` | Maximum chat tokens |
+| `model` | String | `""` | Model name |
+| `api_key` | String | `""` | Access key |
+| `chat_prompt` | String | `"you're a lumesh shell helper"` | Prompt |
+| `syntax` | String | `""` | Lumesh syntax rules |
 
-4. Command Abbreviation Configuration.
- ```bash
- # ====== abbreviations
- let LUME_ABBREVIATIONS = {
-     xi: 'doas pacman -S',
-     xup: 'doas pacman -Syu',
-     xq: 'pacman -Q',
-     xs: 'pacman -Ss',
-     xr: 'doas pacman -Rs',
- }
- ```
+```bash
+let base = fs.dir_name($SCRIPT)
+let syntax = fs.read($base + '/syntax.md') + fs.read($base + '/libs.md') ?: ''
 
-5. Command Alias Configuration.
- ```bash
- # ====== alias
- alias int = into.int()
- alias str = into.str()
- alias each = list.map()
- alias sort = list.sort()
- alias group = list.group()
- alias table = into.table()
- alias format = string.format()
- alias ll = fs.ls -l
- alias lsx = ls -l --time-style=long-iso
- alias join = list.join()
- alias chars = string.chars()
- alias open = fs.read()
- ```
+set LUME_AI_CONFIG = {
+    host: 'localhost:11434',
+    complete_url: '/completion',
+    chat_url: '/v1/chat/completions',
+    complete_max_tokens: 10,
+    chat_max_tokens: 100,
+    model: 'qwen2.5-coder:7b',
+    chat_prompt: "you're a lumesh shell script helper",
+    syntax,
+}
+```
 
-6. History File Path Configuration.
- ```bash
- # ====== history file
- let LUME_HISTORY_FILE = "/tmp/lume_history"
- ```
+---
 
-7. Prompt Configuration.
-    ```bash
-        # MODE: 1=use template; 2=use starship; 0=use default.
-        let LUME_PROMPT_SETTINGS = {
-            MODE: 1,
-            TTL_SECS: 2
-        }
-    ```
-    The command line prompt can operate in the following modes:
-    - 0, default mode
-    - 1, template mode, where the template can be a regular expression or function.
+### Security
 
-      TTL is used to control the cache update frequency, in seconds.
+#### `LUME_KNOCK_VALIDATOR`
+- **Type**: Function or Lambda (no parameters, returns Boolean)
+- **Description**: Only takes effect in login mode (`IS_LOGIN`). Called by lumesh on startup, if returns `false` then immediately exits (`exit(1)`). Can be used for stronger verification in server environments.
 
-      Generally, regular expressions are more resource-efficient;
-      ```bash
-      # Templates support the following variables: $CWD, $CWD_SHORT
-      let LUME_PROMPT_TEMPLATE = (string.blue($CWD_SHORT) + string.yellow(string.bold(">> ")))
-      ```
-      Function templates can be used to render more complex prompts, such as displaying the git branch. Function templates consume slightly more resources than regular templates.
+```bash
+if IS_LOGIN {
+    set LUME_KNOCK_VALIDATOR = () -> {
+        let ans = read "Password: "
+        ans == 'secret'
+    }
+}
+```
 
-      ```bash
-      let LUME_PROMPT_TEMPLATE := x -> {
-          string.format "{} {}{}{} " string.blue(x) string.green(string.bold("|")) \
-          (if (into.exists '.git') {git branch --show-current | string.cyan()} else "") \
-          string.green(string.bold(">"))
-      }
-      ```
+---
 
-    - 2, starship mode
+### Global Behavior
 
-8. Welcome Message
- ```bash
- # ====== welcome msg
- let LUME_WELCOME = "Welcome to Lumesh!"
- ```
+#### `LUME_PRINT_DIRECT`
+- **Type**: Boolean
+- **Default value**: `true`
+- **Description**: Whether to automatically print evaluation result of expression (type and value). Set to `false` to disable this behavior, suitable for script mode.
 
-9. Enable VI Mode
- ```bash
- LUME_VI_MODE = True
- ```
+```bash
+set LUME_PRINT_DIRECT = false
+```
 
-10. Enable Strict Mode
- ```bash
-    # ====== default strict mode
-    let STRICT = True
- ```
- This setting has the lowest priority and may be overridden by the command parameter `-s` or the script-specified mode.
+---
 
-11. Control Direct Print Mode
- ```bash
-    # ====== default strict mode
-    let STRICT = True
- ```
- This mode controls whether to directly print the results and types of arithmetic channels. It is enabled by default. For example, after entering `5`, you will see:
-  ```bash
-  >> [Integer] <<
-  5
-  ```
+#### `LUME_IFS_MODE`
+- **Type**: Integer (bitmask)
+- **Default value**: `2`
+- **Description**: Controls in which scenarios `IFS` (Internal Field Separator) takes effect. Bit meanings:
 
-12. Sudo Command Completion
- ```bash
-    # ====== default strict mode
-    let LUME_SUDO_CMD = "doas"
- ```
- Pressing `Alt+s` will automatically add the sudo command. If you use `doas` or another sudo command, you can configure this option. The default value is `sudo`.
+| Bit value | Scenario |
+|-----------|----------|
+| `2` | Command string argument splitting (cmd str_arg) |
+| `4` | `for` loop string iteration |
+| `8` | `string.split` |
+| `16` | CSV parsing |
+| `32` | `ui.pick` string splitting |
+| `62` | Enable all |
+| `0` | Disable all |
 
-13. Configure `PATH` Environment Variable
- ```bash
- PATH = "~/.local/bin:" + $PATH
- ```
+```bash
+# Only for command arguments (default)
+set LUME_IFS_MODE = 2
 
-14. Configure `IFS`
- ```bash
- IFS = "\n"
- # IFS affect: 0:never; 2:cmd args; 4:for;  8:string.split; 16:csv; 32:pick; 62:all
- let LUME_IFS_MODE=2
- ```
- The latter is used to refine control over where IFS is enabled.
+# Enable all
+set LUME_IFS_MODE = 62
+```
 
-15. Configure Global Module Path
- ```bash
- let LUME_MODULES_PATH=/opt/mods
- ```
-When importing modules, it will first search in the current path's `./mods/`, then `./`, and finally in the global path.
+---
 
-16. Configure Maximum Recursion Depth
- ```bash
- let LUME_MAX_SYNTAX_RECURSION = 100   # Syntax nesting depth
- let LUME_MAX_RUNTIME_RECURSION = 800  # Execution depth
- ```
- This setting does not affect the execution of loop statements. It should only be set when you see a system prompt indicating that the depth needs to be increased.
+#### `LUME_MODULES_PATH`
+- **Type**: String
+- **Default value**: `lumesh/mod` in system data directory
+- **Description**: Root directory for `use` statement to find modules. Global modules should be placed here. Single project modules can be placed in mods directory at same level as script.
 
-17. Highlight Theme Configuration
- ```bash
- # ====== base theme: 'one_dark', 'ayu_dark', 'light'
- LUME_THEME = 'ayu_dark'
+```bash
+set LUME_MODULES_PATH = '~/.local/share/lumesh/mods'
+```
 
- # ====== theme modify
- LUME_THEME_CONFIG = {
-    keyword: "\x1b[38;5;170m",      # Purple (#C678DD)
-    #    ...
- }
+---
 
- ```
- `LUME_THEME` is used to set the base theme;
+#### `LUME_MAX_SYNTAX_RECURSION`
+- **Type**: Integer
+- **Default value**: `100`
+- **Description**: Maximum recursion depth for syntax parsing. Can be increased if script nesting depth is too deep.
 
- `LUME_THEME_CONFIG` is used to modify the base theme, where configurable items include:
- ```bash
- # One Dark core syntax colors - each using a different color
-  keyword,
-  value_symbol,
-  operator,
-  operator_prefix,
-  operator_infix,
-  operator_postfix,
+```bash
+set LUME_MAX_SYNTAX_RECURSION = 200
+```
 
-  # String-related colors
-  string_raw,
-  string_template,
-  string_literal,
-  string_error,
+---
 
-  # Numbers and literals
-  number_literal,
-  number_error,
-  integer_literal,
-  float_literal,
+#### `LUME_MAX_RUNTIME_RECURSION`
+- **Type**: Integer
+- **Default value**: `800`
+- **Description**: Maximum recursion depth for runtime (function calls). Can be increased if recursive function depth is too deep.
 
-  # Symbols and identifiers
-  symbol_none,
-  builtin_cmd,
-  symbol,
+```bash
+set LUME_MAX_RUNTIME_RECURSION = 1600
+```
 
-  # Comments and punctuation
-  comment,
-  punctuation,
+---
 
-  # REPL and interaction-related
-  command_valid,
-  hint,
-  completion_cmd,
-  completion_ai,
+## Complete Configuration Example
 
-  # Time token colors
-  time,
+```bash
+# ===== Login Mode =====
+if IS_LOGIN {
+    set PATH = '/usr/local/bin:/usr/bin:/bin'
+    # Optional: login verification
+    # set LUME_KNOCK_VALIDATOR = () -> { read "Password: " == 'secret' }
+}
 
-  # Regex token colors
-  regex,
- ```
+# ===== Interactive Mode =====
+if IS_INTERACTIVE {
+
+    # --- Appearance ---
+    set LUME_PROMPT_SETTINGS = { MODE: 1, TTL_SECS: 2 }
+    set LUME_PROMPT_TEMPLATE = (dir, ctx) -> {
+        string.blue($dir)
+        + ($ctx.cfm ? ' CFM'.green() : '')
+        + '> '.bold()
+    }
+    LUME_THEME = 'ayu_dark'
+
+    # --- Interactive Behavior ---
+    # set LUME_VI_MODE = true
+    # set LUME_STRICT = true
+    # set LUME_CFM = true
+
+    # --- History ---
+    # set LUME_NO_HISTORY = true
+    # set LUME_HISTORY_FILE = '/tmp/lume_history'
+
+    # --- Auto-completion ---
+    set LUME_COMPLETION_CYCLE = false
+    # set LUME_COMPLETION_DIR = '~/.local/share/lumesh/completions'
+
+    # --- Shortcuts ---
+    set LUME_SUDO_CMD = 'doas'
+    # --- Abbreviations ---
+    set LUME_ABBREVIATIONS = {
+        g: 'git',
+        gs: 'git status',
+    }
+
+    # --- AI ---
+    # set LUME_AI_CONFIG = {
+    #     host: 'localhost:11434',
+    #     model: 'qwen2.5-coder:7b',
+    # }
+}
+
+# ===== Global Settings =====
+PATH = '~/.local/bin:' + $PATH ?.
+set LUME_IFS_MODE = 2
+set LUME_PRINT_DIRECT = true
+# set LUME_MODULES_PATH = '~/.local/share/lumesh/mods'
+# set LUME_MAX_SYNTAX_RECURSION = 100
+# set LUME_MAX_RUNTIME_RECURSION = 800
+```

@@ -1,5 +1,5 @@
 ---
-title: Variables
+title: "Syntax: Variables"
 subtitle: (Basic Syntax)
 date: 2025-06-11 19:16:45
 highlight: true
@@ -18,78 +18,73 @@ categories:
 ### 1. **Data Types**
 #### Basic Types
   | Type       | Example                     |
-  |------------|-----------------------------|
-  | Variable   | `x`, `$a`                   |
-  | Integer    | `42`, `-3`                  |
-  | Float      | `3.14`, `-0.5`, `10%`       |
-  | String     | `"Hello\n"`, `'raw'`        |
-  | Boolean    | `True`, `False`             |
-  | List (Array)| `[1, "a", True]`           |
-  | Map (Dictionary)| `{name: "Alice", age: 30}`|
-  | Range      | `1..8`, `1..=10`            |
-  | Regex      | `r'^\w+'`                   |
-  | Time       | `t'2025-5-20'`              |
-  | File Size  | `4K`, `5T`                  |
-  | Null       | `none`                      |
+  |-----------|--------------------------|
+  | Variable     | `x`, `$a`                    |
+  | Integer       | `42`, `-3`               |
+  | Float       | `3.14`, `-0.5`, `10%`     |
+  | String     | `"Hello\n"`, `'raw'`      |
+  | Boolean     | `true`, `false`           |
+  | List (Array)   | `[1, "a", true]`          |
+  | Set   | `S{1, "a", true}`          |
+  | Map (BtreeMap) | `{name: "Alice", age: 30}`|
+  | Map (HashMap)  | `H{name: "Alice", age: 30}`|
+  | Range       | `1..8`, `1..=10`          |
+  | Regex       | `r'^\w+` |
+  | Time       | `t'2025-5-20'` |
+  | File Size | `4K`,`5T`  |
+  | Null       | `none`                    |
 
 #### Complex Types
   | Type       | Example                     |
-  |------------|-----------------------------|
-  | Function   | `fn add(x,y){return x+y}`  |
-  | Lambda     | `(x,y) -> x + y`           |
-  | Built-in Library | `Math.floor`          |
+  |-----------|--------------------------|
+  | Function     | `fn add(x,y){return x+y}`    |
+  | Lambda     | `(x,y) -> x + y`  |
+  | Built-in Library  | `math.floor`  |
 
   **Scope Rules**
-   - Lambda and function definitions create a child environment scope.
-   - Child environments inherit parent environment variables without modifying the parent scope.
+   - lambda, function functions create child environment scopes.
+   - Child environment inherits parent environment variables, doesn't modify parent scope.
 
 #### Strings
-  - Single quotes denote raw strings.
-  
-  - Double quotes support escaping:
-    + Text escape (e.g., `\n`)
-    + Unicode escape (e.g., `\u{2614}`)
-    + ANSI escape (e.g., `\033[34m`)
-    
-  - Backtick quotes denote string templates:
-    + Support for `$var` variable substitution
-    + Support for `${cmd arg}` sub-statement execution capture
-    + ANSI escape characters.
+  - Single quotes are raw strings.
 
+  - Double quotes support escaping:
+    + Text escapes (like `\n`)
+    + ANSI escapes (like `\033[34m`)
+    + Unicode escapes (like `\u{2614}`)
+
+  - Dot quotes are string templates:
+    + Supports `$var` variable substitution
+    + Supports `${expr}`/`{expr}` sub-expression execution capture
+    + All escape characters.
+
+  - `#wrap` string:
+    r#' ... '#  no escaping
+    r#" ... "#  only escapes quotes
+
+  
      ```bash
      print "Hello\nworld!\u{2614}"
-     Hello                           # Outputs two lines, \n is escaped to a newline
-     world!☔                         # Unicode escape, \u{2614} is the umbrella character
+     Hello                           # outputs two lines, \n escaped to newline
+     world!☔                         # unicode escape, \u{2614} is umbrella character
 
      let str2 = 'Hello\nworld!'
-     Hello\nworld!                   # Outputs one line, including the raw form of \n
+     Hello\nworld!                   # outputs one line, including raw \n form
 
      let a = [1,2,5]
      print `a is $a, and a[0] is ${a[0]}`
 
-     print "\033[31mRed msg\033[m"   # Outputs red "Red msg"
+     print "\033[31mRed msg\033[m"   # outputs red Red msg
      ```
 
-     _Variable substitution within backtick quotes is more efficient than sub-statement capture; it is recommended to use the former unless necessary._
-
-  - **Edge Cases**:
-     > Undefined escape sequences will result in an error, such as:
-
-      ```bash
-      echo "Hello\_"
-
-      [PARSE FAILED] syntax error: invalid string escape sequence `\_`
-            |
-          1 | echo "Hello\_"
-            |
-      ```
 
 #### File Size Type:
 
-  Composed of an integer followed by a unit, supporting the following units:
-  `"B" "K" "M" "G" "T" "P"`
+  Constructed with integer followed by unit, supports these units:
+  `"B" "K" "M" "G" "T" "P" `
 
-  Lumesh will automatically recognize the unit and output in a human-readable format, for example:
+
+  lumesh automatically recognizes units and outputs in human-readable format, for example:
   ```bash
   print 3050M 1038B 3000G
 
@@ -97,26 +92,27 @@ categories:
   2.98G 1K 2.93T
   ```
 
-  File size types can participate in calculations.
-  For example:
+  File size type can participate in operations.
+  Example:
   ```bash
-  1M > 30K      # Returns True
-  fs.ls -l | where(size>20K)   # Filters files larger than 20K
+  1M > 30K      # returns true
+  fs.ls -l | where(size>20K)   # filter files larger than 20K
   ```
 
-#### Date and Time Type
-For example: `t'2025-5-20'`
+#### Date/Time Type
+Example: `t'2025-5-20'`
 
-Date and time types can participate in calculations.
-For example:
+
+Date/time type can participate in operations.
+Example:
 ```bash
-t'2025-5-20' > t'2025-1-20'    # Returns True
+t'2025-5-20' > t'2025-1-20'    # returns true
 ```
-For specific operations, please refer to the built-in `time` module.
+Specific operations please refer to built-in function's `time` module
 
-#### Percentages
+#### Percentage
 
-  Written as a percentage, it will automatically be recognized as a float.
+  Written as percentage, automatically recognized as float
 
   ```bash
   print 37% 2% + 3
@@ -124,13 +120,13 @@ For specific operations, please refer to the built-in `time` module.
   0.37 3.02
   ```
 
-  _A percentage sign immediately following a number denotes a percentage, while a space followed by a percentage sign denotes a modulo operation._
+  _percent sign tightly after number is percentage, space after number + % is modulo operation_
 
 ### 2. **Variable Declaration**
-   - **Declare Variables**: Use the `let` keyword, supporting multiple variable declarations. The type is automatically assigned based on the value.
+   - **Declare Variable**: Use `let` keyword, supports multiple variable declarations. Type automatically allocated based on assignment.
      ```bash
-     let a             # Declaration
-     let x = 10        # Declaration and assignment
+     let a             # declare
+     let x = 10        # declare and assign
      ```
 
 ### 3. **Variable Assignment**
@@ -138,60 +134,60 @@ For specific operations, please refer to the built-in `time` module.
 ### Basic Assignment
 
 ```bash
-# Assignment
+# assignment
 a = 3
 
-# Variable declaration and assignment
+# variable declaration and assignment
 let x = 10
 let name = "Lumesh"
 
-# Multiple variable assignment
+# multi-variable assignment
 let a, b, c = 1, 2, 3
 let a, b, c = 1
 ```
 
-In non-strict mode, variables can be assigned directly without declaration.
+Non-strict mode doesn't need declaration, direct assignment
 
-*In strict mode, declaration is mandatory and must be unique.*
+*In strict mode, declaration is required and unique*
 
-### Delayed Assignment
+### Lazy Assignment
 
-Lumesh's unique delayed assignment feature:
+Lumesh's unique lazy assignment feature:
 
 ```bash
-# Use := for delayed assignment; the expression will not execute immediately
+# use := for lazy assignment, expression doesn't execute immediately
 let cmd := ls -l /tmp
 let calculation := 2 + 3 * 4
 
-# Execute only when needed
-eval(cmd)           # Executes ls -l /tmp
-eval(calculation)   # Calculates to 14
+# execute when needed
+eval(cmd)           # execute ls -l /tmp
+eval(calculation)   # calculate to 14
 
-# If it's a command, it can also be executed directly
+# if it's a command, can also execute directly
 cmd
 ```
 
 ### Destructuring Assignment
 
-Supports destructuring assignment for arrays and maps:
+Supports destructuring for arrays and maps:
 
 ```bash
-# Array destructuring
+# array destructuring
 let [first, second, *rest] = [1, 2, 3, 4, 5]
 # first = 1, second = 2, rest = [3, 4, 5]
 
-# Map destructuring
+# map destructuring
 let {name, age} = {name: "Bob", age: 30, city: "NYC"}
 # name = "Bob", age = 30
 
-# Renaming destructuring
+# rename destructuring
 let {name: userName, age: userAge} = user_data
 ```
 
 ### 4. **Variable Usage**
-Generally, you can use `a` or `$a` directly.
+Generally can directly use `a` or `$a`
 
-*In strict mode, you must use `$a` only.*
+*In strict mode only can use `$a`*
 ```bash
 print $a
 ```
@@ -203,9 +199,11 @@ del x
 ```
 
 ### 6. **Variable Type Detection**
-Use the `typeof` function.
+Use `typeof`/`symof` function
 ```bash
 let a = 10
 typeof a                   # Integer
-typeof a == "Integer"      # True
+typeof a == "Integer"      # true
+# type detection of expression before execution:
+symof a+1                  # BinaryOp
 ```

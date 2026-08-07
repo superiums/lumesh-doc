@@ -96,7 +96,7 @@ lumesh采用和bash一样的管道符，但更加强大：
 - **筛选**
   ```bash
   # 按大小筛选数据，并显示指定列：
-  fs.ls -l | where(size > 5K) | select(name,size,modified)
+  fs.ls -lh | where(size > 5K) | select(name,size,modified)
 
   # 输出
   +--------------------------------------+
@@ -111,7 +111,7 @@ lumesh采用和bash一样的管道符，但更加强大：
 - **排序**
   ```bash
   # 按时间筛选数据，并按指定列排序
-  fs.ls -l | where( fs.diff('d',modified) > 3 ) | sort(size,name)
+  fs.ls -lh | where( modified.diff(time.now(),'d') > 3 ) | .sort(size,name)
 
   # 输出
   +-------------------------------------------------------+
@@ -130,7 +130,7 @@ lumesh采用和bash一样的管道符，但更加强大：
 - **分组**
   ```bash
   # 按类型分组
-  fs.ls -l | group 'type'     # type是函数名，所以引号不能省略
+  fs.ls -lh | group 'type'     # type是函数名，所以引号不能省略
 
   +-----------------------------------------------------------------+
   | KEY        VALUE                                                |
@@ -167,7 +167,7 @@ lumesh采用和bash一样的管道符，但更加强大：
 > 但比较数据时，需要手动转换类型。
 
   ```bash
-  ls -l --time-style=long-iso | .table() | where(int C4>1000)
+  ls -l --time-style=long-iso | .to_table() | where(int C4>1000)
 
   # 输出
   +------------------------------------------------------------------+
@@ -188,8 +188,8 @@ lumesh采用和bash一样的管道符，但更加强大：
 - `>!` 覆盖输出
 `1 + 2 >> result.txt`
 
-*错误重定向：结合错误处置符*
-具体用法请参考 错误处理章节。
+错误处理：请参考下一节 [错误处理](#错误处理)。
+*错误输出重定向：* 请参考 [后台运行 和 输出控制符](syntax4#'后台运行 和 输出控制符')
 
 | 重定向类型               | Lume                  | Bash                    |
 |--------------------------|-----------------------|-------------------------|
@@ -272,7 +272,7 @@ lumesh采用和bash一样的管道符，但更加强大：
       a / b
   } ?: e
 
-  div(3,0)                # the defined error handling will be executed here.
+  div(3,0)                # the defined error handling will be executed on every call.
   ```
 ### 错误调试：
 - 错误提示
@@ -304,45 +304,43 @@ lumesh采用和bash一样的管道符，但更加强大：
   〗
   ```
 
+- 错误捕获
+利用错误捕获，可以获取错误发生的详细信息，包括：`ast, code, expr, msg, type`
+```bash
+5/0 ?: e -> e
 
-- `debug` 命令
-  如需进一步调试，可以使用`debug` 和 `ddebug` , `typeof` 命令。
+# 输出如下：
+╭───────┬────────────────────────╮
+│ KEY   │ VALUE                  │
+├───────┼────────────────────────┤
+│ ast   │ BinaryOp〈/〉          │
+│       │   Integer〈5〉         │
+│       │   Integer〈0〉         │
+│ code  │ 9                      │
+│ depth │ 2                      │
+│ expr  │ 5 / 0                  │
+│ msg   │ can't divide 5 by zero │
+│ type  │ BinaryOp               │
+╰───────┴────────────────────────╯
+```
+
+- 调试命令
+  如需进一步调试，可以使用`debug`/`ddebug` , `typeof`/`symof`, `assert`/`when`命令。
+
+  debug调试（复杂语句可以用{}或()包裹）：
 
   ```bash
-  # 简单数据调试：
-  let c = 0..8
-  debug c                     # 输出：Range〈0..9,1〉
-
-  # 复杂语句调试：
-  let a = fs.ls -l
-  /home/tix |> debug a
-
-  # 输出：
-  List
-    Map
-      mode:
-        Integer〈511〉
-      modified:
-        DateTime〈2025-02-20T03:26:13.582549757〉
-      name:
-        String〈"Documents"〉
-      size:
-        FileSize〈FileSize { size: 21, unit: B }〉
-      type:
-        String〈"symlink"〉
-  ,
-    Map
-      mode:
-        Integer〈448〉
-      modified:
-        DateTime〈2026-01-31T03:57:48.270299425〉
-      name:
-        String〈"Downloads"〉
-      size:
-        FileSize〈FileSize { size: 0, unit: B }〉
-      type:
-        String〈"directory"〉
-
+  debug(x -> x+1)
+  ╭─────────────────────┬────────┬──────────────────╮
+  │ EXPR                │ TYPE   │ VALUE            │
+  ├─────────────────────┼────────┼──────────────────┤
+  │ Lambda〈x〉         │ Lambda │ (x) -> { x + 1 } │
+  │   Block             │        │                  │
+  │     BinaryOp〈+〉   │        │                  │
+  │       Symbol〈"x"〉 │        │                  │
+  │       Integer〈1〉  │        │                  │
+  │                     │        │                  │
+  ╰─────────────────────┴────────┴──────────────────╯
   ```
-- Log 模块
-  Log模块的使用也有利于错误调试，具体请参考[Log模块文档](/zh-cn/doc/libs/log)
+- 调试日志
+  Log模块的使用也有利于错误调试，具体请参考[Log模块文档](/zh-cn/doc/libs/api/log)

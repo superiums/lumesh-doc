@@ -31,15 +31,6 @@ categories:
 ### Bash 的折磨
 在 Bash 的世界里，一切皆字符串。你以为你在操作变量，实际上你在玩一场随时会走火的游戏。
 
-
-引号是必须的护身符，忘了它，你可能就会在 production 环境里删库跑路。每个新手都血淋淋地踩过这些坑，而可悲的是，每个老手也依然在心惊胆战地踩。
-
-### Lume 的轻松
-告别猜忌，让代码回归直觉。
-
-
-
-{{% flex gap=3 wrap=true direction="column" %}}
 ```bash
 # 你以为这会输出 15，但实际上...
 x=10
@@ -53,6 +44,11 @@ filename="my file.txt"
 rm $filename    # 实际执行: rm my file.txt  → 瞬间删错两个文件！
 rm "$filename"  # 这才是唯一的保命符
 ```
+
+引号是必须的护身符，忘了它，你可能就会在 production 环境里删库跑路。每个新手都血淋淋地踩过这些坑，而可悲的是，每个老手也依然在心惊胆战地踩。
+
+### Lume 的轻松
+告别猜忌，让代码回归直觉。
 
 ```bash
 let x = 10
@@ -72,7 +68,6 @@ let filename = "my file.txt"
 fs.rm filename   # 绝对安全，filename 是一个完整的值，不是两个词
 ```
 
-{{% /flex %}}
 
 ---
 
@@ -667,3 +662,7 @@ fs.ls -lh \
 ```
 
 **夺回对工具的控制权。你的代码，本该如此优雅。**
+
+[快速开始](../doc/quickstart)
+
+[进一步对比](../topics/bashlife)

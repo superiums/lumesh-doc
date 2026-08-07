@@ -1,7 +1,8 @@
 ---
-title: 惊鸿一瞥
-date: 2025-06-11 19:16:45
+title: 快速概览
+date: 2026-07-11 19:16:45
 highlight: true
+weight: 1
 tags:
  - glance
 categories:
@@ -9,72 +10,252 @@ categories:
  - why
 ---
 
+
+### 交互
+
 ![demo](images/demo.gif)
 
-## 1.1 什么是Lumesh
 
-Lumesh 是一个现代化的 shell 和脚本语言，作为 Bash 的替代者而设计。它采用 Rust 实现，专为高性能和用户友好体验而打造，我们的目标是："像 JavaScript 一样书写，像 Bash 一样工作，像光一样运行"。
+### 语法高亮
 
-## 1.2 为什么要选择 Lumesh
+![highlight](images/highlight.gif)
 
-### 性能优势
-Lumesh 有着卓越的性能表现，100万次循环仅需185ms，比Bash的2068ms快11倍 。
-Lumesh 有着比传统shell更小的体积（仅3MB)和更低的内存使用(仅4.8MB)。
+- 自动补全
+   * 命令补全/提示
+   * 参数补全/提示
+   * 路径补全
+   * 历史命令补全/提示
+   * 内置库补全/提示，参数提示
+   * ai补全提示(alt+i)
 
-### 语法友好度
-相比传统Shell，Lumesh提供更现代、更直观的语法设计，大大降低了学习成本。
+| ![complete](images/completion.gif) | ![complete](images/ai.gif) |
+|------------------------|------------------------|
 
 
-### 交互友好
-提供命令和参数自动补全，语法高亮，快捷键绑定等特性。
+- 细致的错误提示
 
-### 对比
+|          语法错误提示          |         运行错误提示           |
+|------------------------|------------------------|
+| ![err](images/err.gif) | ![err runtime](images/err_runtime.gif) |
 
-| 对比项目|    lume       |     bash      |     dash      |     fish      |
+
+### 按键绑定
+
+#### 快捷键绑定,可自定义函数修改输入行
+```bash
+set LUME_HOT_BINDINGS = {
+    CTRL_q: 'exit',
+    ALT_m: save_cmdmark,
+    CTRL_SHIFT_M: select_cmdmark,
+    CTRL_SHIFT_D: select_dirmark,
+    ALT_e: fix_typos,
+    CTRL_SHIFT_t: timestamp,
+    'CTRL_/': menu,
+}
+```
+
+#### 斜杠命令
+1. 内置/命令：
+- `/` 命令菜单
+- `/ <query>` 快速模糊目录跳转，类似zoxide的z命令
+- `/h [prefix]` 历史命令模糊搜索
+![slash cmd](images/bindings.gif)
+
+2. 支持自定义/xxx命令
+```bash
+let open_file = (b) -> {fd -t file | ui.pick('select file:') ?! | xdg-open -- _}
+
+set LUME_SLASH_BINDINGS = {
+    sm: save_cmdmark,
+    sd: save_dirmark,
+    m: select_cmdmark,
+    d: select_dirmark,
+    g: fuzzy_go,
+    o: open_file,
+    e: edit_file,
+    sc: search_content,
+    cm: git_commit,
+}
+```
+
+
+### 性能
+
+ * 内存使用
+
+|          lume          |         fish           |
+|------------------------|------------------------|
+| ![mem_lume](images/mem_lume.png) | ![mem_fish](images/mem_fish.png) |
+|          bash          |         dash           |
+| ![mem_bash](images/mem_bash.png) | ![mem_dash](images/mem_dash.png) |
+
+
+ * 循环测试
+
+|          lume          |         fish           |
+|------------------------|------------------------|
+| ![time_lume](images/time_lume.png) | ![time_fish](images/time_fish.png) |
+|          bash          |         dash           |
+| ![time_bash](images/time_bash.png) | ![time_dash](images/time_dash.png) |
+
+_其中fish无法成功完成百万次循环_
+
+
+ * 软件包大小（安装后）
+
+|         |    lume       |     bash      |     dash      |     fish      |
 |---------|---------------|---------------|---------------|---------------|
-| 速度(百万循环)    |     *****     |     ***       |     ****      |    *          |
-| 交互    |     ****      |     **        |     *         |    *****      |
-| 语法    |     *****     |     **        |     *         |    ****       |
-| 体积    |     ****      |     ***       |     *****     |    **         |
-| 错误提示|     *****     |     *         |     *         |    ***        |
-| 错误处理|     *****     |     *         |     *         |    *        |
-| 内置库  |     *****     |               |               |    *         |
-| 按键绑定|     ☑      |               |               |      ☑        |
-| 结构化管道|     ☑      |               |               |              |
-| AI交互  |     ☑        |               |               |               |
+| 版本    |    v0.16.10     |    v5.2.037   |    v0.5.12    |   v4.0.2      |
+| 体积    |    3.97 MB     |    9.2 MB     |    153.8 KiB  |   21.64 MB    |
 
-## 1.3 Lumesh 的核心亮点
 
-### LUME 设计理念
-Lumesh 的名称源自"光"（lume [lʌmi]），体现四大核心设计原则：
+* 测试结果
 
-- **Lightweight（轻量级）**：设计简洁、资源占用少，适合快速启动场景
-- **Ultimate（功能强大）**：提供全面的命令行体验，满足高级用户需求  
-- **Modern（现代化）**：采用现代设计理念，支持最新脚本语言特性
-- **Efficient（高效）**：命令执行和脚本处理效率高、响应快
+| ![highlight](images/mem_chart.svg) | ![highlight](images/time_chart.svg) |
+|------------------------|------------------------|
 
-## 1.4 Lumesh 解决的核心问题
+_由于fish无法完成百万次任务，我们取值它完成一半任务的时间_
 
-### 传统Shell的痛点
-1. **语法限制**：传统Shell语法陈旧，学习曲线陡峭
-2. **错误处理困难**：缺乏灵活的错误捕获和恢复机制
-3. **数据处理能力弱**：难以处理结构化数据
-4. **编程能力不足**：缺乏现代编程语言特性
+### 语法
 
-### Lumesh的解决方案
-- **现代语法**：支持解构赋值、箭头函数、链式调用、高阶函数、装饰器等现代特性
-- **强大错误处理**：提供7种错误捕获操作符（`?.`、`?:`、`?+`、`??`、`?>`、`?!`、`?~`）
-- **结构化管道**：支持在管道中传递和处理结构化数据
-- **丰富内置库**：提供17个内置模块，涵盖文件系统、字符串处理、时间操作等 
+语法友好易用。
 
-## 1.5 适用场景
+- 直接数学运算
 
-Lumesh 特别适合以下场景：
-- **日常系统管理**：CFM模式让传统命令操作无缝过渡
-- **脚本开发**：现代语法让脚本编写更高效
-- **数据处理**：结构化管道和内置库简化数据操作
-- **开发工作流**：与Git等开发工具高效集成
+```bash
+ 6 / 3
+ 5 - 1
+ 1+2^3*2
+```
 
-通过这些创新特性，Lumesh 成功地将Shell的易用性与现代编程语言的强大功能结合起来，为用户提供了一个既熟悉又强大的命令行环境。
+- 变量
+```bash
+let a = (2+3)*5
+print "a=" a
+print `a={a}`
+
+let b,c = 1,2     # 支持多变量赋值
+println b c
+println(b,c)      # 也可以
+```
+
+- 数组/列表
+```bash
+let arr = [10, "a", true]
+let arr_b = 0...10
+
+arr[0]       # → 10
+
+# 切片操作
+arr[1..3]     # → ["a", true]（左闭右开）
+arr[:2]     # → [10, true]（步长2）
+arr[-1..]      # → true（切片支持负数索引）
+
+# 复杂嵌套
+[1,24,5,[5,6,8]][3][1]     # 显示6
+```
+
+- 映射/字典
+```bash
+let dict = {name: "Lume", age: 2}
+
+# 基础访问
+dict.name
+dict[name]
+```
+
+- if条件语句
+```bash
+if a>0 && b==0 {
+   print OK
+}else{
+   print BAD
+}
+```
+
+- match匹配语句
+```bash
+match a {
+ 10 => print "ten",
+ 20 => print "twenty"
+ _ => print other
+}
+```
+
+- 其他语句
+同时支持 *for, while, loop* 等循环语句.
+条件赋值语句 *a?b:c*
+延迟赋值语句 `let a := b + c`
+
+- lambda表达式
+```bash
+let addone = x -> x+1
+let add = (x,y) -> x+y
+
+addone(2)
+add(3,4)
+```
+
+- function函数
+
+  > 支持高阶函数
+  > 支持函数嵌套
+  > 支持默认参数
+  > 支持剩余参数收集
+
+```bash
+fn add(x,y=0,*other){     # =提供默认参数，*收集剩余参数
+ x+y+len(other)
+}
+
+add(3)
+add(3,4)
+add(3,4,5,6,7)
+```
+
+- error catch
+
+```bash
+let e = x -> print x
+
+3 / 0 ?: e # 你可以使用函数来捕获和处理错误
+3 / 0 ?: 0 # 在失败时给出默认值
+
+3 / 0 ?. # 你也可以选择忽略它。
+3 / 0 ?? # 你也可以选择在 错误输出 上显示它。
+3 / 0 ?+ # 你也可以选择将其合并到 标准输出。
+3 / 0 ?! # 你也可以选择将错误作为结果使用，这对错误重定向很有用
+
+```
+错误捕获可以在表达式和整个函数声明中使用。
+
+- 智能管道
+
+**智能管道**可以自动适应输入和输出格式，智能支持字节管道和 *结构化数据管道*。
+
+> 结构化管道示例 :
+
+```bash
+
+ls -l | into.table() | where( int C4 > 4000 )            # 使用系统ls命令
+
+let thead = [mode,i,user,group,size,mday,mtime,name]
+ls -l | into.table(thead)  | where(int size > 400) | select([name,size,mtime])   # 自定义转换表头
+
+fs.ls -lh | where(size > 3M) | select(name)              # 使用内置ls命令
+```
 
 [快速开始](../doc/quickstart)
+
+## 手册
+
+ - [语法手册](../doc/syntax)
+ - [内置库函数](../doc/libs/)
+ - [按键绑定](../doc/keys)
+ - [Bash语法对比](../glance/bash)
+
+## 测试脚本
+
+ - [syntax-test](https://codeberg.org/santo/lumesh/raw/branch/main/src/tests/op-test.lm)
+ - [benchmark-test](https://codeberg.org/santo/lumesh/raw/branch/main/src/tests/benchmark.lm)
+ - [benchmark-bash-test](https://codeberg.org/santo/lumesh/raw/branch/main/src/tests/benchmark.sh)

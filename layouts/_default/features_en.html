@@ -1,0 +1,408 @@
+{{ define "main" }}
+<section id="features" class="lume-section lume-features py-20 px-6 lg:px-16">
+    <div class="w-full my-3">
+        <div class="text-center mb-6">
+        <img src="{{ "images/ban.svg" | relURL }}" alt="Lumesh" class="block w-full h-auto">
+    </div>
+    </div>
+    <div class="mx-auto max-w-7xl">
+        <div class="text-center max-w-2xl my-3 p-6 mx-auto">
+            <p class="lume-eyebrow text-sm my-3 font-medium">Why Lume</p>
+            <h2 class="text-2xl lg:text-3xl font-extrabold text-white">
+                Every Bash pitfall is a design starting point for Lume
+            </h2>
+            <p class="mt-4 text-neutral-400 text-sm lg:text-base">
+                Secure by default, explicit is better than implicit — 11 dimensions, tackling Bash's historical baggage one by one
+            </p>
+        </div>
+
+        <div class="mt-14 flex flex-wrap gap-4">
+            <div class="lume-feature-card rounded-2xl p-6 flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="lume-feature-icon flex items-center justify-center rounded-lg text-lg"
+                        >⌨</span
+                    >
+                    <h3 class="text-white font-semibold text-base">Syntax</h3>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-bash"
+                        >Bash</span
+                    >
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        Space-sensitive, <code class="lume-inline-code">[ ]</code
+                        >/<code class="lume-inline-code">[[ ]]</code>/<code
+                            class="lume-inline-code"
+                            >(( ))</code
+                        >
+                        messy, no spaces in assignments
+                    </p>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-lume"
+                        >Lume</span
+                    >
+                    <p class="text-neutral-200 text-sm leading-relaxed">
+                        Spaces optional, <code class="lume-inline-code">==</code>
+                        unifies comparison across all types, no magic parentheses needed
+                    </p>
+                </div>
+            </div>
+
+            <div class="lume-feature-card rounded-2xl p-6 flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="lume-feature-icon flex items-center justify-center rounded-lg text-lg"
+                        >🔢</span
+                    >
+                    <h3 class="text-white font-semibold text-base">Type System</h3>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-bash"
+                        >Bash</span
+                    >
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        Everything is a string, need <code class="lume-inline-code">$(( ))</code
+                        > for arithmetic, no floats, overflows don't error
+                    </p>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-lume"
+                        >Lume</span
+                    >
+                    <p class="text-neutral-200 text-sm leading-relaxed">
+                        Full types: integers/floats/arrays/maps/ranges/regex/time/file-size literals, operations written directly
+                    </p>
+                </div>
+            </div>
+
+            <div class="lume-feature-card rounded-2xl p-6 flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="lume-feature-icon flex items-center justify-center rounded-lg text-lg"
+                        >❝</span
+                    >
+                    <h3 class="text-white font-semibold text-base">String</h3>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-bash"
+                        >Bash</span
+                    >
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        Implicit splitting+glob expansion is a minefield, nested interpolation escaping hell
+                    </p>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-lume"
+                        >Lume</span
+                    >
+                    <p class="text-neutral-200 text-sm leading-relaxed">
+                        Three string types (raw/escaped/template interpolation), <code
+                            class="lume-inline-code"
+                            >StringSafe</code
+                        >
+                        type prevents injection
+                    </p>
+                </div>
+            </div>
+
+            <div class="lume-feature-card rounded-2xl p-6 flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="lume-feature-icon flex items-center justify-center rounded-lg text-lg"
+                        >🗂</span
+                    >
+                    <h3 class="text-white font-semibold text-base">Data Structures</h3>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-bash"
+                        >Bash</span
+                    >
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        Arrays/associative arrays syntax is cumbersome, no nested access support
+                    </p>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-lume"
+                        >Lume</span
+                    >
+                    <p class="text-neutral-200 text-sm leading-relaxed">
+                        Intuitive array/map literals, supports <code class="lume-inline-code">select</code> (SQL-like) and <code class="lume-inline-code">get</code> dot-path access
+                    </p>
+                </div>
+            </div>
+
+            <div class="lume-feature-card rounded-2xl p-6 flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="lume-feature-icon flex items-center justify-center rounded-lg text-lg"
+                        >⤳</span
+                    >
+                    <h3 class="text-white font-semibold text-base">Flow Control</h3>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-bash"
+                        >Bash</span
+                    >
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        <code class="lume-inline-code">case</code>
+                        has many pitfalls, only wildcard matching supported
+                    </p>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-lume"
+                        >Lume</span
+                    >
+                    <p class="text-neutral-200 text-sm leading-relaxed">
+                        <code class="lume-inline-code">match</code>
+                        supports multi-value/range/regex matching; <code class="lume-inline-code"
+                            >if</code
+                        >/<code class="lume-inline-code">for</code>
+                        can be expression return values
+                    </p>
+                </div>
+            </div>
+
+            <div class="lume-feature-card rounded-2xl p-6 flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="lume-feature-icon flex items-center justify-center rounded-lg text-lg"
+                        >ƒ</span
+                    >
+                    <h3 class="text-white font-semibold text-base">Functions</h3>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-bash"
+                        >Bash</span
+                    >
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        Only positional parameters, return values can only be 0-255 exit codes
+                    </p>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-lume"
+                        >Lume</span
+                    >
+                    <p class="text-neutral-200 text-sm leading-relaxed">
+                        Named parameters, default values, variadic parameters, any return value, Lambda/closure/currying, decorators
+                    </p>
+                </div>
+            </div>
+
+            <div class="lume-feature-card rounded-2xl p-6 flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="lume-feature-icon flex items-center justify-center rounded-lg text-lg"
+                        >🔒</span
+                    >
+                    <h3 class="text-white font-semibold text-base">Scope</h3>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-bash"
+                        >Bash</span
+                    >
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        Variables pollute global scope by default
+                    </p>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-lume"
+                        >Lume</span
+                    >
+                    <p class="text-neutral-200 text-sm leading-relaxed">
+                        Functions have isolated scope by default, parent scope modification requires explicit <code class="lume-inline-code">set</code>
+                    </p>
+                </div>
+            </div>
+
+            <div class="lume-feature-card rounded-2xl p-6 flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="lume-feature-icon flex items-center justify-center rounded-lg text-lg"
+                        >🔀</span
+                    >
+                    <h3 class="text-white font-semibold text-base">
+                        Pipes / Subprocesses
+                    </h3>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-bash"
+                        >Bash</span
+                    >
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        Right side of pipe runs in subshell, variable changes lost; can only pass text streams
+                    </p>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-lume"
+                        >Lume</span
+                    >
+                    <p class="text-neutral-200 text-sm leading-relaxed">
+                        Four pipe types (standard/positional/distribute/PTY), structured data flows directly, no subprocesses spawned
+                    </p>
+                </div>
+            </div>
+
+            <div class="lume-feature-card rounded-2xl p-6 flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="lume-feature-icon flex items-center justify-center rounded-lg text-lg"
+                        >⚠</span
+                    >
+                    <h3 class="text-white font-semibold text-base">Error Handling</h3>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-bash"
+                        >Bash</span
+                    >
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        Relies on exit codes, need manual <code class="lume-inline-code">set -euo pipefail</code>
+                    </p>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-lume"
+                        >Lume</span
+                    >
+                    <p class="text-neutral-200 text-sm leading-relaxed">
+                        Compiler-level error messages + 7 error catching operators
+                    </p>
+                </div>
+            </div>
+
+            <div class="lume-feature-card rounded-2xl p-6 flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="lume-feature-icon flex items-center justify-center rounded-lg text-lg"
+                        >📦</span
+                    >
+                    <h3 class="text-white font-semibold text-base">Modularity</h3>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-bash"
+                        >Bash</span
+                    >
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        <code class="lume-inline-code">source</code>
+                        pollutes global namespace, no module system
+                    </p>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-lume"
+                        >Lume</span
+                    >
+                    <p class="text-neutral-200 text-sm leading-relaxed">
+                        <code class="lume-inline-code">use ... as</code>
+                        module imports + 22 on-demand built-in modules
+                    </p>
+                </div>
+            </div>
+
+            <div class="lume-feature-card rounded-2xl p-6 flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <span
+                        class="lume-feature-icon flex items-center justify-center rounded-lg text-lg"
+                        >⚡</span
+                    >
+                    <h3 class="text-white font-semibold text-base">Performance</h3>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-bash"
+                        >Bash</span
+                    >
+                    <p class="text-neutral-400 text-sm leading-relaxed">
+                        About 2200ms for one million loops
+                    </p>
+                </div>
+                <div class="lume-feature-row">
+                    <span class="lume-feature-tag lume-feature-tag-lume"
+                        >Lume</span
+                    >
+                    <p class="text-neutral-200 text-sm leading-relaxed">
+                        About 200ms, 10x+ faster
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section
+    id="more-features"
+    class="lume-section lume-more-features py-20 px-6 lg:px-16"
+>
+    <div class="mx-auto max-w-7xl">
+        <div class="text-center max-w-2xl mx-auto mb-3">
+            <p class="lume-eyebrow text-sm mb-3 font-medium">
+                Beyond the shell
+            </p>
+            <h2 class="text-2xl lg:text-3xl font-extrabold text-white">
+                More than replacing Bash
+            </h2>
+        </div>
+
+        <div class="mt-14 flex flex-wrap gap-4">
+            <div class="lume-more-card rounded-2xl p-6 flex flex-col gap-3">
+                <span
+                    class="lume-more-icon rounded-xl flex items-center justify-center text-xl"
+                    >✨</span
+                >
+                <h3 class="text-white font-semibold">Modern Interactive Experience</h3>
+                <p class="text-neutral-400 text-sm leading-relaxed">
+                    Abbreviation expansion, programmable hotkeys/slash commands, programmable prompt, syntax highlighting themes, auto-completion,
+                    and
+                    <strong class="text-neutral-200 font-medium"
+                        >AI Assistant</strong
+                    >
+                    for command completion and smart suggestions.
+                </p>
+            </div>
+
+            <div class="lume-more-card rounded-2xl p-6 flex flex-col gap-3">
+                <span
+                    class="lume-more-icon rounded-xl flex items-center justify-center text-xl"
+                    >⏻</span
+                >
+                <h3 class="text-white font-semibold">Automatic Cleanup of Background Tasks</h3>
+                <p class="text-neutral-400 text-sm leading-relaxed">
+                    When the main process exits, all background tasks follow automatically, no need for
+                    <code class="lume-inline-code">trap</code> manual cleanup.
+                </p>
+            </div>
+
+            <div class="lume-more-card rounded-2xl p-6 flex flex-col gap-3">
+                <span
+                    class="lume-more-icon rounded-xl flex items-center justify-center text-xl"
+                    >🌐</span
+                >
+                <h3 class="text-white font-semibold">Cross-platform</h3>
+                <p class="text-neutral-400 text-sm leading-relaxed">
+                    Consistent experience anywhere, no need to rewrite scripts for different systems.
+                </p>
+            </div>
+
+            <div class="lume-more-card rounded-2xl p-6 flex flex-col gap-3">
+                <span
+                    class="lume-more-icon rounded-xl flex items-center justify-center text-xl"
+                    >🔧</span
+                >
+                <h3 class="text-white font-semibold">Familiar Daily Workflow</h3>
+                <p class="text-neutral-400 text-sm leading-relaxed">
+                    Provides
+                    <strong class="text-neutral-200 font-medium">CFM</strong
+                    > (Command-Focused Mode) for daily CLI scenarios, while also being compatible with
+                    <code class="lume-inline-code">include</code>
+                    simple inclusion style.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center max-w-2xl mx-auto mb-3 py-6">
+      <a href="/glance/why" class="lume-btn lume-btn-outline rounded-lg px-6 py-3 font-semibold text-sm inline-flex items-center gap-2">
+        More Comparisons
+        <span class="lume-btn-arrow">→</span>
+      </a>
+    </div>
+
+</section>
+{{ end }}

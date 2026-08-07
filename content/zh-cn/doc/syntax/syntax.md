@@ -50,15 +50,19 @@ categories:
   
   - 双引号支持转义：
     + 文本转义（如 `\n`）
-    + unicode转义（如`\u{2614}`）
     + ansi转义（如`\033[34m`)
+    + unicode转义（如`\u{2614}`）
     
   - 点引号为字符串模板：
     + 支持`$var`变量替换
-    + 支持`${cmd arg}`子语句执行捕获
-    + ansi转义字符。
+    + 支持`${expr}`/`{expr}`子语句执行捕获
+    + 所有转义字符。
 
+  - `#包裹`的字符串：
+    r#' ... '#  不转义
+    r#" ... "#  仅转义引号
 
+  
      ```bash
      print "Hello\nworld!\u{2614}"
      Hello                           #输出两行, \n被转义为换行符
@@ -73,19 +77,6 @@ categories:
      print "\033[31mRed msg\033[m"   #输出红色的Red msg
      ```
 
-     _点引号内的变量替换比子语句捕获效率高，非必要情况建议使用前者_
-
-  - **边缘情况**：
-     > 未定义的转义序列会报错，如：
-
-      ```bash
-      echo "Hello\_"
-
-      [PARSE FAILED] syntax error: invalid string escape sequence `\_`
-            |
-          1 | echo "Hello\_"
-            |
-      ```
 
 #### 文件大小类型：
 
@@ -104,7 +95,7 @@ categories:
   文件大小类型可参与运算。
   如：
   ```bash
-  1M > 30K      # 返回 True
+  1M > 30K      # 返回 true
   fs.ls -l | where(size>20K)   # 筛选大于20k的文件
   ```
 
@@ -115,7 +106,7 @@ categories:
 日期时间类型可参与运算。
 如：
 ```bash
-t'2025-5-20' > t'2025-1-20'    # 返回True
+t'2025-5-20' > t'2025-1-20'    # 返回true
 ```
 具体操作请参考内置函数的`time`模块
 
@@ -209,9 +200,11 @@ del x
 ```
 
 ### 6. **变量类型检测**
-使用 `typeof` 函数
+使用 `typeof`/`symof` 函数
 ```bash
 let a = 10
 typeof a                   # Integer
-typeof a == "Integer"      # True
+typeof a == "Integer"      # true
+# 执行前的表达式类型检测：
+symof a+1                  # BinaryOp
 ```

@@ -1,5 +1,5 @@
 ---
-title: Ranges, Lists, and Maps
+title: "Syntax: Ranges, Lists, Sets, and Maps"
 date: 2025-06-11 19:16:45
 highlight: true
 weight: 40
@@ -10,40 +10,44 @@ categories:
  - syntax
 ---
 
-> Basic Syntax: Ranges, Lists, and Maps
+> Basic Syntax: Ranges, Lists, Sets, and Maps
 
-## III. Ranges, Lists, and Maps
+## III. Ranges, Lists, Sets, and Maps
 
 ### 1. Ranges
 
-- Range expressions
-    Ranges use `..` (left-closed, right-open) or `..=` (closed range), with no spaces on either side.
-    Variable expansion is supported.
+
+- Range Expression
+    Ranges use `..` (left-closed right-open) or `..=` (closed interval), no spaces on either side.
+    Supports variable expansion.
+
 
     ```bash
-    0..10        # does not include 10
-    0..=10         # includes 10
-    a..b
+    0..10        # doesn't include 10
+    0..=10       # includes 10
+    a..=b
     ```
 
     Range expressions support stepping: `:step`
     ```bash
-    0..6:2        # indicates a step of 2: [0,2,4,6]
+    0..=6:2     # step of 2: [0,2,4,6]
     ```
 
-    Can be used for loops, containment checks, array creation, etc.
+    Can be used in loops, containment detection, array creation, etc.
 
     ```bash
-    let r = 0..8
+    let r = 0..=8
 
-    for i in r {...}       # more efficient than looping directly on an array
-    r ~: 5                 # check if it contains an element
-    list.from(r)           # convert to an array
+    for i in r {...}       # more efficient than looping directly on array
+    r ~: 5                 # check if contains element
+    list.from(r)           # convert to array
     ```
 
-### 2. Lists (Arrays)
-- Lists are represented with `[ ]`. The internal elements are ordered.
-- They can also be created directly from ranges using `...` or `...=`
+### 2. Lists (Arrays)/Sets
+- Lists represented by `[ ]`. Elements inside are ordered.
+- Sets represented by `S{}`, sets automatically sorted inside, cannot be intervened from outside sorting.
+
+-= Also can use `...` or `...=` to create directly from range
 
     ```bash
     0...5               # outputs [0,1,2,3,4]
@@ -51,80 +55,85 @@ categories:
     list.from(0..5)
     ```
 
-*Two dots `..` `..=` create ranges, while three dots `...` `...=` create arrays.*
+*Two dots `..` `..=` create range, three dots `...` `...=` create array*
 
-- Indexing is represented with `.` or `[i]`.
+- Indexing using `.` or `[i]`.
     ```bash
-    let arr = [10, "a", True]
+    let arr = [10, "a", true]
     ```
 
-- Indexing and Slicing
+- Indexing and slicing
     ```bash
-    # Basic indexing
+    # basic indexing
 
     arr.1
     arr[0]       # → 10
 
-    # Slicing operations
-    arr[1:3]     # → ["a", True] (left-closed, right-open)
-    arr[::2]     # → [10, True] (step of 2)
-    arr[-1:]     # → True (slicing supports negative indexing)
+    # slice operations
+    arr[1..3]     # → ["a", true] (left-closed right-open)
+    arr[_.._:2]     # → [10, true] (step size 2)
+    arr[-1.._]      # → true (slice supports negative indices)
     ```
 
-- Complex Nesting
+**Placeholder `_` in slice means open interval**
+
+- Complex nesting
     ```bash
-    # Complex nesting
+    # complex nesting
     [1,24,5,[5,6,8]][3][1]     # displays 6
-    # Modify element
+    # # modify element
     # arr[2] = 3.14 # → [10, "a", 3.14]
     ```
-- Advanced Operations
-Refer to the [list](/doc/libs/list) module.
+- Advanced operations
+Refer to [list](/zh-cn/doc/libs/list) module.
 
 **Edge Cases**:
-- Array indexing that exceeds bounds will trigger an `out of bounds` error.
-- Array slicing supports negative numbers, indicating indices counted from the end.
-- Indexing on non-indexable objects will trigger the following error:
+- Array index if out of bounds, triggers `out of bounds` error
+- Array slice supports negative, meaning index counting from end
+- If indexable operation performed on non-indexable object, triggers:
 `[ERROR] type error: expected indexable type (list/dict/string), found symbol`
 
 ### 3. Maps (Dictionaries)
-- Maps are represented with `{}`
+- Maps represented by `{}` or `M{}` for BtreeMap, and `H{}` for HashMap
 
     ```bash
     let mydict = {name: "Alice", age: 30}
 
-    # Allows shorthand:
-    let a = b = 3,
-    {a, b}
-    {
+    # allow shorthand:
+    let a = b =3,
+    H{a, b}
+    M{
         a,
         b,
-    }          # allows trailing commas, allows multi-line writing
-    {a, }             # trailing comma for a single key-value cannot be omitted
+    }          # allow trailing comma, allow multi-line writing
+    {a, }             # single key-value comma cannot be omitted
     ```
 
-- Dictionary Indexing
+- Dictionary indexing
     ```bash
-    # Basic access
+    # basic access
 
     mydict["name"]     # → "Alice"
-    mydict.name        # → "Alice" (shorthand)
-    mydict@name        # → "Alice" (shorthand)
+    mydict.name        # → "Alice" (shorthand form)
+    mydict@name        # → "Alice" (shorthand form)
 
-    # Dynamic key support
+    # dynamic key support
     let key = "ag" + "e"
     dict[key]       # → 30
 
-    # Nested access
+    # nested access
     let data = {user: mydict}
     data.user.age # → 100
     ```
-- Advanced Operations
-Refer to the [map](/doc/libs/map) module.
+- Advanced operations
+Refer to [map](/zh-cn/doc/libs/map) module.
 
 **Edge Cases**:
 | Scenario                          | Behavior                           |
-|----------------------------------|-----------------------------------|
-| Accessing a non-existent array index | Triggers `[ERROR] key `x` not found in map` error            |
-| Indexing a non-dictionary object  | Triggers `[ERROR] not valid index option` error  |
-| Indexing an undefined symbol      | Returns a string, as operating on filenames is the most common operation in shell |
+|------------------------------|--------------------------------|
+| Access non-existent array index          | Triggers `[ERROR] key `x` not found in map` error            |
+| Index non-dictionary object          | Triggers `[ERROR] not valid index option` error  |
+| Index undefined symbol          | Returns string, because file name operations are most common in shell |
+
+
+*Progress: Completed file 6/15*

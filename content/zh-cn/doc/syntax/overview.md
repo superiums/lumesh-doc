@@ -1,5 +1,5 @@
 ---
-title: Lumesh 语法概览
+title: 语法：概览
 date: 2025-07-05 19:16:45
 weight: 1
 highlight: true
@@ -12,22 +12,6 @@ categories:
 ---
 
 Lumesh 是一个现代化的 shell 和脚本语言，采用 Pratt 解析器实现复杂的表达式解析。
-
-## 基础语法结构
-
-### 运算符优先级系统
-
-Lumesh 使用精确定义的运算符优先级，从低到高排列：
-
-1. **赋值运算符** (优先级 1): `=`, `:=`, `+=`, `-=`, `*=`, `/=`
-2. **重定向和管道** (优先级 2): `|`, `|_`, `|>`, `|^`, `>>`, `>!`
-3. **错误处理** (优先级 3): `?.`, `?:` 等
-4. **Lambda 表达式** (优先级 4): `->`
-5. **条件运算符** (优先级 5): `a ? b : c`
-6. **逻辑或** (优先级 6): `||`
-7. **逻辑与** (优先级 7): `&&`
-8. **比较运算** (优先级 8): `==`, `!=`, `>`, `<`, `>=`, `<=`, `===`, `!==`
-9. 四则运算...
 
 ## 数据类型
 
@@ -46,9 +30,10 @@ let percent = 85%
 
 
 # 字符串
-let str1 = "双引号字符串，\n支持转义"
-let str2 = '单引号原始字符串，\n不转义'
-let template = `模板字符串 $var ${var + 1}`
+let str1 = "双引号字符串，转义ansi/unicode"
+let str2 = '单引号原始字符串，只转义引号'
+let str2 = r#'原始字符串，不转义'#
+let template = `模板字符串 $var ${var + 1} {var+1}`
 
 # 布尔值
 let flag = true
@@ -333,7 +318,7 @@ fn expensive_calculation(input) {
 # 字符串链式操作
 "hello world"
     .split(' ')
-    .map(s -> s.to_upper())
+    .map(s -> s.upper()())
     .join('-')
 
 # 数据处理链
@@ -356,13 +341,14 @@ let slice1 = arr[1..4]       # [2, 3, 4]
 let slice2 = arr[1.._]        # [2, 3, 4, 5]
 let slice3 = arr[_..3]        # [1, 2, 3]
 let slice3 = arr[-3.._]       # [3, 4, 5]
+# 以上`_`可省略
 let slice4 = arr[_.._:2]       # [1, 3, 5] (步长为2)
+let slice4 = arr[:2]           # [1, 3, 5] (步长为2)
 
 # 映射索引
 let obj = {name: "Alice", age: 25}
 let name = obj[name]      # "Alice"
 let ages = obj.age           # 25 (点号访问)
-let age = obj@age           # 25 (@访问)
 ```
 
 ## 范围操作

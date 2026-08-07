@@ -22,12 +22,13 @@ let user = {
         skills: ["rust", "javascript", "python"]
     }
 }
-user.profile.skills@1  # 输出: "javascript"
+user.profile.skills[1]  # 输出: "javascript"
 ```
 
 - 链式调用
 ```bash
 1...10 | .map(x -> x * 2) | .filter(x -> x > 10)
+(1...10).map(x -> x * 2).filter(x -> x > 10)
 # 链式调用，清晰直观
 ```
 
@@ -39,7 +40,7 @@ ls -1 |> print "-->" _ "<--"
 - 结构化管道
 ```bash
 df -H | into.table() | pprint
-fs.ls -l | where(size > 5K) | select(name,size,modified)
+fs.ls -lh | where(size > 5K) | select(name,size,modified)
 ```
 
 - 错误捕获
@@ -50,7 +51,7 @@ fs.ls -l | where(size > 5K) | select(name,size,modified)
 
 - 数据调试
 ```bash
-let a := (x) -> x + 1
+let a = (x) -> x + 1
 debug a
 ```
 
@@ -61,10 +62,9 @@ debug a
 let data = {a: 1, b: 2, c: 3}
 
 # 键值同时转换
-let result = map.map(
-    k -> k.to_upper(),     # 键转换函数
-    v -> v * 2,         # 值转换函数
-    data
+map.map(
+    data,
+    (k,v) -> [k.upper(), v * 2]
 )
 # 结果: {A: 2, B: 4, C: 6}
 ```
@@ -76,7 +76,7 @@ let result = map.map(
 
 - 找出大于5KB且在24小时内修改过的文件,以表格显示：
   ```bash
-  fs.ls -l ./src/ | where(size > 5K) | where (fs.diff('d',modified)>1) | pprint
+  fs.ls -lh ./src/ | where(size > 5K) | where (time.diff(modified,time.now(),'d')>1) | pprint
   ```
 
 - 将当前目录及其子目录下的所有rs源码文件备份：
@@ -117,11 +117,11 @@ let result = map.map(
 ### 系统管理
 - 找出cpu占用率超过2%的用户进程，以表格显示
 ```bash
- ps u -u1000 | into.table() | where( into.float(CPU) > 2.0 ) | pprint
+ ps u | into.table() | where( into.float(CPU) > 2.0 ) | pprint
 ```
 - 找出内存使用超过10%的进程
 ```bash
-ps u -u1000 | into.table() | where( into.float(MEM) > 10.0 ) | pprint
+ps u | into.table() | where( into.float(MEM) > 10.0 ) | pprint
 ```
 
 ### 网络操作
@@ -173,7 +173,7 @@ if $sel {
 # 目录操作
 fs.ls("/path")              # 列出目录内容
 fs.mkdir("new_dir")         # 创建目录
-fs.rm("empty_dir")       # 删除空目录
+fs.rm("empty_dir")          # 删除空目录
 
 # 文件操作
 fs.read("file.txt")         # 读取文件
@@ -211,7 +211,7 @@ fs.ls -p        # 显示完整路径
 
 ## 常用内置函数
 
-### 核心函数
+### 顶层函数
 
 ```bash
 # 数据操作
@@ -232,9 +232,9 @@ import("module.lm")         # 导入模块到新环境
 ```bash
 # 数据表格操作
 let users = [
-    {name: "Alice", age: 25, active: True},
-    {name: "Bob", age: 30, active: False},
-    {name: "Carol", age: 35, active: True}
+    {name: "Alice", age: 25, active: true},
+    {name: "Bob", age: 30, active: false},
+    {name: "Carol", age: 35, active: true}
 ]
 
 # 过滤行
@@ -260,6 +260,8 @@ command &
 
 # 静默执行
 command &-
+command &?
+command &.
 
 
 ```
@@ -300,21 +302,14 @@ println(argv[0])  # 第一个参数
 #!/usr/bin/env lumesh
 
 # 测试函数
-fn assert(actual, expected, test_name) {
-    if actual != expected {
-        print "[FAIL]" test_name "| 实际：" actual "| 预期：" expected
-    } else {
-        print "[PASS]" test_name
-    }
-}
 
 # 变量赋值测试
 let x = 10
-assert(str(x), "10", "单变量赋值")
+assert(str(x), "10", "[FAIL] 单变量赋值")
 
 # 延迟赋值测试
 x := 2 + 3
-assert(eval(x), 5, "延迟赋值求值")
+assert(eval(x), 5, "[FAIL] 延迟赋值求值")
 ```
 
 ## 日志系统
@@ -323,12 +318,12 @@ assert(eval(x), 5, "延迟赋值求值")
 
 ```bash
 # 设置日志级别
-log.set_level(log.level.info)    # 设置为 INFO 级别
+log.levels()
+log.level(3)            # 设置为 INFO 级别
 
 # 检查日志级别
-if log.enabled(1) {
-    log.debug("调试已开启")
-}
+if log.is_enabled(1) {}
+log.debug("调试已开启")   # 不会打印，level不够
 log.info("调试信息")
 
 # 禁用日志
@@ -338,9 +333,9 @@ log.disable()
 
 
 了解更多：
-- [使用案例](/zh-cn/cases/)
-- [lf配置文件对比(lumesh vs bash)](/zh-cn/cases/lf)
-- [使用Lumesh编写lf配置文件的语法演示](/zh-cn/cases/case_lf)
-- [特性概览 (superiums/lumesh)](/zh-cn/overview)
-- [语法手册 (superiums/lumesh)](/zh-cn/syntax)
-- [内置函数 (superiums/lumesh)](/zh-cn/doc/libs/)
+- [使用案例](../cases/)
+- [lf配置文件对比(lumesh vs bash)](lf)
+- [使用Lumesh编写lf配置文件的语法演示](lf/case_lf)
+- [特性概览 (superiums/lumesh)](../overview)
+- [语法手册 (superiums/lumesh)](../syntax)
+- [内置函数 (superiums/lumesh)](../doc/libs/)

@@ -1,66 +1,61 @@
 ---
-title: Custom Operators  
+title: Custom Operators
 date: 2025-12-25 19:16:45
 ---
 
-Custom Operators
-----------------
+## Custom Operators
 
 ### Custom Unary Operators
-
-Custom unary operators must start with `__`, and are used as postfix operators after definition.
+Custom unary operators must start with `__`. After definition, they are used as suffix operators.
 
 ```bash
-    # Define
-    let __! = x -> Math.sum(x)
-    let __+ = x -> x.to_upper()
-    
-    # Use
-    [5,6,7]  __!              # 18
-    'lume' __+                # LUME
-    
+# Definition
+let __! = x -> Math.sum(x)
+let __+ = x -> x.upper()()
+
+# Usage
+[5,6,7]  __!              # 18
+'lume' __+                # LUME
 ```
-> Why not define prefix operators? Because they are similar to function calls, it's better to just define a function directly.  
-> If you think there is a need for this, you can submit a request on the [project homepage](https://codeberg.org/santo/lumesh/issue).
+
+> Why not define prefix operators? Because they're similar to function calls, so it's better to just define functions directly.
+> If you think there's a need for them, you can submit a request at [the project homepage](https://codeberg.org/santo/lumesh/issue).
 
 ### Custom Binary Operators
-
-Custom binary operators must start with `_` (but not with `__`), and are used as binary operators after definition.
+Custom unary operators must start with `_` (but not `__`). After definition, they are used as binary operators.
 
 ```bash
-    # Define custom operator
-    let ..+ = (a, b) -> a.concat(b)  # Custom addition
-    
-    # Use custom operator
-    [1, 2] ..+ [3, 4]    # [1, 2, 3, 4]
-    
+# Define custom operator
+let ..+ = (a, b) -> a.concat(b)  # Custom addition
+
+# Use custom operator
+[1, 2] ..+ [3, 4]    # [1, 2, 3, 4]
 ```
+
 Binary operators involve operator precedence.
+- Operators starting with `..+` have the same precedence as addition.
+- Operators starting with `..*` have the same precedence as multiplication.
+- Other operators starting with `..` have higher precedence than exponentiation but lower than unary operators (like `!`).
 
-*   Those starting with `..+` have the same precedence as addition.
-*   Those starting with `..*` have the same precedence as multiplication.
-*   Other operators starting with `..` have higher precedence than exponentiation but lower than unary operators (such as `!`).
 
-### Use Cases
+### Application Scenarios
 
-1.  Data Processing Pipeline
-
+1. Data processing pipeline
 ```bash
-    let ..-> = (data, processor) -> processor(data)
-    
-    let a = [-3,-2,1,5,8, 'fast','pipe']
-    let clean = x -> list.filter(x, i -> typeof(i)=='Integer')
-    let filter = x -> list.filter(x, i -> i>0)
-    let save = x -> {x >> /tmp/saved}
-    
-    a ..-> clean ..-> filter ..-> save
-    
+let ..-> = (data,processor) -> processor(data)
+
+let a = [-3,-2,1,5,8, 'fast','pipe']
+let clean = x -> list.filter(x, i -> typeof(i)=='Integer')
+let filter = x -> list.filter(x, i -> i>0)
+let save = x -> {x >> /tmp/saved}
+
+a ..-> clean ..-> filter ..-> save
 ```
-2.  Type Checking
+
+2. Type checking
 
 ```bash
-    let ..? = (value, expected_type) -> typeof(value) == expected_type ? value : throw(format('expected {expected_type}, found {}', typeof(value)))
-    
-    5 ..? 'String'
-    
+let ..? = (value, expected_type) -> typeof(value) == expected_type ? value : throw(format('expected {expected_type}, found {}', typeof(value)))
+
+5 ..? 'String'
 ```

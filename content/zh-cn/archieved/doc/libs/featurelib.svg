@@ -1,0 +1,325 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 1084 322"
+  width="1084"
+  height="322"
+  preserveAspectRatio="xMidYMid slice"
+  aria-hidden="true"
+>
+  <defs>
+    <style>
+      text {
+        font-family: 'JetBrains Mono', ui-monospace, 'Courier New', Courier, monospace;
+      }
+    </style>
+
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="50%" stop-color="#111827"/>
+      <stop offset="100%" stop-color="#0a0e1a"/>
+    </linearGradient>
+
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <linearGradient id="beam" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00ff88" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#00ff88" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#00a8ff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1084" height="322" fill="url(#bg)"/>
+
+  <!-- 网格 -->
+  <g opacity="0.07">
+    <path d="M0 80H1084" stroke="#1e3a5f" stroke-width="0.5"/>
+    <path d="M0 160H1084" stroke="#1e3a5f" stroke-width="0.5"/>
+    <path d="M0 240H1084" stroke="#1e3a5f" stroke-width="0.5"/>
+    <path d="M361 0V322" stroke="#1e3a5f" stroke-width="0.5"/>
+    <path d="M723 0V322" stroke="#1e3a5f" stroke-width="0.5"/>
+  </g>
+
+  <!-- 光带 -->
+  <g opacity="0.3">
+    <rect x="-150" y="60" width="150" height="1.5" fill="url(#beam)">
+      <animate attributeName="x" from="-150" to="1084" dur="5s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="-100" y="140" width="120" height="1" fill="url(#beam)">
+      <animate attributeName="x" from="1084" to="-120" dur="6s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="-130" y="220" width="130" height="1" fill="url(#beam)">
+      <animate attributeName="x" from="-130" to="1084" dur="4.5s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <!-- fs -->
+  <g filter="url(#glow)">
+    <rect x="20" y="20" width="150" height="50" rx="6"
+          fill="#0d1117" stroke="#1f6feb" stroke-width="1.5" opacity="0.9"/>
+    <text x="95" y="42" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="bold">
+      fs
+    </text>
+    <text x="95" y="58" text-anchor="middle" fill="#8b949e" font-size="8">
+      read · write · ls
+    </text>
+  </g>
+
+  <!-- string -->
+  <g filter="url(#glow)">
+    <rect x="190" y="20" width="150" height="50" rx="6"
+          fill="#0d1117" stroke="#7c3aed" stroke-width="1.5" opacity="0.9"/>
+    <text x="265" y="42" text-anchor="middle" fill="#a78bfa" font-size="11" font-weight="bold">
+      string
+    </text>
+    <text x="265" y="58" text-anchor="middle" fill="#8b949e" font-size="8">
+      split · join · replace
+    </text>
+  </g>
+
+  <!-- regex -->
+  <g filter="url(#glow)">
+    <rect x="360" y="20" width="150" height="50" rx="6"
+          fill="#0d1117" stroke="#f59e0b" stroke-width="1.5" opacity="0.9"/>
+    <text x="435" y="42" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="bold">
+      regex
+    </text>
+    <text x="435" y="58" text-anchor="middle" fill="#8b949e" font-size="8">
+      match · replace · search
+    </text>
+  </g>
+
+  <!-- list -->
+  <g filter="url(#glow)">
+    <rect x="530" y="20" width="150" height="50" rx="6"
+          fill="#0d1117" stroke="#10b981" stroke-width="1.5" opacity="0.9"/>
+    <text x="605" y="42" text-anchor="middle" fill="#34d399" font-size="11" font-weight="bold">
+      list
+    </text>
+    <text x="605" y="58" text-anchor="middle" fill="#8b949e" font-size="8">
+      first · last · map
+    </text>
+  </g>
+
+  <!-- map -->
+  <g filter="url(#glow)">
+    <rect x="700" y="20" width="150" height="50" rx="6"
+          fill="#0d1117" stroke="#ec4899" stroke-width="1.5" opacity="0.9"/>
+    <text x="775" y="42" text-anchor="middle" fill="#f472b6" font-size="11" font-weight="bold">
+      map
+    </text>
+    <text x="775" y="58" text-anchor="middle" fill="#8b949e" font-size="8">
+      keys · values · merge
+    </text>
+  </g>
+
+  <!-- math -->
+  <g filter="url(#glow)">
+    <rect x="870" y="20" width="190" height="50" rx="6"
+          fill="#0d1117" stroke="#06b6d4" stroke-width="1.5" opacity="0.9"/>
+    <text x="965" y="42" text-anchor="middle" fill="#22d3ee" font-size="11" font-weight="bold">
+      math
+    </text>
+    <text x="965" y="58" text-anchor="middle" fill="#8b949e" font-size="8">
+      sin · cos · sqrt · rand
+    </text>
+  </g>
+
+  <!-- rand -->
+  <g filter="url(#glow)">
+    <rect x="20" y="90" width="150" height="50" rx="6"
+          fill="#0d1117" stroke="#f59e0b" stroke-width="1.5" opacity="0.9"/>
+    <text x="95" y="112" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="bold">
+      rand
+    </text>
+    <text x="95" y="128" text-anchor="middle" fill="#8b949e" font-size="8">
+      int · float · choice
+    </text>
+  </g>
+
+  <!-- time -->
+  <g filter="url(#glow)">
+    <rect x="190" y="90" width="150" height="50" rx="6"
+          fill="#0d1117" stroke="#58a6ff" stroke-width="1.5" opacity="0.9"/>
+    <text x="265" y="112" text-anchor="middle" fill="#58a6ff" font-size="11" font-weight="bold">
+      time
+    </text>
+    <text x="265" y="128" text-anchor="middle" fill="#8b949e" font-size="8">
+      now · parse · fmt
+    </text>
+  </g>
+
+  <!-- from -->
+  <g filter="url(#glow)">
+    <rect x="360" y="90" width="150" height="50" rx="6"
+          fill="#0d1117" stroke="#a78bfa" stroke-width="1.5" opacity="0.9"/>
+    <text x="435" y="112" text-anchor="middle" fill="#a78bfa" font-size="11" font-weight="bold">
+      from
+    </text>
+    <text x="435" y="128" text-anchor="middle" fill="#8b949e" font-size="8">
+      json · toml · csv
+    </text>
+  </g>
+
+  <!-- into -->
+  <g filter="url(#glow)">
+    <rect x="530" y="90" width="150" height="50" rx="6"
+          fill="#0d1117" stroke="#34d399" stroke-width="1.5" opacity="0.9"/>
+    <text x="605" y="112" text-anchor="middle" fill="#34d399" font-size="11" font-weight="bold">
+      into
+    </text>
+    <text x="605" y="128" text-anchor="middle" fill="#8b949e" font-size="8">
+      str · int · json
+    </text>
+  </g>
+
+  <!-- sys -->
+  <g filter="url(#glow)">
+    <rect x="700" y="90" width="150" height="50" rx="6"
+          fill="#0d1117" stroke="#f472b6" stroke-width="1.5" opacity="0.9"/>
+    <text x="775" y="112" text-anchor="middle" fill="#f472b6" font-size="11" font-weight="bold">
+      sys
+    </text>
+    <text x="775" y="128" text-anchor="middle" fill="#8b949e" font-size="8">
+      env · define · defined
+    </text>
+  </g>
+
+  <!-- console -->
+  <g filter="url(#glow)">
+    <rect x="870" y="90" width="190" height="50" rx="6"
+          fill="#0d1117" stroke="#22d3ee" stroke-width="1.5" opacity="0.9"/>
+    <text x="965" y="112" text-anchor="middle" fill="#22d3ee" font-size="11" font-weight="bold">
+      console
+    </text>
+    <text x="965" y="128" text-anchor="middle" fill="#8b949e" font-size="8">
+      color · table · prompt
+    </text>
+  </g>
+
+  <!-- ui -->
+  <g filter="url(#glow)">
+    <rect x="20" y="160" width="150" height="50" rx="6"
+          fill="#0d1117" stroke="#ef4444" stroke-width="1.5" opacity="0.9"/>
+    <text x="95" y="182" text-anchor="middle" fill="#f87171" font-size="11" font-weight="bold">
+      ui
+    </text>
+    <text x="95" y="198" text-anchor="middle" fill="#8b949e" font-size="8">
+      pick · confirm · widget
+    </text>
+  </g>
+
+  <!-- log -->
+  <g filter="url(#glow)">
+    <rect x="190" y="160" width="150" height="50" rx="6"
+          fill="#0d1117" stroke="#eab308" stroke-width="1.5" opacity="0.9"/>
+    <text x="265" y="182" text-anchor="middle" fill="#facc15" font-size="11" font-weight="bold">
+      log
+    </text>
+    <text x="265" y="198" text-anchor="middle" fill="#8b949e" font-size="8">
+      debug · info · warn
+    </text>
+  </g>
+
+  <!-- boolean -->
+  <g filter="url(#glow)">
+    <rect x="360" y="160" width="150" height="50" rx="6"
+          fill="#0d1117" stroke="#6366f1" stroke-width="1.5" opacity="0.9"/>
+    <text x="435" y="182" text-anchor="middle" fill="#818cf8" font-size="11" font-weight="bold">
+      boolean
+    </text>
+    <text x="435" y="198" text-anchor="middle" fill="#8b949e" font-size="8">
+      and · or · not · xor
+    </text>
+  </g>
+
+  <!-- filesize -->
+  <g filter="url(#glow)">
+    <rect x="530" y="160" width="150" height="50" rx="6"
+          fill="#0d1117" stroke="#14b8a6" stroke-width="1.5" opacity="0.9"/>
+    <text x="605" y="182" text-anchor="middle" fill="#2dd4bf" font-size="11" font-weight="bold">
+      filesize
+    </text>
+    <text x="605" y="198" text-anchor="middle" fill="#8b949e" font-size="8">
+      to_bytes · to_kb · format
+    </text>
+  </g>
+
+  <!-- about -->
+  <g filter="url(#glow)">
+    <rect x="700" y="160" width="150" height="50" rx="6"
+          fill="#0d1117" stroke="#8b5cf6" stroke-width="1.5" opacity="0.9"/>
+    <text x="775" y="182" text-anchor="middle" fill="#a78bfa" font-size="11" font-weight="bold">
+      about
+    </text>
+    <text x="775" y="198" text-anchor="middle" fill="#8b949e" font-size="8">
+      version · build_info
+    </text>
+  </g>
+
+  <!-- set -->
+  <g filter="url(#glow)">
+    <rect x="870" y="160" width="190" height="50" rx="6"
+          fill="#0d1117" stroke="#f43f5e" stroke-width="1.5" opacity="0.9"/>
+    <text x="965" y="182" text-anchor="middle" fill="#fb7185" font-size="11" font-weight="bold">
+      set
+    </text>
+    <text x="965" y="198" text-anchor="middle" fill="#8b949e" font-size="8">
+      first · last · map · filter
+    </text>
+  </g>
+
+  <!-- 底部管道 -->
+  <rect x="20" y="240" width="1044" height="65" rx="8"
+        fill="#0d1117" stroke="#21262d" stroke-width="1" opacity="0.7"/>
+
+  <text x="40" y="262" fill="#58a6ff" font-size="9" font-weight="bold">
+    Pipeline:
+  </text>
+
+  <g transform="translate(100, 248)">
+    <rect x="0" y="0" width="90" height="24" rx="12"
+          fill="#1f2937" stroke="#1f6feb" stroke-width="1"/>
+    <text x="45" y="16" text-anchor="middle" fill="#58a6ff" font-size="9">from</text>
+
+    <text x="105" y="16" fill="#4a5568" font-size="12">›</text>
+
+    <rect x="120" y="0" width="90" height="24" rx="12"
+          fill="#1f2937" stroke="#7c3aed" stroke-width="1"/>
+    <text x="165" y="16" text-anchor="middle" fill="#a78bfa" font-size="9">into</text>
+
+    <text x="235" y="16" fill="#4a5568" font-size="12">›</text>
+
+    <rect x="250" y="0" width="90" height="24" rx="12"
+          fill="#1f2937" stroke="#10b981" stroke-width="1"/>
+    <text x="295" y="16" text-anchor="middle" fill="#34d399" font-size="9">math</text>
+
+    <text x="365" y="16" fill="#4a5568" font-size="12">›</text>
+
+    <rect x="380" y="0" width="90" height="24" rx="12"
+          fill="#1f2937" stroke="#f59e0b" stroke-width="1"/>
+    <text x="425" y="16" text-anchor="middle" fill="#fbbf24" font-size="9">log</text>
+
+    <text x="495" y="16" fill="#4a5568" font-size="12">›</text>
+
+    <rect x="510" y="0" width="90" height="24" rx="12"
+          fill="#1f2937" stroke="#ec4899" stroke-width="1"/>
+    <text x="555" y="16" text-anchor="middle" fill="#f472b6" font-size="9">to json</text>
+
+    <circle cx="45" cy="12" r="3" fill="#58a6ff" opacity="0.8">
+      <animate attributeName="cx" from="45" to="555" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.8;0.3;0.8" dur="3s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <text x="40" y="295" fill="#8b949e" font-size="8" opacity="0.6">
+    Built with Nushell · Functional · Composable · Expressive
+  </text>
+
+  <line x1="0" y1="320" x2="1084" y2="320" stroke="#21262d" stroke-width="2" opacity="0.5"/>
+</svg>

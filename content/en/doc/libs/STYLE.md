@@ -1,20 +1,19 @@
 ---
-title: const of STYLE
+title: Built-in Constant STYLE
 date: 2025-12-25 19:16:45
 weight: 42
 tags:
- - const
+  - const
 categories:
- - wiki
- - const
+  - wiki
+  - const
 ---
 
-## STYLE
+## Styles
 
-| style | reset |
-|----------|------|
+| Set Style | Reset |
+|-----------|-------|
 |   | RESET |
-| NORMAL | RESET_NORMAL |
 | BOLD | RESET_BOLD |
 | DIM | RESET_DIM |
 | ITALIC | RESET_ITALIC |
@@ -24,10 +23,9 @@ categories:
 | HIDDEN | RESET_HIDDEN |
 | STRIKE | RESET_STRIKE |
 
-
-usage：
+Usage:
 ```bash
 STYLE.DIM + 'lume'
-# same as
+# Equivalent to
 string.dim('lume')
 ```

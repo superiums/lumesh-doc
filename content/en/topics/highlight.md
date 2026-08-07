@@ -1,138 +1,132 @@
 ---
-title: Syntax Highlighting  
+title: Syntax Highlighting
 date: 2025-12-25 19:16:45
 ---
 
-Lumesh Syntax Highlighting
---------------------------
+## Syntax Highlighting for Lumesh
+> As Lumesh is a new language, how can editors get syntax highlighting support?
 
-> How can Lumesh, a new language, get syntax highlighting support in editors?
-
-The author has created a syntax highlighting project for general editors:
+The author has created a universal editor syntax highlighting project:
 
 [tree-sitter-lumesh](https://github.com/superiums/tree-sitter-lumesh)
 
-Editors that support tree-sitter will be able to quickly get syntax highlighting support.
+Editors supporting tree-sitter will quickly get syntax highlighting support.
 
 ### Helix Editor
 
-*   Method 1: When installing lume with install.sh, it automatically adds syntax highlighting support for helix.
+- **Method 1**: When installing lume using install.sh, syntax highlighting support for helix will be automatically added
 
-*   Method 2: Use precompiled files
+- **Method 2**: Using precompiled files
 
-1.  Add the following to your helix configuration file `languages.toml`:
+  1. Add the following to helix's configuration file `languages.toml`:
 
-```toml file-name=~/.config/helix/languages.toml
+  ```toml file-name=~/.config/helix/languages.toml
 
-# Other sections
-[[language]]
-name = "lumesh"
-scope = "source.lumesh"
-injection-regex = "lumesh"
-file-types = ["lm", "lumesh"]
-roots = []
-comment-token = "#"
-indent = { tab-width = 2, unit = "  " }
+  # Other locations
+  [[language]]
+  name = "lumesh"
+  scope = "source.lumesh"
+  injection-regex = "lumesh"
+  file-types = ["lm", "lumesh"]
+  roots = []
+  comment-token = "#"
+  indent = { tab-width = 2, unit = "  " }
 
-```
+  ```
+  
+  2. Link the syntax highlighting files
+  
+  + For personal installation:
+  ```bash
+  ln -s ~/.local/share/lumesh/tree-sitter-lumesh/grammars/lumesh.so ~/.config/helix/runtime/grammars
+  ln -s ~/.local/share/lumesh/tree-sitter-lumesh/queries ~/.config/helix/runtime/
+  ```
 
-
-2.  Link the syntax highlighting files
-
-*   For personal installation:
-```bash
-ln -s ~/.local/share/lumesh/tree-sitter-lumesh/grammars/lumesh.so ~/.config/helix/runtime/grammars
-ln -s ~/.local/share/lumesh/tree-sitter-lumesh/queries ~/.config/helix/runtime/
-```
-
-*   For system installation:
-```bash
-ln -s /usr/local/share/lumesh/tree-sitter-lumesh/grammars/lumesh.so ~/.config/helix/runtime/grammars
-ln -s /usr/local/share/lumesh/tree-sitter-lumesh/queries ~/.config/helix/runtime/
-```
-
-
-*   Method 3: Compile from source:
-
-1.  In your helix configuration file `languages.toml`, add:
-
-# Top of the file, to avoid downloading other language sources
-```toml
-use-grammars = { only = [ "lumesh" ] }  
+  + For system installation:
+  ```bash
+  ln -s /usr/local/share/lumesh/tree-sitter-lumesh/grammars/lumesh.so ~/.config/helix/runtime/grammars
+  ln -s /usr/local/share/lumesh/tree-sitter-lumesh/queries ~/.config/helix/runtime/
+  ```
 
 
-# Other sections
-[[language]]
-name = "lumesh"
-scope = "source.lumesh"
-injection-regex = "lumesh"
-file-types = ["lm", "lumesh"]
-roots = []
-comment-token = "#"
-indent = { tab-width = 2, unit = "  " }
+- **Method 3**: From source compilation:
 
-[[grammar]]  
-name = "lumesh"  
-source = { git = "https://github.com/superiums/tree-sitter-lumesh", rev = "v0.13.0" }
-```
+  1. Add the following to helix's configuration file `languages.toml`:
 
+  ```toml file-name=~/.config/helix/languages.toml
+  # At the top, to avoid downloading source code for other languages
+  use-grammars = { only = [ "lumesh" ] }  
 
-2.  Run the following commands:
+  # Other locations
+  [[language]]
+  name = "lumesh"
+  scope = "source.lumesh"
+  injection-regex = "lumesh"
+  file-types = ["lm", "lumesh"]
+  roots = []
+  comment-token = "#"
+  indent = { tab-width = 2, unit = "  " }
 
-```bash
-helix --grammar fetch
-helix --grammar build
+  [[grammar]]  
+  name = "lumesh"  
+  source = { git = "https://github.com/superiums/tree-sitter-lumesh", rev = "v0.13.0" }
 
-```
+  ```
 
-3.  Run the following command:
+  2. Run command:
+  ```bash
+  helix --grammar fetch
+  helix --grammar build
+  ```
 
-```bash
-cp ~/.config/helix/runtime/grammars/sources/lumesh/queries/* /home/tix/.config/helix/runtime/queries
-```
+  3. Run command:
+  ```bash
+  cp ~/.config/helix/runtime/grammars/sources/lumesh/queries/* /home/tix/.config/helix/runtime/queries
+  ```
 
-Usage:
+**Usage:**
 
-Files with the `.lm` extension or those with a shebang line containing `lumesh` will receive highlighting.
+Files with `.lm` extension or files with `lumesh` in the shebang line will get syntax highlighting support.
 
-## Lumelf Syntax Highlighting
+## Syntax Highlighting for Lumelf
+> Use Lumesh to write configuration files for lf file manager
 
-Using Lumesh to write configuration files for lf file manager
-
-The author has created a syntax highlighting project for general editors:
+The author has created a universal editor syntax highlighting project:
 
 [tree-sitter-lumelf](https://github.com/superiums/tree-sitter-lumelf)
 
+Editors supporting tree-sitter will quickly get syntax highlighting support.
 
-Editors that support tree-sitter will be able to quickly get syntax highlighting support.
+### Helix Editor
 
-#### Helix Editor
-Method 1: When installing lume with install.sh, it automatically adds syntax highlighting support for helix.
+- **Method 1**: When installing lume using install.sh, syntax highlighting support for helix will be automatically added
 
-Method 2: Use precompiled files or source code, similar to the previous section
+- **Method 2**: Using precompiled files or source code, similar to the previous section
 
-But the configuration is slightly different. Add the following to your helix configuration file languages.toml:
+  But the configuration is slightly different; add the following to helix's configuration file `languages.toml`:
 
-```toml
-[[language]]
-name = "lumelf"
-scope = "source.lumelf"
-injection-regex = "lumelf"
-shebangs = ["lumelf"]
-file-types = ["lmf"]
-roots = []
-comment-token = "#"
-indent = { tab-width = 2, unit = " " }
+  ```toml file-name=~/.config/helix/languages.toml
 
-[[grammar]]
-name = "lumelf"
-source = { git = "https://github.com/superiums/tree-sitter-lumelf", rev = "v0.13.1" }
-```
+  [[language]]
+  name = "lumelf"
+  scope = "source.lumelf"
+  injection-regex = "lumelf"
+  shebangs = ["lumelf"]
+  file-types = ["lmf"]
+  roots = []
+  comment-token = "#"
+  indent = { tab-width = 2, unit = "  " }
 
-Other steps are the same as the previous section.
+  [[grammar]]  
+  name = "lumelf"  
+  source = { git = "https://github.com/superiums/tree-sitter-lumelf", rev = "v0.13.1" }
 
-Usage:
+  ```
 
-Add the following shebang line at the beginning of your lfrc:
+Other steps are the same as the previous section
+
+**Usage:**
+
+Add the following shebang line at the first line of lfrc:
 `#! lumelf`
-Or name the file with the `.lmf` extension.
+Or name the file with `.lmf` extension.

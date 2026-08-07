@@ -1,5 +1,5 @@
 ---
-title: Functions and Commands
+title: "Syntax: Functions and Commands"
 date: 2025-06-11 19:16:45
 highlight: true
 weight: 60
@@ -9,85 +9,91 @@ categories:
  - wiki
  - syntax
 ---
-> Functions and Commands
+> Functions, Commands
 
 ## VI. Functions
 
-### **Function Definition with `fn`**
-   - Defined using `fn`, supports *default parameters* and *rest parameter collection*.
+### **fn Function Definition**
+   - Define using `fn`, supports *default parameters*, *remaining parameter collection*, supports decorators.
        ```bash
        fn add(a,b,c=10,*d) {
           return  a + b + c + len(c)
        }
 
-       # Equivalent to:
+       # equivalent to:
        fn add(a,b,c=10,*d) {
           a + b + c + len(c)
        }
 
-       echo add(2, 3)  # Outputs 5
-       echo add(2,3,4, 5)  # Outputs 10
+       echo add(2, 3)  # outputs 5
+       echo add(2,3,4, 5)  # outputs 10
        ```
 
-### **Lambda Expressions**
-   - Defined using `->`.
+
+### **Lambda Expression**
+   - Define using `->`.
 
        ```bash
        let add = (x,y) -> x + y
        ```
   - Differences between lambda and regular functions:
-      + Lambda does not support default parameters and return statements, nor does it support rest parameter collection.
-      + Lambda *supports partial application of parameters*, returning subsequent lambdas.
-  - Similarities:
-      Both lambda and functions inherit the current environment variables and run in an isolated environment, without polluting the current environment.
+      + lambda doesn't support default parameters and return statements, doesn't support remaining parameter collection.
+      + lambda doesn't support decorators.
+      + lambda *supports partial application*, returns subsequent lambda
+      + lambda supports closure capturing.
 
-### Function Calls
-   Function names are followed immediately by `()` or `!` to execute the function.
+  - Same things:
+      lambda and functions both inherit current environment variables, run in isolated environment, won't pollute current environment.
+
+
+### Function Call
+   Function name directly followed by `()` or `!` to execute.
 
   ```bash
-  # Custom functions can be called like this
+  # custom function can be called like this
   add(3,5)
-  # Or like this
-  add! 3 5   # Note the need to add the ! suffix to distinguish from command calls.
+  # or like this
+  add! 3 5   # note need to add ! suffix, to distinguish from command call.
   ```
 
-   Distinguishing between function calls and command executions helps avoid name clashes, such as:
+   Distinguishing function call from command execution helps avoid same-name function overriding command, for example:
   ```bash
-  # Test case 6: Function and command name clash
-  fn ls() { echo "My ls" }
-  ls -l                # Executes the system command ls
-  ls()                 # Calls the function
-  ls!                  # When using the ! suffix, calls the function; this is a syntax sugar that flattens the parentheses.
+  # test case 6: function and command same name override
+  fn ls() { print "Lume" }
+  ls -l                # execute system command ls
+  ls()                 # call function
+  ls!                  # when using ! suffix, call function, this is syntax sugar for flattening parentheses.
   ```
 
 **Tips**:
-- When the parameter is a literal lambda expression, please use the parentheses pattern; the flat pattern cannot be parsed.
-- Similarly, when the parameter is a logical operation like &&, please use the parentheses pattern or the flat pattern after grouping with parentheses.
+- When parameter is literal lambda expression, use parenthesized mode, flat mode cannot parse.
+- Similarly, when parameter is logical operators like &&, use parenthesized mode, or use parenthesized grouped flat mode.
+
 
 **Edge Cases**:
-   - When function names conflict, the new definition will override the old one.
-   - Calling a function with a mismatched number of parameters will throw an error. For example:
+   - When function name conflicts, new definition overrides old.
+   - When calling function, argument count mismatch will error. Example:
    `[ERROR] arguments mismatch for function `add`: expected 3, found 1`
 
-### Chained Calls
+### Chained Call
 
   ```bash
   [1,3,5,6].sum()
 
   "hello world"
       .split(' ')
-      .map(s -> s.to_upper())
+      .map(s -> s.upper()())
       .join('-')
       .green()
   ```
-For commonly used data types, chained calls can be used directly, including:
-`String, List, Map, Time, Integer, Float, Range`
+For common data types, can directly use chained call, including:
+`string, list, map, time, integer, float, range`
 
 ### Decorators
-Decorators are a special type of higher-order function that can insert required logic before and after the execution of a specific function.
+Decorator is a special higher-order function that can insert needed logic before and after specific function execution.
 
 ```bash
-# Using a decorator in function definition
+# use decorator during function definition
 @timeit
 fn test(n){
   for i in 0..n {
@@ -96,110 +102,124 @@ fn test(n){
   print 'sum is' n
 }
 
-# Decorator function
+# decorator func
 fn timeit(){
-    fn wrapper(func_t){
-        (args_t) -> {
-            let start = time.stamp_ms()                       # Logic before function execution
-            func_t(args_t)                                  # Function execution
-            let end = time.stamp_ms()                         # Logic after function execution
-            print '>Time:'.green().bold() (end - start) 'ms'
-        }
+    fn before(){
+        let start = time.stamp_ms()
     }
+    fn after(){
+        let end = time.stamp_ms()
+        print '>Time:'.green().bold() (end - start) 'ms'
+    }
+    [before,after]
 }
+
 ```
-**Please Note**
-- All variable names defined by decorators applied to the same function cannot be duplicated.
-For example, if a second decorator is to be applied to the `test` function above, that decorator cannot use the variable names `func_t` or `args_t`.
-This is a trade-off for performance and convenience; for higher performance, we accept this small inconvenience.
+**Decorator function must return [before,after] list, can use placeholder `_` if empty**
+
+### Error Handling
+Error capture uses operators like `?:` (see error capture section for more), it can capture during call, or set in function definition.
+Example:
+
+```bash
+dosth() ?: e -> print e.code
+
+fn test(){
+  ...
+} ?: e -> print e.msg
+```
 
 ## VII. Running System Commands
 
 ### Command Invocation
 
-In Lumesh, you can conveniently run programs just like in other shells, such as:
+In lumesh, you can conveniently run programs like in other shells, for example
   ```bash
-  ls
+  ls                  # only in CFM mode
   ls -l
   ```
 
-- Multiple commands: if the preceding command fails, subsequent commands will not continue executing;
-- Unless the error has been handled:
+- Multiple commands, if previous command fails, subsequent commands won't execute;
+- Unless error already handled:
 
   ```bash
-  ls '/0' ; ls -l         # The latter will not execute
-  ls '/0' ?. ; ls -l      # The latter will execute
+  ls '/0' ; ls -l         # latter won't execute
+  ls '/0' ?. ; ls -l      # latter will execute
   ```
-- Use the `^` suffix to force command mode
+- Use `^` suffix to force bypass variable parsing
   ```bash
   let id = 5
-  id^ -u              # Informs the system this is a command
+  id^ -u              # tell system this is a command
   ```
-- Empty parameter commands
+- Empty argument command
   ```bash
-  notepad.exe             # If not recognized as a command (e.g., on Windows, commands with extensions)
-  notepad.exe _           # Pass an empty parameter to force recognition as a command
+  notepad.exe             # if not recognized as command (e.g. on Windows, command with extension)
+  notepad.exe _           # pass empty argument, force recognize as command
   ```
 
 ### Wildcard Expansion
-In Lumesh, `~` directory expansion and `*` expansion are also supported:
+In lumesh, also supports `~` directory expansion and `*` expansion:
 
   ```bash
   ls ~/**/*.md
   ```
-*But does not support `{}` expansion as in bash.*
+*But doesn't support bash's {} expansion*
 
-### Background Execution and Output Control Characters
-- Like bash, use the `&` symbol to run programs in the background.
-- Output control character `&`: we adopt a simpler way to suppress command output.
-- Output control characters apply only to commands, not to functions.
+### Background Execution and Output Control
+- Like bash, use `&` symbol to run program in background.
+- Output control `&`: we use more concise way to close command output.
+- Output control only applies to commands, not functions.
 
   ```bash
   thunar &         # run in background, and shutdown stdout and stderr
   ls &-            # shutdown stdout
   ls /o &?         # shutdown stderr
-  ls  /o '/' &+            # shutdown stdout and stderr
+  ls  /o '/' &.            # shutdown stdout and stderr
 
   ls  /o '/' &? | bat            # shutdown stderr and pipe stdout to next cmd.
+
   ```
-Here is a comparison of syntax with bash:
+Below is comparison with bash syntax:
 
-| Task         |  Lumesh  | bash               |
+| Task         |  lumesh  | bash               |
 |--------------|----------|--------------------|
-| Background Run |   cmd &  |cmd &               |
-| Close Std Output |   cmd &- |cmd 1> /dev/null    |
-| Close Error Output |   cmd &? |cmd 2> /dev/null    |
-| Close All Output |   cmd &. |cmd 2>&1 > /dev/null|
-| Output Error to Std* |   cmd &+ |cmd 2>&1      |
+| Shutdown stdout |   cmd &- |cmd 1> /dev/null    |
+| Shutdown stderr |   cmd &? |cmd 2> /dev/null    |
+| Shutdown all output |   cmd &. |cmd 2>&1 > /dev/null|
+| *Append stderr to stdout* |   cmd &+ |cmd 2>&1      |
+| Background execution     |   cmd &  |cmd &               |
 
-[^1]: *todo
 
 ### Output Channels
 
-- Standard Output (defined the same as in bash, can use `&-` to close standard output)
-- Error Output (defined the same as in bash, can use `&?` to close standard output, can use error handling symbols to handle errors)
-- Structured Data Channel (specific to Lumesh, can be disabled in configuration)
+- Standard Output (same definition as bash, can use `&-` to close standard output)
+- Error Output (same definition as bash, can use `&?` to close standard output, can use error handling operators to handle error)
+- Structured Data Channel (lumesh exclusive, can be closed in config)
 
-  Set `let LUME_PRINT_DIRECT= False` in the configuration file to disable the structured data channel.
+  Set `let LUME_PRINT_DIRECT= false` in config file to close structured data channel
 
   ```bash
   ❯ ls
-  Documents  Downloads  dprint.json  typescript        # Standard output
+  Documents  Downloads  dprint.json  typescript        # standard output
+
 
   ❯ ls /x
-  ls: cannot access '/x': No such file or directory    # Error output
-  [ERROR] command `ls` failed: "exit status: 2"        # Lumesh error capture, target of error handling symbols
+  ls: cannot access '/x': No such file or directory    # error output
+  [ERROR] command `ls` failed: "exit status: 2"        # Lumesh error capture, target of error handling operators
+
+  ❯ rsync -av src/ dest/ &+ | grep "error"             # append error to standard output
 
   ❯ 3 + 5
-  8                           # Standard output
-    >> [Integer] <<           # Structured channel data type hint
-  8                           # Structured channel (operation result)
+  8                           # standard output
+    >> [Integer] <<           # structured channel type hint
+  8                           # structured channel (operation result)
+
   ```
 
 **Output Printing**
 
-- `print` consumes the operation result and prints it to standard output.
-- `tap` prints to standard output but retains the operation result.
+- print consumes operation result, prints to standard output
+- tap   prints to standard output, but preserves operation result
 
   ```bash
   ❯ print 3+5
@@ -210,34 +230,35 @@ Here is a comparison of syntax with bash:
 
     >> [Integer] <<
   8
+
   ```
 
-## VIII. Built-in Function Library
+## VIII. Built-in Function Libraries
 
-Lumesh includes a large number of practical function libraries to facilitate convenient functional programming, such as:
-- **Collection Operations**: `list.reduce, list.map`
+Lumesh has many practical built-in function libraries for convenient functional programming, such as
+- **Collection Operations**: `list.fold, list.map`
 - **File System**: `fs.ls, fs.read, fs.write`
 - **String Processing**: `string.split, string.join`, regex module, formatting module
 - **Time Operations**: `fs.now, fs.format`
-- **Data Conversion**: Into module, From module
-- **Mathematical Calculations**: Complete mathematical function library
-- **Logging**: Log module
-- **UI Operations**: `ui.pick, ui.confirm`
+- **Data Conversion**: into module, from module
+- **Math Calculations**: complete math function library
+- **Logging**: log module
+- **ui operations**: `ui.pick, ui.confirm`
 
-You can view available modules and functions using the `help` command.
-You can view specific module functions using the `help String` command.
+Can view available modules and functions via `help` command.
+Can view specific module functions via `help string` command.
 
-> Built-in functions support three calling methods:
+> Built-in functions support three calling styles
   ```bash
   string.red(msg)
   string.red msg
   string.red! msg
   ```
-And also support chained calls and pipeline method calls:
+and chained call and pipe method call:
   ```bash
   msg.red()
   msg | .red()
   ```
 
-For detailed content, please continue reading:
- - [Built-in Lib Library](/doc/libs)
+For detailed content, continue reading:
+ - [Built-in Libs](/zh-cn/doc/libs/)

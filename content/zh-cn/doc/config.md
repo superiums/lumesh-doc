@@ -1,7 +1,7 @@
 ---
 title: 配置文件
 date: 2026-07-20 15:16:45
-highlight: True
+highlight: true
 weight: 13
 tags:
  - syntax

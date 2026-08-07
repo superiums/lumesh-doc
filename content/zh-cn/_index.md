@@ -1,6 +1,7 @@
 ---
 title: Lumesh 文档
 date: 2025-12-25 19:16:45
+layout: hero
 ---
 
 {{% flex gap=3 wrap=true %}}

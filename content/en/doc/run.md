@@ -1,20 +1,20 @@
 ---
-title: Starting and Running
+title: Startup and Execution
 date: 2025-06-11 19:16:45
 highlight: true
-weight: 2
+weight: 12
 tags:
- - install
+  - install
 categories:
- - wiki
- - install
+  - wiki
+  - install
 ---
 
-> The interactive mode is started with the `lume` or `lume -i` command.
+> Interactive mode is started via `lume` or `lume -i` command
 
 ## Startup Parameters
 
-The command line supports various execution modes, as you can see:
+Command-line supports multiple execution modes as you see:
 
 ```bash
 > lume -h
@@ -23,133 +23,158 @@ Lumesh scripting language runtime
 Usage: lume [OPTIONS] [FILE_N_ARGS]... [-- [CMD_ARGV]...]
 
 Arguments:
-  [FILE_N_ARGS]...  script file and args to execute
+  [FILE_N_ARGS]...  Script file and args to execute
   [CMD_ARGV]...     args for cmd
 
 Options:
-  -p, --profile      config file
-  -s, --strict       strict mode
-  -i, --interactive  force interactive mode
+  -p, --profile      Config file
+  -s, --strict       Strict mode
+  -i, --interactive  Force interactive mode
   -m, --cfmoff       NO command first mode
   -a, --aioff        NO ai mode
   -n, --nohistory    NO history (private) mode
-  -c, --cmd <CMD>    command to eval
+  -c, --cmd <CMD>    Command to eval
   -h, --help         Print help
   -V, --version      Print version
 ```
 
-## Running Modes
+## Execution Modes
 
 ### 1. REPL Interactive Mode
 > `lume`
 
-The user interactive mode is the default startup mode, handling user input and output.
+User interactive mode is the default startup mode, handling user input/output.
 
-It supports syntax highlighting and auto-completion.
+Supports code highlighting, auto-completion.
 
-**Auto Suggestions**
+**Auto-hinting**
 
-- Typing part of a word will prompt Lumesh to suggest matching built-in functions, third-party commands, aliases, built-in syntax, and historical commands.
+- Type partial words, lumesh will automatically hint matching built-in functions, third-party commands, aliases, built-in syntax, history commands
 
-- Typing `module_name + dot + space`: `into. ` will suggest all available functions within that module.
+- Type `module_name.+.`: `into.` will hint all available functions in that module.
 
-**Auto Completion**:
+**Auto-completion**:
 
-- Pressing `Tab` will trigger auto-completion.
+- Press `Tab` to trigger auto-completion.
 
-Completion modes:
+Completion mode:
 
-  + The first word triggers *command completion*, including system executable commands, built-in functions, aliases, and built-in syntax.
+  + First word, triggers *command completion*, including system executable commands, built-in functions, aliases, built-in syntax.
 
-  + Words with path symbols like `.`, `/` (or `\` on Windows) will trigger *path completion*.
+  + Words with path symbols, like `.`, `/` (win then `\`), triggers *path completion*.
 
-  + More than two words that are not paths will trigger *AI auto-completion*.
+  + More than two words, and not a path, then triggers *AI auto-completion*.
 
-  _To use AI completion, please configure the AI interface first._ The default is the Ollama configuration, which connects after running Ollama.
+  *To use AI completion, please configure AI interface first*. Default is ollama default configuration, just run ollama and connect.
 
 **Common Keys**:
 
-- `Right` or `Ctrl+J`: Accept completion suggestions (supports paths and historical commands).
-- `Alt+J`: Accept a single word completion suggestion.
+- `Ctrl+J`: Accept completion suggestion (supports paths and history commands).
+- `Alt+J`: Accept single word completion suggestion.
 - `Ctrl+D`: Terminate input.
-- `Ctrl+C`: Terminate the current operation.
-- `Ctrl+L`: Clear the screen.
+- `Ctrl+C`: Terminate current operation.
+- `Ctrl+U`/`Ctrl+K`: Clear input before/after current line
+- `Ctrl+O`: Clear multi-line input
+- `Ctrl+L`: Clear screen
 
-For other shortcuts, please refer to [Shortcuts](keys).
+For more shortcuts, see [Shortcuts](keys)
 
-**Custom Key Bindings**:
-Custom bindings can be configured in the configuration file. Please refer to the [Configuration Files](config) section.
+**Custom Hotkey Bindings**:
+Can be configured in config file.
+Please see [Configuration](config) section.
 
-**History**: Saved in the default configuration directory, configurable via the configuration file.
-- `UP/DOWN` or `Ctrl+N/P`: Switch between history records.
+**History**: Saved in default config directory, can be configured via config file.
+- `UP/DOWN` or `Ctrl+N/P`: Switch history records.
 
 
 ### 2. Script Parsing Mode
 > `lume [filename]`
-Run a script:
+Run scripts:
 
 ```bash
 lume ./my.lm
 lume ./my.lm arg1 arg2
 ```
 
-If you are particularly concerned about performance, you can use the command parsing dedicated lite version: `lumesh`.
+If you particularly care about performance, you can use the command parsing exclusive lite version: `lumesh`
 
 ### 3. Command Execution Mode
-> `lume -c <command> <parameters>...`
-If you need to keep the REPL window open after executing a command for continued interaction, add the `-i` parameter:
-> `lume -ic <command> <parameters>...`
+> `lume -c <command> <args>...`
+If you need to keep REPL window after command execution for continued interaction, add `-i` parameter
+> `lume -ic <command> <args>...`
 
-### 4. LOGIN-SHELL Mode
-> The first shell at system startup.
+### 4. Login-Shell Mode
+> First shell at system startup
 
-To start the shell, you should first configure the system environment variables in the config file, similar to `.bashrc`. Once prepared, you can execute `set_as_login_shell()` or the following script:
+To start shell, first configure system environment variables in config file, similar to .bashrc content.
+When ready, execute `set_as_login_shell()` or the following script:
 
 ```bash
-    let p = (About | .get('bin'))
-    if !(fs.read /etc/shells | .contains($p)) {
-        sudo lume -c `fs.append /etc/shells "\n$p"` ?: doas lume -c `fs.append /etc/shells "\n$p"`
-    }
-    chsh -s $p
+  let p = (About | .get('bin'))
+  if !(fs.read /etc/shells | .contains($p)) {
+      sudo lume -c `fs.append /etc/shells "\n$p"` ?: doas lume -c `fs.append /etc/shells "\n$p"`
+  }
+  chsh -s $p
 ```
 
 ### 5. Strict Mode
-> `lume -s`
 
-In strict mode, variables must be declared first and cannot be redeclared.
+**Strict**
 
-When using variables, the `$` prefix should be used. This is to enhance script parsing speed.
+In strict mode, variables must be declared first and cannot be re-declared.
 
-In non-strict mode, direct access to variables without `$` is allowed.
+When using variables, use `$` prefix. This is to improve script parsing speed.
+
+**Non-Strict**
+
+In non-strict mode, allow accessing variables without `$` prefix.
 
 Both modes allow implicit type conversion.
 
-### 6. Command Priority Mode
 
-#### Default CFM Mode
-> `lume`
-In interactive command mode and command mode (`lume -c`), if the input is only one line, command priority mode is used.
+#### Mode Switching
+- Startup Mode
+  Depends on factor 1: Setting in config file: `set LUME_STRICT = true` enables strict mode.
+  
+  Depends on factor 2: Startup lume parameters: If `-s` parameter exists, it will override config file settings.
 
-In this mode, it prioritizes parsing as a command rather than programming, treating characters like `.` and `+` as ordinary characters.
+- Command Switching
+  ```bash
+  sys.set_strict(true)     # Enable strict mode
+  sys.set_strict(false)    # Disable strict mode
+  ```
 
-*To temporarily skip this mode, add `:` at the beginning of the command line.*
-```bash
-ping 1.1.1.1     # Correct, in CFM mode `.` is an ordinary character
-ping '1.1.1.1'   # Correct
-3+5^2            # Incorrect, in CFM mode `+` is an ordinary character
-:3+5^2           # Correct, temporarily skip CFM mode
-```
+### 6. Command First Mode
 
-*If the input has multiple lines, it will not enter CFM mode.*
+#### Mode Description
 
-#### Skip CFM Mode
-> `lume -m`
+- Normal Mode
+  Symbols parsed first as operators.
 
-```bash
-ping 1.1.1.1     # Incorrect, `.` is an operator
-ping '1.1.1.1'   # Correct
-3+5^2            # Correct, `+` is an operator
-```
+- Command First Mode (CFM)
+  Parsed first as commands, especially parameters position's `.` `+` `-` `=` operators treated as regular characters first.
 
-### 7. No AI Mode
-### 8. No History Mode
+
+#### Mode Switching
+- Startup Mode
+  Depends on factor 1: Setting in config file: `set LUME_CFM = true` enables Command First Mode.
+  Depends on factor 2: Startup lume parameters: If `-m` and `-M` parameters exist, they will override config file settings.
+
+- Command Switching
+  ```bash
+  sys.set_cfm(true)     # Enable CFM mode
+  sys.set_cfm(false)    # Disable CFM mode
+  ```
+
+- Temporary Switching
+  Type `:` at line beginning to switch to Normal mode
+  
+  Type `>` at line beginning to switch to Command First mode
+
+- Auto Mode
+  If not set, single line input uses CFM mode, multi-line input uses Normal mode.
+
+More information can be found in [Syntax Rules](syntax/symbo)
+
+### 6. No AI Mode
+### 7. No History Mode

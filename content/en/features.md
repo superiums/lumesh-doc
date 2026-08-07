@@ -1,5 +1,5 @@
 ---
-title: Lumesh 特性
+title: Lumesh Features
 date: 2025-12-25 19:16:45
-layout: "features" 
+layout: features_en
 ---

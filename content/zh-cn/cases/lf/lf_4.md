@@ -18,7 +18,7 @@ lf filemanager 配置对比 D
 - **lumesh**: 使用内置文件函数和字符串插值
 ```bash
 let base_name = fs.base_name($fx)
-let new_name =read `rename "$base_name" to:`
+let new_name = read `rename "$base_name" to:`
 if $new_name {
     $lf_user_wheel mv -- $base_name $new_name
     lf -remote `send $id :select $new_name`

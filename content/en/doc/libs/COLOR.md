@@ -1,18 +1,18 @@
 ---
-title: const of COLOR
+title: Built-in Constant COLOR
 date: 2025-12-25 19:16:45
 weight: 41
 tags:
- - const
+  - const
 categories:
- - wiki
- - const
+  - wiki
+  - const
 ---
 
-## 8bit color
+## Basic Colors
 
-| foreground | foreground light | background | background light |
-|--------|----------|--------|----------|
+| Foreground | Foreground Bright | Background | Background Bright |
+|------------|-------------------|------------|-------------------|
 | BLACK | LIGHT_BLACK | BG_BLACK | BG_LIGHT_BLACK |
 | RED | LIGHT_RED | BG_RED | BG_LIGHT_RED |
 | GREEN | LIGHT_GREEN | BG_GREEN | BG_LIGHT_GREEN |
@@ -22,74 +22,76 @@ categories:
 | CYAN | LIGHT_CYAN | BG_CYAN | BG_LIGHT_CYAN |
 | GRAY | LIGHT_GRAY | BG_GRAY | BG_LIGHT_GRAY |
 
-usage：
+Usage:
 ```bash
 COLOR.RED + 'lume'
-# same as
+# Equivalent to
 string.red('lume')
 ```
 
-## 256bit color
+## 256 Colors
 
-| foreground | background |
-|--------|--------|
+| Foreground | Background |
+|------------|------------|
 | FG_1 | BG_1 |
 | FG_2 | BG_2 |
 | ... | ... |
 | FG_256 | BG_256 |
 
-usage：
+Usage:
 ```bash
 COLOR.FG_50 + 'lume'
-# same as
-string.clr('lume',50)
+# Equivalent to
+string.clr('lume', 50)
 ```
 
-## true color
-- by name
+## True Colors
 
-| foreground | background |
-|--------|--------|
+- By Name
+
+| Foreground | Background |
+|------------|------------|
 | aliceblue | BG_aliceblue |
 | BG_antiquewhite | BG_antiquewhite |
 | ... | ... |
 | yellowgreen | BG_yellowgreen |
 
-to list the avaluable colors, use：
+Available colors can be viewed using the following methods:
 ```bash
 string.colors()
 string.colors(false)
 ```
 
-usage：
+Usage:
 ```bash
 COLOR.green + 'lume'
-# same as
-string.color('lume','green')
+# Equivalent to
+string.color('lume', 'green')
 ```
 
-- via hex code
+- By Code
 
-| foreground | background |
-|--------|--------|
+| Foreground | Background |
+|------------|------------|
 | FGX_000000 | BGX_000000 |
 | FGX_000001 | BGX_000001 |
 | ... | ... |
 | FGX_ffffff | BGX_ffffff |
 
-usage：
+Usage:
 ```bash
 COLOR.FGX_aaff22 + 'lume'
-# same as
-string.color('lume','#aaff22')
+# Equivalent to
+string.color('lume', '#aaff22')
 ```
 
-## reset：
+## Reset:
+
 RESET
 
-usage：
+Usage:
 ```bash
 COLOR.RED + 'lume' + COLOR.RESET + ' normal'
-# same as
+# Equivalent to
 string.red('lume') + ' normal'
 ```

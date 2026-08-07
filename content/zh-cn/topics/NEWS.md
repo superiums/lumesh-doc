@@ -1,3 +1,15 @@
+---
+title: 最新动态
+date: 2025-06-11 19:16:45
+highlight: true
+weight: 90
+tags:
+ - news
+categories:
+ - topics
+ - news
+---
+
 # lumesh 近期版本动态（0.16.13 → 0.17.5）
 
 承接上期报告（0.14.x–0.16.12：编辑器重写、分词器重构、History/Slash Commands、AI 集成），本期焦点转向语言核心层——**字符串/引号系统的深度重构**、**`Bytes` 类型的引入**、**后台任务管理体系的建立**，以及一系列贯穿始终的性能打磨。

@@ -23,44 +23,54 @@ shell 后面指定lume或lumesh作为脚本解析器。
 [使用Lumesh编写lf配置文件的语法演示](/zh-cn/cases/case_lf)
 
 ```bash
-set ifs "\n"
-set shellopts '-s'
-set shell lumesh
+#! lumelf
+set ifs '\n'
+# set ifs "\n"
+set shellopts '-sM'
+set shell lume
 set filesep "\n"
 & if $LF_LEVEL.to_int() > 1 { lf -remote `send $id echoerr "Nest Level $LF_LEVEL"` }
 & if !fs.exists('/tmp/lf') {mkdir /tmp/lf}
 & if !fs.exists('/tmp/lf/files') {touch /tmp/lf/files /tmp/lf/tags /tmp/lf/history; 'copy' >! /tmp/lf/files}
-
+#
+# ========== General settings ==========
+# --style--
 set borderfmt "\033[32m"
 set errorfmt "\033[1;43;41m"
 set timefmt '2006-1-2 15:04'
-set rulerfmt "%{lf_user_wheel}| %a|  %p|  %{lf_selmode} \033[7;31m %m \033[0m|  \033[7;33m %c \033[0m|  \033[7;35m %s \033[0m|  \033[7;34m %f \033[0m|  %i/%t"
-set locale 'zh-CN'
+set rulerfmt "%{lf_user_wheel}| %a|  %p| %{lf_mode}| %{lf_selmode} \033[7;31m %m \033[0m|  \033[7;33m %c \033[0m|  \033[7;35m %s \033[0m|  \033[7;34m %f \033[0m|  %i/%t"
 set tempmarks '=>+@^#'
 
 set drawbox
 set roundbox
 set showbinds
-
 set scrolloff 10
 set icons
+# set globsearch
 set incsearch
 set incfilter
+# set smartcase
 set ignorecase
 set anchorfind false
 set findlen 0
 set tabstop 4
 set info 'size'
 set preview
-set sixel
+# set sixel
+# set previewer ~/.config/lf/previewer.lm
 set previewer ~/.config/lf/previewer
+# set cleaner ~/.config/lf/cleaner
 set dircounts
 set selmode 'dir'
+# setlocal ~/Downloads sortby "atime"
+# setlocal ~/Downloads reverse
 set user_wheel ''
+# Remove some defaults
 map d
 map y
 map p
 map m
+# map s
 map f
 map c
 map r
@@ -68,8 +78,10 @@ map t
 map G
 map F
 map w
+# ========== Commands ==========
+#    profile
 cmd profile ${{
-  print lf -remote `send $id source ~/.config/lf/profiles/${$argv[0]}`
+  lf -remote `send $id source ~/.config/lf/profiles/${$argv[0]}.lmf`
 }}
 map z2 profile extra
 map z3 profile disk
@@ -78,15 +90,15 @@ map z5 profile develop
 map z6 profile auto-redraw
 map z7 profile tarzip
 
+# defaults:
 cmd open % eprint 'not dir'
 map e $$lf_user_wheel hx $f
-
-
 map zm set info perm
 map zu set info user:group
 
-
-map W $lume
+# ---------- shell ----------
+# map W  ${{ $SHELL }}
+map W $lume -mic `cd $PWD`
 map . :read; cmd-history-prev;
 map <a-\;> push :<space>$fx<home>
 map <a-4> push $<space>$fx<home>
@@ -95,28 +107,31 @@ map <a-5> push %<space>$fx<home>
 map <a-1> push !<space>$fx<home>
 
 cmd all-cmd ${{
-    let cmd = lf -remote `query $id cmds` | .lines() | .drop(1) | \
-        .map(x -> {x.split("\t\t") | .first()}) | ui.pick "select cmd:"
+    let cmd = lf -remote `query $id cmds` | .lines() | .skip(1) | \
+        .map(x -> {$x.split("\t\t") | .first()}) | ui.pick("select cmd:")
     lf -remote `send $id :$cmd`
 }}
 map <c-e> all-cmd
 
 cmd history-cmd ${{
-    let cmd = lf -remote `query $id history` | .lines() | ui.pick "history command:" | .split("\t\t") | .last()
+    let cmd = lf -remote `query $id history` | .lines() | .last() | ui.pick("history command:") | .split("\t\t") | .last()
     lf -remote `send $id $cmd`
 }}
 map <backspace> history-cmd
 map <backspace2> history-cmd
+# <c-h>
 
 cmd history-dir ${{
-  let hist = lf -remote `query $id jumps` | into.table('jump','path') | .drop(1) | ui.pick "choose history:"
-  lf --remote `send $id cd ${$hist.path}`
+  let hist = lf -remote `query $id jumps` | .lines() | .skip(2) | .map(x -> $x.split()) | ui.pick("choose history:")
+  lf --remote `send $id cd ${$hist.last()}`
 }}
 map <c-g> history-dir
 
+# ---------- quit ----------
 cmd quit-print ${{ print $fx ; lf -remote `send $id quit` }}
 map <c-o> quit-print
 
+# ---------- settings ----------
 map <f-12> ${{ lf -remote `query $id maps` | less }}
 
 cmd edit-config ${{
@@ -125,10 +140,10 @@ cmd edit-config ${{
 }}
 map zc edit-config
 
-cmd toggle-preview %{{
+cmd toggle-preview ${{
     match $lf_preview {
-        'true' => lf -remote `send $id :set nopreview; set ratios 1:5`
-        _ => lf -remote `send $id :set preview; set ratios 1:2:3`
+        'true' => lf -remote `send $id set nopreview; set ratios 1:5`
+        _ => lf -remote `send $id set preview; set ratios 1:2:3`
     }
 }}
 map zp toggle-preview
@@ -148,15 +163,18 @@ map zP parent-panel-off
 
 cmd toggle-super ${{
     if $lf_user_wheel {
-        lf -remote `send $id :set user_wheel;set borderfmt \033[32m; set promptfmt '\033[32;1m%u@%h\033[0m:\033[34;1m%d\033[0m\033[1m%f\033[0m'`
+        lf -remote `send $id :set user_wheel;set borderfmt "\033[32m"; set promptfmt "\033[32;1m%u@%h\033[0m:\033[34;1m%d\033[0m\033[1m%f\033[0m"`
     }else{
-        lf -remote `send $id :set user_wheel pkexec;set borderfmt \033[31m; set promptfmt '\033[5;5mSUPER\033[0m $id \033[0m:\033[34;1m%d\033[0m\033[1m%f\033[0m'`
+        lf -remote `send $id :set user_wheel 'pkexec --keep-cwd';set borderfmt "\033[31m"; set promptfmt "\033[5;5mSUPER\033[0m $id \033[0m:\033[34;1m%d\033[0m\033[1m%f\033[0m"`
     }
 }}
 map zz toggle-super
 
+# ---------- reload ----------
+# reload config
 map <c-s> source ~/.config/lf/lfrc
 
+# ---------- navigation ----------
 map <tab> half-down
 map <backtab> half-up
 map J push 3j
@@ -165,6 +183,9 @@ map <c-j> push 7j
 map <c-k> push 7k
 map <a-j> push 10j
 map <a-k> push 10k
+# ---------- quick navigation ----------
+# Fast navigation
+# map gh cd ~
 map g<space> push :cd<space>
 map g/ cd /
 map gr cd /
@@ -186,6 +207,7 @@ map g. cd ~/.config/lf
 map ga cd /usr/share/applications
 map gG bottom
 
+# zoxide
 cmd zox %{{
     if len($argv) {
         let select=zoxide query --exclude (pwd()) $argv
@@ -201,17 +223,21 @@ cmd zoxide-query ${{
 }}
 map gq zoxide-query
 
+# cmd cd-usermedia & lf -remote `send $id cd /run/media/$USER`
 cmd cd-usermedia &{{
+    mkdir -p `$XDG_RUNTIME_DIR/media`
     lf -remote `send $id cd $XDG_RUNTIME_DIR/media`
 }}
 map gi cd-usermedia
 
+# link
 cmd follow-link %{{
     let real=readlink $f
     lf -remote `send $id select $real`
 }}
 map gL follow-link
 
+# ---------- select ----------
 cmd select-files &{{
     let htag= $lf_hidden ? '-H' : ''
     let r=fd --exact-depth 1 $argv $htag -c never -j 4 | .lines() | .join(' ')
@@ -233,33 +259,50 @@ map So select-files -o root
 
 map Sr push :select-files<space>--regex<space>
 
+# ---------- search ----------
 map , find
+# map <backslash> find
+# map \[ find-prev
+# map \] find-next
 map <lt> find-prev
 map <gt> find-next
 
 cmd fzf-edit $ hx (fzf)
 map fe fzf-edit
 
+# Select the file or directory via fzf
+# limit size 50k
 cmd fzf-file ${{
-    let ext = len($argv) ? '-e'+$argv[0] : ''
+    print $argv
+    typeof $argv | print
+    let ext = len($argv) ? '-e' + $argv[0] : ''
     let selected = fd --type 'file' $ext '-S-50k' -j 4 | fzf --preview "~/.config/lf/previewer {} 30 18"
     lf -remote `send $id select $selected`
 }}
 map ff<space> push :fzf-file<space>
 map fft fzf-file txt
+# map fp fzf-file png
+# map fj fzf-file jpg
+# map fa fzf-file mp3
+# map fv fzf-file mp4
+# map ffw fzf-file docx
+# map ffx fzf-file xlsx
 map ffg fzf-file gz
+# map ffz fzf-file zip
 map ffm fzf-file md
 map ffs fzf-file sh
 map ffy fzf-file py
 
+# cd into the selected directory via fzf
 cmd fzf-folder ${{
-  select = $lf_user_wheel fd --type d '.' -d 5 -j 4 | fzf --preview 'ls {}'
+    let select = $lf_user_wheel fd --type d '.' -d 5 -j 4 | fzf --preview 'ls {}'
     lf -remote `send $id cd $select`
 }}
 map fd fzf-folder
 
+# limit size 50k
 cmd fzf-content ${{
-    let file_type = len($argv)>0 ? $argv[0] : 'sh'
+    let file_type = $argv[0] ?: 'md'
     let RG_PREFIX = `$lf_user_wheel rg --type $file_type --column --line-number --no-heading --color=always --smart-case --max-filesize 50K`
     let res = fzf --ansi --disabled \
           --bind `start:reload:$RG_PREFIX {q}` \
@@ -270,10 +313,14 @@ cmd fzf-content ${{
           --delimiter ':' \
           --preview 'bat --color=always {1} --highlight-line {2}' \
           --header `Searching Content in FileType: $file_type` \
+
+          # --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
+          # --bind 'enter:become(vim {1} +{2})'
     if $res {
           let a = $res.split(':').take(3).join(':')
           $lf_user_wheel hx $a
     }
+    # [ -n "$res" ] && lf -remote `send $id select \"$res\"`
 }}
 map fc<space>  push :fzf-content<space>
 map fct fzf-content txt
@@ -283,6 +330,7 @@ map fcy fzf-content py
 map fcj fzf-content js
 
 
+# ---------- filter ----------
 map \\ filter
 map F<space> filter
 map Ft setfilter .txt
@@ -295,26 +343,32 @@ map Fx setfilter .xlsx
 map Fg setfilter .gz
 map Fz setfilter .zip
 map Fm setfilter .md
-map Fs setfilter .sh
+map fs.setfilter .sh
 map Fy setfilter .py
 map Fc setfilter
+# map fm :filter; set user_filter true
 
+# ---------- sort ----------
 
+# ---------- operation ----------
 
+# ----- op: yank ----------
 map yy copy
 
+# Copy the absolute paths of selections separated by \n
 cmd yank-path &{{
     $fx.lines().join("\n") | wl-copy
 }}
 map yp yank-path
 
+# Copy the file names (including extension) of the selections separated by \n
 cmd yank-name &{{
-    $fx.lines() | .map(fs.base_name) | .join("\n") | wl-copy
+    $fx.lines() | .map(x -> fs.base_name($x)) | .join("\n") | wl-copy
 }}
 map yn yank-name
 
 cmd yank-basename &{{
-    $fx.lines() | .map(x -> {fs.base_name(True,$x) | .first()}) | .join("\n") | wl-copy
+    $fx.lines() | .map(x -> {fs.stem($x)}) | .join("\n") | wl-copy
 }}
 map yb yank-basename
 
@@ -327,8 +381,10 @@ map yu yank-clear
 cmd yank-list $$fx | hx
 map \| yank-list
 
+# ----- op: cut ----------
 map yc cut
 
+# ----- op: delete ----------
 cmd delete ${{
   println '=====DELETE====='.red().bold() $fx '================'.red()
   if ui.confirm('Delete these files [y/n]:'){
@@ -337,8 +393,8 @@ cmd delete ${{
 }}
 map dD delete
 
-cmd trash %{{
-    let files = $fx.lines() | list.map(fs.base_name)
+cmd trash ${{
+    let files = $fx.lines() | list.map(x -> fs.base_name($x))
     let ans = read `Trash: $files [y/N]`
 
     if $ans == 'y' {
@@ -351,60 +407,70 @@ cmd trash %{{
 }}
 map dd trash
 
+# ----- op: paste ----------
+# focus: select;
+# tag as choosed: unselect; toggle
+# cancel tag as choosed: unselect
 
 cmd mpaste %{{
-    let load=fs.read ~/.local/share/lf/files | .lines()
-    let files = $load.drop(1)
+    let load = fs.read ~/.local/share/lf/files | .lines()
+    let files = $load.skip(1)
     let file_count = len($files)
-    if $file_count==0 {
+    if $file_count == 0 {
         print 'No files yanked'
         exit 0
     }
-    let mode=$load.at(0)
-    let base_names = $files.map(fs.base_name)
+    let mode = $load.get(0)
+    let base_names = $files.map(x -> fs.base_name($x))
+    let tg
     let ans = read `$mode $file_count files? [y/N]`
     if $ans == 'y' {
         match $mode {
             copy => {
                 $lf_user_wheel cp -r $argv -- $files '.'
-                let tg='='
+                set tg = '='
             }
             move => {
                 $lf_user_wheel mv -- $files '.'
-                let tg='>'
+                set tg = '>'
             }
         }
 
         '' >! ~/.local/share/lf/files
         lf -remote 'send clear'
-        for file in $base_names {
-            lf -remote `send $id :select "$file"; tag $tg`
+        # lf -remote `send $id :unselect`
+        for name in $base_names {
+            lf -remote `send $id :select $name; tag '$tg'`
         }
     }
 }}
+# with backup
 map po mpaste --backup=numbered --force
 map pb mpaste --backup=numbered
+# no backup
 map pO mpaste --force
 map pi mpaste -i
 map pn mpaste -n
 map pu mpaste --update
 map pP mpaste --update --preserve
+# link
 map ps mpaste --symbolic-link
 map pl mpaste --link
 map pH mpaste -H
+# use bultiin paste
 map pp paste
 
 
 cmd link %{{
     let load= fs.read ~/.local/share/lf/files | .lines()
-    let files=$load.drop(1)
+    let files=$load.skip(1)
     let file_count = len($files)
     if $file_count==0 {
         print 'No files yanked'
         exit 0
     }
-    let mode=$load.at(0)
-    let base_names = $files.map(fs.base_name)
+    let mode=$load.get(0)
+    let base_names = $files.map(x -> fs.base_name($x))
 
     for filex in $base_names{
         if (fs.exists fs.join('.',$filex)) {
@@ -414,22 +480,25 @@ cmd link %{{
     }
     match $mode {
         copy => $lf_user_wheel ln -s -- $files '.'
-        move =>  $lf_user_wheel ln -- $files '.'
+        move => $lf_user_wheel ln -- $files '.'
     }
 
     '' >! ~/.local/share/lf/files
     lf -remote 'send clear'
+    # lf -remote `send $id :unselect`
     for file in $base_names {
-        lf -remote `send $id :select "$file"; tag '@'`
+        # echo $file..>>/tmp/lf/p
+        lf -remote `send $id :select '$file'; tag '@'`
     }
 
 }}
 map pL link
 
+# copy with rsync
 cmd paste-rsync %{{
-    let load= fs.read ~/.local/share/lf/files | .lines()
-    let mode=$load.at(0)
-    let files=$load.drop(1)
+    let load = fs.read ~/.local/share/lf/files | .lines()
+    let mode = $load.get(0)
+    let files = $load.skip(1)
     match $mode{
         copy => {
             $lf_user_wheel rsync -ar --ignore-existing --info=progress2 -- $files '.'
@@ -440,6 +509,8 @@ cmd paste-rsync %{{
     }
 
     '' >! ~/.local/share/lf/files
+    # lf -remote `send $id Rsyn Finished.`
+    # lf -remote `send clear`
 }}
 map pr paste-rsync
 
@@ -447,7 +518,7 @@ cmd paste-to %{{
     let dest = $argv[0] ?: {print 'Cancelled';exit 0}
     $lf_user_wheel cp -r --backup=numbered -i -- $fx $dest
     if fs.is_dir($dest){
-        let base_names = $fx.lines() | .map(fs.base_name) | .join("\n")
+        let base_names = $fx.lines() | .map(x -> fs.base_name($x)) | .join("\n")
         lf -remote `send $id :unselect; cd $dest; select $base_names`
     }else{
         lf -remote `send $id :unselect; select $dest; `
@@ -464,9 +535,10 @@ cmd paste-from %{{
 map pf push :paste-from<space>
 
 
+# ----- op: change name ----------
 cmd rename-to %{{
     let base_name = fs.base_name($fx)
-    let new_name =read `rename "$base_name" to:`
+    let new_name = read `rename "$base_name" to:`
     if $new_name {
         $lf_user_wheel mv -- $base_name $new_name
         lf -remote `send $id :select $new_name`
@@ -481,10 +553,11 @@ map cn :rename; cmd-delete-home           #rename basename
 map ce push ca<c-f><c-k>                  #rename extension
 map cf :rename; cmd-end; cmd-delete-home  #rename fullname
 
+# Bulk rename on selected files or all the non-hidden files in the current directory if no selection
 cmd bulk-rename ${{
-    let new=mktemp
+    let new = mktemp _
     $fs + "\n" >! $new
-    helix $new
+    hx $new
     let old_files = $fs.lines()
     let new_files = fs.read $new | .lines()
     lf -remote `send $id unselect`
@@ -499,7 +572,8 @@ cmd bulk-rename ${{
 
 map cb bulk-rename
 
-cmd chmod ${{
+# ----- op: chmod ----------
+cmd chmod %{{
     let ans = read "Mode Bits:"
     if $ans {
         $fx |> $lf_user_wheel chmod $ans _
@@ -518,6 +592,8 @@ cmd chown %{{
 map co chown
 map cO chown -R
 
+# ----- op: make new ----------
+# map mf push %touch<space>
 cmd mkfile %{{
     if len($argv)>0 {
         $lf_user_wheel touch -- $argv
@@ -528,13 +604,14 @@ cmd mkfile %{{
 }}
 map mf push :mkfile<space>
 
+# cmd mkdir %mkdir -p "$(echo $* | tr ' ' '\ ')"
 cmd mkdirs ${{
     if $argv {
         $lf_user_wheel mkdir -p -- $argv
-        let name = ""
+        # let name = ""
         for file in $argv{
             if !$file.starts_with('/'){
-                name = fs.base_name($file)
+                let name = fs.base_name($file)
                 lf -remote `send $id :select $name; tag '+'`
             }
         }
@@ -542,6 +619,7 @@ cmd mkdirs ${{
 }}
 map mk push :mkdirs<space>
 
+# Create a directory with the selected items
 cmd folder-selected %{{
     let dest = read "Fold to :"
     if $dest {
@@ -558,8 +636,13 @@ cmd folder-selected %{{
 map ms folder-selected
 
 
-map i ${{let LESSOPEN=' | ~/.config/lf/previewer %s 20 30'; less -R -k ~/.config/lf/less.lesskey $f}}
+# ----- op: view ----------
+map i ${{
+    let LESSOPEN=' | ~/.config/lf/previewer %s 20 30'; less -R '--lesskey-content=i quit' $f
+}}
+# map i ${{let LESSOPEN=' | ~/.config/lf/previewer %s 20 30'; less -R -k ~/.config/lf/less.lesskey $f}}
 
+# ----- op: edit ----------
 map En &geany $fx
 map Ec &code $fx
 map Ep &lapce $fx
@@ -568,10 +651,13 @@ map Ee &gedit $fx
 map Ea &apostrophe $fx
 map El &lite-xl $fx
 map Em &marker $fx
+map Ef &ferrite $fx
 map Er &retext $fx
 map Ev &vi $fx
 map Ez &zed $fx
-
+map Eg $glow $fx | less
+# ----- op: open ----------
+# reveal dir--
 map rr &$lf_user_wheel foot lf '.'
 map rt &thunar '.'
 map rs &spacefm -t '.'
@@ -582,50 +668,57 @@ map rn &geany '.'
 map rl &lite-xl '.'
 map rz &zed '.'
 cmd cmus-play &{{
+    # sock=/run/user/1000/cmus-socket 默认socket路径，无须指定
     pgrep -x cmus ?: foot cmus
     cmus-remote -c -q $fx
     cmus-remote -p -q
 }}
 map Om cmus-play
+# open file--
 cmd open-handlr $ handlr open $fx; lf -remote `send $id unselect`
 map o open-handlr
 
-cmd open-with-gui &$argv[0] $fx ## opens with a gui application outside lf client
+cmd open-with-gui &{{ let cmd = $argv[0]; $cmd $fx }} ## opens with a gui application outside lf client
 map Og push :open-with-gui<space> ## input application
 
-cmd open-with-cli $$argv[0] $fx ## opens with a cli application inside lf client
+cmd open-with-cli ${{ let cmd = $argv[0]; $cmd $fx }} ## opens with a cli application inside lf client
 map Oc push :open-with-cli<space> ## input application
 
 map Ox &xarchiver $f
 
-cmd extract-to %{{
+# ----- op: archive ----------
+cmd extract-to ${{
     let dest = $argv[0] ?: {print 'Cancelled'; exit 0}
+    # tar, zip, gz, 7z, xz/lzma, bz/bz2, bz3, lz4, sz (Snappy), zst, rar and br
     if (regex.match '\.([gb7xs]z|t[gbx]z|zip|zst|bz2|lz4|lzma|tar|rar|br)$' $f) {
-        let base_name = fs.base_name(True,$f).first()
+        let base_name = fs.stem($f)
         let npath = fs.join($dest,$base_name)
         $lf_user_wheel ouch -q decompress --dir $npath $f
         lf -remote `send $id :cd $dest; select $base_name; tag '^'`
     }else{
-        print 'Unsupported file extention'
+        print 'Unsupported file extension'
     }
 }}
-map ah push :extract-to<space>.<enter>
+map ah push :extract-to<space>./
 map ax push :extract-to<space>/tmp/
 map aX push :extract-to<space>
 
+# ----- op: compress ----------
 cmd compress-to ${{
     let dest = $argv[0] ?: {print 'Cancelled'; exit 0}
     let sources = $fx.lines()
+    let base_name
+    let dest_file
     if $dest.ends_with('/'){
-        let base_name = fs.base_name($sources.first())
-        let dest_file = fs.join($dest, $base_name)
+        set base_name = fs.base_name($sources.first())
+        set dest_file = fs.join($dest, $base_name)
     }else{
-        let base_name = fs.base_name($dest)
-        let dest_file = $dest
+        set base_name = fs.base_name($dest)
+        set dest_file = $dest
     }
-    if !(regex.match '\.(gz|tgz|zip|tar|7z|bz|bz2|xz|lzma|sz|lz4|zst|rar)$' $base_name) {
-        base_name = $base_name + '.tgz'
-        dest_file = $dest_file + '.tgz'
+    if !(regex.match '\.(tgz|gz|zip|tar|7z|bz|bz2|xz|lzma|sz|lz4|zst|rar)$' $base_name) {
+        set base_name = $base_name + '.tgz'
+        set dest_file = $dest_file + '.tgz'
     }
     $lf_user_wheel ouch compress -qSg $sources $dest_file
     let dir = fs.dir_name($dest)
@@ -633,17 +726,20 @@ cmd compress-to ${{
 }}
 map ac push :compress-to<space>/tmp/
 
+# mount archive
 cmd archive-mount ${{
     let base_name = fs.base_name($f)
-    let mntdir=`/tmp/lf/mount/$base_name`
+    let mntdir =`/tmp/lf/mount/$base_name`
     mkdir -p $mntdir
     $lf_user_wheel archivemount $f $mntdir -o nosave
     lf -remote `send $id cd $mntdir`
 }}
 map am archive-mount
 
+# ---------- bookmark ----------
 map mb mark-save
 
+# ---------- diff ----------
 cmd diff !{{
     let files = $fs.lines()
     if len($files)>1 {
@@ -670,9 +766,9 @@ cmd diff-md5 %{{
     let files = $fs.lines()
     if len($files)>1 {
         let lines = $lf_user_wheel md5sum $files[0] $files[1] | .lines()
-        let s1 = $lines[0] | .words() | .at(0)
-        let s2 = $lines[1] | .words() | .at(0)
-        print $s1==$s2 ? 'Same' : 'Differ'
+        let s1 = $lines[0] | .words() | .get(0)
+        let s2 = $lines[1] | .words() | .get(0)
+        print($s1==$s2 ? 'Same' : 'Differ')
     }else{
         echo 'please select 2 files!'
     }
@@ -680,7 +776,7 @@ cmd diff-md5 %{{
 map dm diff-md5
 
 cmd check-sum %{{
-    let ext_name = fs.base_name(True, $fx).last()
+    let ext_name = fs.extension($fx)
     match $ext_name {
         sha512 => sha512sum -c $fx
         sha384 => sha384sum -c $fx
@@ -693,27 +789,38 @@ cmd check-sum %{{
 }}
 map dc check-sum
 
-map d<space> !dust
+# ---------- other ----------
+# list the size of each item in the current directory
+map d<space> !dust $fx
 
 
+# ---mount---
 
 cmd mount-dev ${{
-    let sel =  lsblk -rno 'name,type,size,mountpoint,label,fstype' | into.table([name,'type',size,mountpoint,label,fstype]) \
-        | where($type!='disk' && !$mountpoint && $fstype !~: 'member') \
-        | ui.pick "which to mount:" ?: { print 'no device'; exit 0 }
+    # let devices = lsblk -Jpo 'name,type,size,mountpoint,label,fstype' | from.json() | .get('blockdevices')
+    # let device = table.get $devices 'name' | ui.pick 'mount device:'
+    # let sel = table.grep $devices $device | .get(0) | .get(0) | table.rows() | ui.pick('mount partition:') ?: {print 'no partition'; exit 0}
+
+    let cols = 'name,type,size,fstype,label,mountpoint'
+    let sel =  lsblk -ro $cols | into.table($cols.split(',')) \
+        | where(!$mountpoint && $type!='disk') | table.rows(true) \
+        | ui.pick _ 'to mount:' ?: { print 'no device'; exit 0 }
 
     if $sel {
         if !$lf_user_wheel {
             eprint 'Must be root to mount'
             exit 1
         }
-        let src = $sel.type == 'part' ? `/dev/${$sel.name}` : `/dev/mapper/${$sel.name}`
+        let src = $sel.type=='part' ? `/dev/${$sel.name}` : `/dev/mapper/${$sel.name}`
         let point = $sel.label==none ? $sel.name : $sel.label
+        # let uid = id^ -u
+        # let dest = `/run/user/$uid/media/$point`
         let dest = `$XDG_RUNTIME_DIR/media/$point`
         if !fs.exists($dest){ mkdir -p $dest }
         $lf_user_wheel mount -m -o 'defaults,noatime' $src $dest  ?: \
             e -> {notify-send 'Mount Failed' $e.msg.lines().join(';'); exit 1}
-        lf -remote `send $id cd $dist`
+            # e -> {lf -remote `send $id echoerr Mount Failed: ${e.msg}`}
+        lf -remote `send $id cd $dest`
         notify-send 'Mount' `device $src mounted`
     }
 }}
@@ -721,8 +828,8 @@ map mm mount-dev
 
 cmd umount-dev ${{
     let sel =  lsblk -rno 'name,type,size,mountpoint,label,fstype' | into.table([name,'type',size,mountpoint,label,fstype])     \
-        | where(mountpoint != none) \
-        | ui.pick() ?.
+        | where($mountpoint) | table.rows(true) \
+        | ui.pick _ ?.
 
     if sel {
         if $PWD ~: $sel.mountpoint {
@@ -731,28 +838,34 @@ cmd umount-dev ${{
         $lf_user_wheel umount $sel.mountpoint ?: \
             e -> {notify-send 'Umount Failed:' $e.msg.lines().join(';'); exit 1}
         lf -remote `send $id reload`
-        notify-send 'Umount' `device ${sel.name} umounted`
+        notify-send 'Umount' `device ${$sel.name} umounted`
     }
 }}
 map mu umount-dev
 
+#---tag---
 map T tag-toggle
 
+# ---drag----
 cmd drag-in %{{
-  dest=dragon-drop --target -x -p
+  let dest = dragon.skip --target -x -p
   cp $dest .
   let base_name = fs.base_name($dest)
-  lf -remote `send $id :select ${base_name}; tag =`
+  lf -remote `send $id :select ${$base_name}; tag '='`
 }}
 map di drag-in
 
-cmd drag-out &dragon-drop $fx
+cmd drag-out &dragon.skip $fx
 map do drag-out
 
-cmd on-cd &{{
-    sys.print_tty `\033]0;lf $PWD\007`
-}}
+# ========== Life-Cyle-Hook ========
+# cmd on-cd &{{
+    # console.print_tty `\033]0;lf $PWD\007`
+    # let title = `\033]0;lf $PWD\007`
+    # tty-write $title
+# }}
 
-on-cd
+# also run at startup
+# on-cd
 
 ```

@@ -12,7 +12,7 @@ categories:
 
 使用Lumesh编写lf配置文件的语法演示
 
-[lf 文件管理器](https://github.com/gokcehan/lf)是一个非常强大的TUI文件管理器，支持高度灵活的自定义操作。是我最喜欢的文件管理器。以下是用Lumesh为lf编写的命令配置的部分演示。
+[lf 文件管理器](https://github.com/gokcehan/lf)是一个非常强大的TUI文件管理器，支持高度灵活的自定义操作。是作者最喜欢的文件管理器。以下是用Lumesh为lf编写的命令配置的部分演示。
 
 [完整的配置文件](/data/lfrc_lm)
 
@@ -20,7 +20,7 @@ categories:
 
 ```bash
 cmd all-cmd ${{
-    let cmd = lf -remote `query $id cmds` | .lines() | .drop(1) | \
+    let cmd = lf -remote `query $id cmds` | .lines() | .skip(1) | \
         .map(x -> {x.split("\t\t", $x) | .first()}) | ui.pick "select cmd:"
     lf -remote `send $id :$cmd`
 }}
@@ -30,7 +30,7 @@ cmd all-cmd ${{
 - `let` 变量定义
 - 管道操作符 `|` 用于数据流处理
 - `.lines()` 字符串处理方法
-- `.drop(1)` 列表操作，跳过第一个元素
+- `.skip(1)` 列表操作，跳过第一个元素
 - `.map()` 函数式编程，使用lambda表达式 `x -> {...}`
 - `ui.pick` 交互式选择器
 
@@ -38,7 +38,7 @@ cmd all-cmd ${{
 
 ```bash
 cmd history-dir ${{
-  let hist = lf -remote `query $id jumps` | into.table('jump','path') | .drop(1) | ui.pick "choose history:"
+  let hist = lf -remote `query $id jumps` | into.table('jump','path') | .skip(1) | ui.pick "choose history:"
   lf --remote `send $id cd ${$hist.path}`
 }}
 ```
@@ -60,7 +60,7 @@ cmd toggle-preview %{{
 ```
 
 Lumesh的`match`模式匹配语法，类似Rust的match表达式。
-这里匹配的是`true`字符串，如需bool值应大写首字母`True`
+这里匹配的是`true`字符串，如需bool值应大写首字母`true`
 
 ### 4. 条件表达式和三元操作
 
@@ -107,8 +107,8 @@ cmd delete ${{
 
 ```bash
 cmd mpaste %{{
-    let load=fs.read ~/.local/share/lf/files | .lines()
-    let files = $load.drop(1)
+    let load = fs.read ~/.local/share/lf/files | .lines()
+    let files = $load.skip(1)
     let file_count = len($files)
     if $file_count==0 {
         print 'No files yanked'

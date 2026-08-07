@@ -1,5 +1,5 @@
 ---
-title: Operators
+title: "Syntax: Operators"
 date: 2025-07-05 19:16:45
 weight: 30
 highlight: true
@@ -11,51 +11,53 @@ categories:
  - syntax
 ---
 
-> Basic Syntax: Arithmetic Operations, Logical Operations, Custom Operations
+> Basic Syntax: Arithmetic, Logical, Custom Operators
 
 ## II. Operators
-<!-- > Operators can be viewed using the `ops` command -->
+<!-- > Operators can be viewed via `ops` command -->
 
-### 1. Classification and Precedence of Operators
+### 1. Operator Classification and Precedence
 
-**Precedence from high to low** (the higher the number, the higher the precedence)
+**Precedence from high to low** (higher number = higher priority)
 
-| Precedence | Operator/Structure         | Example/Description         |
-|------------|-----------------------------|------------------------------|
-| 13         | Parentheses `()`            | `(a + b) * c`               |
-| 12         | Unary Operators `!`, `-`, `__..` | `!flag`, `-5`               |
-| 11         | Exponentiation `^`          | `2 ^ 3`                      |
-| 10         | Multiplication/Division/Modulus `*`, `/`, `%`, `_*..` | `a * b % c`               |
-| 9          | Addition/Subtraction `+`, `-`, `_+..` | `a + b - c`               |
-| 8          | Comparison `==`, `!=`, `>` etc. | `a >= b`                    |
-| 7          | Logical AND `&&`            | `cond1 && cond2`            |
-| 6          | Logical OR `\|\|`             | `cond1 \|\| cond2`            |
-| 5          | Conditional Operator `? :`   | `cond ? t : f`              |
-| 4          | Lambda Expression `->`      | `x -> x+1`                  |
-| 3          | Error Handling `?:`, `?.`   | `3 / 0 ?: 1`                |
-| 2          | Pipe `|`                    | `ls -1 | sort`              |
-| 2          | Redirection `<<`, `>>`, `>!` | `date _ >> /tmp/day.txt`    |
-| 1          | Assignment `=`, `:=`        | `x = 5`, `let y := 10`      |
+| Priority | Operator/Structure              | Example/Description                  |
+| --- | ------------------- | ---------------------- |
+| 13  | Parentheses `()`             | `(a + b) * c`          |
+| 12  | Unary Operators `!`, `-`, `__..`  | `!flag`, `-5`          |
+| 11  | Exponentiation `^`            | `2 ^ 3`               |
+| 10  | Multiplication/Division/Modulo `*`, `/`, `%`, `_*..` | `a * b % c`            |
+| 9   | Addition/Subtraction `+`, `-`, `_+..`         | `a + b - c`            |
+| 8   | Comparison `==`, `!=`, `>` etc | `a >= b`                 |
+| 7   | Logical AND `&&`            | `cond1 && cond2`       |
+| 6   | Logical OR `\|\|`          | `cond1 \|\| cond2`       |
+| 5   | Conditional Operator `? :`       | `cond ? t : f`         |
+| 4   | Lambda Expression `->`         |    `x -> x+1`              |
+| 3   | Error Handling `?:` `?.`     |    `3 / 0 ?: 1`          |
+| 2   | Pipe `\|`               | `ls -1 \| sort`               |
+| 2   | Redirection `<<` `>>` `>!`  | `date _ >> /tmp/day.txt`      |
+| 1   | Assignment `=`, `:=`        | `x = 5`, `let y := 10` |
 
-Pipes and redirection are at the same level, while logical operations have a higher precedence than pipes and redirection.
+Pipe and redirection have same level; logical operators have higher priority than pipe and redirection.
+
 
 ### 2. Space Rules
-| Operator Type         | Requires Spaces            | Example                    |
-|-----------------------|---------------------------|----------------------------|
-| Regular Operators      | Spaces on both sides      | `a + b`, `x <= 10`        |
-|                       | In non-strict mode, some symbols can omit spaces | `a+b`, `x<=10`, `a=5`     |
-|                       | `-` and `/` must have spaces | `b-3` is a string, `3- b` is subtraction |
-| Custom Operators       | Must start with an underscore and have spaces on both sides | `x _*+ y`, `a _?= b`     |
-|                       | Suffix operators must start with double underscores and have spaces | `x __*+`                  |
-| Prefix Operators       | Space before or start, no space after | `!x`, `-7`                |
-| Infix Operators        | No spaces before or after  | `dict.key`, `1..9`        |
-| Suffix Operators       | No spaces before or after  | `func(a)`, `array[i]`, `10M` |
+| Operator Type         | Requires Space                | Example                    |
+|-------------------|---------------------------|-------------------------|
+| Regular Operators         | Spaces on both sides                  | `a + b`, `x <= 10`       |
+|                  | Non-strict mode, spaces can be omitted on both sides  | `a+b`, `x<=10`, `a=5`      |
+|                  |          `-` and `/` should have spaces       | `b-3` is string, `3- b` is subtraction |
+| Custom Operators       | Must start with underscore and have spaces on both sides     | `x _*+ y`, `a _?= b`     |
+|                  | Postfix operator, must start with double underscore and have space     | `x __*+`     |
+| Prefix Operators         | Space before or start, no space after                  | `!x`,  `-7`                 |
+| Infix Operators           | No space before or after                  | `dict.key`,   `1..9`      |
+| Postfix Operators           | No space before or after                  | `func(a)`,   `array[i]`, `10M`    |
 
 **Custom Operators**
-- Custom operators start with `_` and can only contain symbols, not numbers or letters.
-- Custom unary operators start with `__`, such as `__+`, with precedence equal to unary operators. They can only be used as suffix operators.
-- Custom binary operators starting with `_+`, such as `_+%`, have precedence equal to `+` and `-`.
-- Custom multiplication-level operators starting with `_*`, such as `_* -`, have precedence equal to `*` and `/`.
+- Custom unary operators start with `__`, e.g., `__+`, same precedence as unary operators. Can only be used as postfix.
+
+- Custom operators are symbols starting with `..`, can only contain symbols, no numbers or letters.
+- Custom `+`-level operators start with `..+`, e.g., `..+%`, same precedence as `+` `-`
+- Custom `*`-level operators start with `..*`, e.g., `..*-`, same precedence as `*` `/`
 
     ```bash
     let __++ = x -> x + 1;
@@ -64,63 +66,72 @@ Pipes and redirection are at the same level, while logical operations have a hig
 
 ---
 
+
 ### 3. Special Operators
-- `==` and `!=` perform type-sensitive equality comparison.
-- `~=` and `!~=` perform value equality comparison.
+- `===` `!==` type-aware equality comparison.
+- `==` `!=` equality comparison, allows different types.
 
-- `~:` and `!~:` check for containment (can be used for strings, arrays, ranges, dictionaries (to check for a specific key)).
-Supports regex containment checks.
+- `~:` `!~:` containment (can be used on strings, arrays, ranges, dicts (check if contains specific key)).
+Supports regex containment detection.
 
-Examples:
+Example:
 
   ```Bash
-  5 == "5"        # False
-  5 ~= "5"        # True
-  "abc" ~: "a"    # True
-  0..8 ~: 8      # False
-  0..8 ~: 8       # True
-  "abc" ~: '\d'   # False
+  5 === "5"       # false
+  5 == "5"        # true
+  5 == 5.0        # true
+  "abc" ~: "a"    # true
+  0..8 ~: 8      # false
+  0..=8 ~: 8       # true
+  "abc" ~: g'\d'  # false
+
   ```
 
+**For non-comparable types, returns `none`**
+
+Example: `'a' > 1`      # none
+
+
 ### 4. Arithmetic Operations
-> `+`, `-`, `*`, `/` are overloaded operators.
-> In addition to performing basic arithmetic on numbers, they can also handle more complex operations.
-> `%` and `^` remain ordinary operations, only supporting operations between numbers.
+> `+` `-` `*` `/` are overloaded operators
+> Besides completing arithmetic on numbers, can also complete more complex operations
+> `%` `^` are still regular operators, only support operations between numbers.
 
 #### Addition `+`
 
 > Numbers
 
-- Number + Number = Numbers added with high precision
+- Number + Number = high-precision addition
     ```bash
     1 + 2.5           # → 3.5
     ```
 
-- Number + String = Added as numeric values
+- Number + String = concatenate numerically
     ```bash
     1 + "2.5"           # → 3.5
     ```
 
-- Number + List = Summed together
+- Number + List = sum together
     ```bash
     1 + [2.5,3]           # → 6.5
     ```
 
 > Strings
 
-- String + String = String concatenation
+- String + String = string concatenation
     ```bash
     "1" + 2.5           # → "12.5"
     ```
 
-- String + List = Concatenated together
+
+- String + List = concatenate together
     ```bash
     "1" + [2,3]           # → "123"
     ```
 
 > Ranges
 
-- Range + Integer = Range expansion (positive numbers from the tail, negative numbers from the head)
+- Range + Integer = range expansion (positive from tail, negative from head)
     ```bash
     0..8 + 2           # → 0..10
     0..8 + (-2)           # → 2..8
@@ -128,34 +139,34 @@ Examples:
 
 > Lists
 
-- List + List = List merging
+- List + List = list merge
     ```bash
     [1,2] + [3,4,5]           # → [1,2,3,4,5]
     ```
 
-- List + Other = Inserting value into the list
+- List + Other = insert value into list
     ```bash
     [1] + 2.5           # → [1,2.5]
     ```
 
 > Maps
 
-- Map + Map = Map merging
+- Map + Map = map merge
     ```bash
     {a:b} + {c:d}           # → {a:b,c:d}
     ```
 
-- Map + Other = Inserting value into the map
+- Map + Other = insert value into map
     ```bash
     {a:b} + c           # → {a:b,c:c}
     ```
 
 > Bytes
 
-- Bytes + Bytes = Bytes appending
-- Bytes + String = Bytes appending
+- Byte + Byte = byte append
+- Byte + String = byte append
 
-*Other cases throw exceptions*
+*Other cases throw exception*
 
 * * *
 
@@ -163,38 +174,39 @@ Examples:
 
 > Numbers
 
-- Number - Number = Numbers subtracted with high precision
+- Number - Number = high-precision subtraction
     ```bash
     1 - 2.5           # → -1.5
     ```
 
-- Number - String = Subtracted as numeric values
+- Number - String = subtract numerically
     ```bash
     1 - "2.5"           # → -1.5
     ```
 
+
 > Strings
 
-- String - String = String removal (first occurrence)
+- String - String = string remove (first occurrence)
     ```bash
     "i am lume" - "a"           # → "i m lume"
     ```
 
-- String - Float = String removal (first occurrence)
+- String - Float = string remove (first occurrence)
     ```bash
     "i am lume v4.2" - 4.2           # → "i am lume v"
     ```
 
-- *String - Integer = String removal (positive numbers from the tail, negative numbers from the head)*
+- *String - Integer = string remove (positive from tail, negative from head)*
     ```bash
     "98101" - 1           # → "9801"
     "98101" - (-2)           # → "101"
     ```
-Exceeding length returns an empty string.
+If beyond length, returns empty string
 
 > Ranges
 
-- Range - Integer = Range scaling (positive numbers from the tail, negative numbers from the head)
+- Range - Integer = range scale (positive from tail, negative from head)
     ```bash
     0..8 - 2           # → 0..6
     0..8 - (-2)           # → -2..8
@@ -202,56 +214,56 @@ Exceeding length returns an empty string.
 
 > Lists
 
-- List - List = List difference
+- List - List = list difference
     ```bash
     [1,2,3,4,5] - [3,4,5]           # → [1,2]
     ```
 
-- List - Other = List removal
+- List - Other = list remove
     ```bash
     [1,2,3] - 2           # → [1,3]
     ```
 
 > Maps
 
-- Map - Map = Map difference
+- Map - Map = map difference
     ```bash
     {a:b,c:d} - {c:d}           # → {a:b}
     ```
 
-- Map - Other = Map key removal
+- Map - Other = map key remove
     ```bash
     {a:b,c:d} - c           # → {a:b}
     ```
 
-*Other cases throw exceptions*
+*Other cases throw exception*
 
 * * *
 
 #### Multiplication `*`
 
 > Numbers
-- Number * Number = Numbers multiplied
+- Number * Number = number multiplication
     ```bash
     2 * 2.5           # → 5
     ```
-- Number * String = Multiplied as numeric values
+- Number * String = multiply numerically
     ```bash
     2 * "2.5"           # → 5
     ```
 
 > Strings
 
-- String * Integer = String repetition
+- String * Integer = string repeat
     ```bash
     "2" * 5           # → "22222"
     ```
 
-- List * List = Matrix multiplication
+- List * List = matrix multiplication
     ```bash
     [[1,2,3],[4,5,6]] * [[7,8],[9,10],[11,12]]
 
-    # → Returns
+    # → returns
         +----------+
         | C0   C1  |
         +==========+
@@ -260,10 +272,10 @@ Exceeding length returns an empty string.
         +----------+
 
     ```
-*Matrix multiplication requires correct dimensions.*
-*If there are missing elements internally, they will be filled with 0 during calculation.*
+*Matrix multiplication requires correct dimensions*
+*If missing elements inside, will be filled with 0 during calculation*
 
-- List * Number = Each element multiplied
+- List * Number = multiply each element
     ```bash
     [1,2,3] * 2.5           # → [2.5,5,7.5]
     ```
@@ -274,12 +286,12 @@ Exceeding length returns an empty string.
 
 > Numbers
 
-- Number / Number = Numbers divided
+- Number / Number = number division
     ```bash
     5 / 2             # → 2
     5 / 2.0           # → 2.5
     ```
-- Number / String = Divided as numeric values
+- Number / String = divide numerically
     ```bash
     5 / "2"               # → 2
     5.0 / "2.5"           # → 2
@@ -287,7 +299,7 @@ Exceeding length returns an empty string.
 
 > Lists
 
-- List / Number = Each element divided
+- List / Number = divide each element
     ```bash
     [2,4,6] / 2          # → [1,2,3]
     ```
@@ -296,14 +308,14 @@ Exceeding length returns an empty string.
 
 
 ### 5. Implicit Type Conversion
-Operations between numbers automatically convert to a higher precision type.
-When adding different types of data, it always attempts to automatically convert to the type of the first data.
+Operations between numbers automatically convert to higher precision type.
+Operations between different types always try to automatically convert to the type of the first operand.
 
   ```bash
   # Non-strict mode
-  3 + "5"                        # → 8 (automatically converted to integer)
-  "10" + 2                       # → "102"  (automatically converted to string)
-  "10" * 2                       # → "1010"  (string repetition)
+  3 + "5"                        # → 8 (auto converted to integer)
+  "10" + 2                       # → "102"  (auto converted to string)
+  "10" * 2                       # → "1010"  (string repeat)
   [1,2,3] + 5                    # → [1,2,3,5]
   [2,3] - 2                      # → [3]
   0..8 + 3                       # → 0..11
@@ -312,77 +324,102 @@ When adding different types of data, it always attempts to automatically convert
 
 
 ### 6. Increment Operators
-> `+=`, `-=`, `*=`, `/=`
-Only applicable to numeric operations.
+> `+=` `-=` `*=` `/=`
+Only applicable to number operations.
 
-For uninitialized variables, they are automatically initialized to 0.
+For uninitialized, auto-initialize to 0
 
-Unlike arithmetic operations, for non-numeric values, it will return none instead of throwing an exception.
-For example:
+Example:
 
   ```bash
   a += 1               # → 1
-  a += [1]             # none
   ```
 **Edge Cases**:
-- Division by zero will throw an error.
+- Division by zero will error.
 
 ### 7. Logical Operators
-> `&&`, `||` return Bool values.
-They convert the values on both sides to Bool values and perform logical operations. For example:
+> `&&` `||` return Bool
+They convert both sides to Bool and perform logical operations. Example:
 ```bash
-False && print a   # Does not execute print, returns False
-True && print a    # Executes print, returns False because the right side statement returns none
+false && print a   # doesn't execute print, returns false
+true && print a   # executes print, returns false, because right side returns none
 ```
 
-- Compared to Bash
-Logical operators differ from Bash, and their meaning is the same as in other programming languages, performing purely logical operations.
+- Comparison with Bash
+Logical operators differ from Bash, but same as other programming languages, they perform pure logical operations.
 
-  + In Bash, `&&` means the right side executes only if the left side succeeds, and it does not return a value.
-  + In Lumesh, `&&` means the right side is computed only if the left side returns True, always returning a boolean value.
+  + In Bash, `&&` executes right side only if left side succeeds, doesn't return value.
+  + In Lumesh, `&&` calculates right side only if left returns true, always returns boolean.
 Similarly,
-  + In Bash, `||` means the right side executes only if the left side fails, and it does not return a value.
-  + In Lumesh, `||` means the right side is computed only if the left side returns False, always returning a boolean value.
+  + In Bash, `||` executes right side only if left fails, doesn't return value.
+  + In Lumesh, `||` calculates right side only if left returns false, always returns boolean.
 
-To achieve similar effects as in Bash, you can:
-  + Execute the right side only if the left side succeeds: `left_arm ; right_arm`
-  + Execute the right side only if the left side fails: `left_arm ?: right_arm`
-  
-### 8. Ternary Operator
+To achieve similar effect to Bash:
+  `a &: b ?: c` 
+
+### 8. Conditional Operator
 > `test ? t : f`
 
 Equivalent to `if test { t } else { f}`
 
-Supports nesting, such as `test?t:b?tb:fb`
+Supports nesting, e.g., `test?t:b?tb:fb`
 
 * * *
 
 ## III. Custom Operators
-### Custom Unary Operators
-Custom unary operators must start with `__`, and after definition, they are used as suffix operators.
+### Custom Unary Operator
+Custom unary operator must start with `__`, after definition, used as postfix operator.
 
 ```bash
-# Definition
+# definition
 let __! = x -> Math.sum(x)
-# Usage
+let __+ = x -> x.upper()()
+
+# usage
 [5,6,7]  __!              # 18
+'lume' __+                # LUME
+
 ```
 
-> Why not define prefix operators? Because they are similar to function calls, it is better to define a function directly.
-> If you think there is a need for it, you can submit a request at the [project homepage](https://codeberg.org/santo/lumesh/issue).
-
-### Custom Binary Operators
-Custom binary operators must start with `_` (but not with `__`), and after definition, they are used as binary operators.
+### Custom Binary Operator
+Custom binary operator must start with `_` (but not `__`), after definition, used as binary operator.
 
 ```bash
-# Define a custom operator
-let _+ = (a, b) -> a.concat(b)  # Custom addition
+# define custom operator
+let ..+ = (a, b) -> a.concat(b)  # custom addition
 
-# Use the custom operator
-[1, 2] _+ [3, 4]    # [1, 2, 3, 4]
+# use custom operator
+[1, 2] ..+ [3, 4]    # [1, 2, 3, 4]
 ```
 
-Binary operators involve operator precedence.
-- Operators starting with `_+` have precedence equal to addition.
-- Operators starting with `_*` have precedence equal to multiplication.
-- Other operators starting with `_` have precedence higher than exponentiation and lower than unary operators (like `!`).
+Binary operator involves precedence.
+- Starting with `..+`, same precedence as addition.
+- Starting with `..*`, same precedence as multiplication.
+- Other operators starting with `..`, higher precedence than exponentiation, lower than unary (e.g., `!`).
+
+
+### Use Cases
+
+1. Data Processing Pipeline
+```bash
+let ..-> = (data,processor) -> processor(data)
+
+let a = [-3,-2,1,5,8, 'fast','pipe']
+let clean = x -> list.filter(x, i -> typeof(i)=='Integer')
+let filter = x -> list.filter(x, i -> i>0)
+let save = x -> {x >> /tmp/saved}
+
+a ..-> clean ..-> filter ..-> save
+
+```
+
+2. Type Checking
+
+```bash
+let ..? = (value, expected_type) -> typeof(value) == expected_type ? value : throw(format('expected {expected_type}, found {}', typeof(value)))
+
+5 ..? 'String'
+
+```
+
+*Progress: Completed file 5/15*

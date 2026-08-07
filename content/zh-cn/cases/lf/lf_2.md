@@ -18,7 +18,7 @@ lf filemanager 配置对比 B
 - **lumesh**: 使用正则匹配和内置文件函数
 ```bash
 if (regex.match '\.([gb7xs]z|t[gbx]z|zip|zst|bz2|lz4|lzma|tar|rar|br)$' $f) {
-    let base_name = fs.base_name(True,$f).first()
+    let base_name = fs.stem($f)
     let npath = fs.join($dest,$base_name)
     $lf_user_wheel ouch -q decompress --dir $npath $f
 }
@@ -108,7 +108,7 @@ fi
 **写法对比**:
 - **lumesh**: 使用模式匹配
 ```bash
-let ext_name = fs.base_name(True, $fx).last()
+let ext_name = fs.extension($fx)
 match $ext_name {
     sha512 => sha512sum -c $fx
     sha256 => sha256sum -c $fx

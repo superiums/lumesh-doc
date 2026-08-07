@@ -342,28 +342,21 @@ categories:
 > `&&` `||` 返回Bool值
 他们会把左右两侧的值转为Bool值并进行逻辑运算。如：
 ```bash
-False && print a   # 不执行打印，返回False
-True && print a   # 执行打印，返回False，因为右侧语句返回none
+false && print a   # 不执行打印，返回false
+true && print a   # 执行打印，返回false，因为右侧语句返回none
 ```
 
 - 与Bash比较
 逻辑运算符不同于Bash，而是与其他编程语言中的含义相同，只是进行纯粹的逻辑运算。
 
   + 在Bash中，`&&` 表示左侧执行成功才执行右侧，不返回值。
-  + 在Lumesh中，`&&` 表示左侧返回True才计算右侧，始终返回布尔值。
+  + 在Lumesh中，`&&` 表示左侧返回true才计算右侧，始终返回布尔值。
 类似的，
   + 在Bash中，`||` 表示左侧执行失败才执行右侧，不返回值。
-  + 在Lumesh中，`||` 表示左侧返回False才计算右侧，始终返回布尔值。
+  + 在Lumesh中，`||` 表示左侧返回false才计算右侧，始终返回布尔值。
 
 要实现类似Bash中的效果，可以：
-  + 左侧执行成功才执行右侧：
-
-    `left ; right`
-    或 `left ?~ && right` 
-  + 左侧执行失败才执行右侧：
-
-    `left ?: righm`
-    或 `left ?~ || right` 
+  `a &: b ?: c` 
   
 ### 8. 选择运算符
 > `test ? t : f`
@@ -381,16 +374,13 @@ True && print a   # 执行打印，返回False，因为右侧语句返回none
 ```bash
 # 定义
 let __! = x -> Math.sum(x)
-let __+ = x -> x.to_upper()
+let __+ = x -> x.upper()()
 
 # 使用
 [5,6,7]  __!              # 18
 'lume' __+                # LUME
 
 ```
-
-> 为何不定义前置运算符？ 因为和函数调用方式类似，还不如直接定义函数。
-> 如果您认为有使用的必要，可以到[项目主页](https://codeberg.org/santo/lumesh/issue)提交请求。
 
 ### 自定义双目运算符
 自定义单目运算符必须以`_`开头（但不以`__`开头），定义后，作为双目运算符使用。

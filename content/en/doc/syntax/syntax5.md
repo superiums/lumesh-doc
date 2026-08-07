@@ -1,5 +1,5 @@
 ---
-title: Pipes and Errors
+title: "Syntax: Pipes and Errors"
 date: 2025-06-11 19:16:45
 highlight: true
 weight: 70
@@ -10,91 +10,93 @@ categories:
  - syntax
 ---
 
-> Pipes, Redirection, Errors, Logs
+> Pipes, Redirection, Errors, Logging
 
 ## IX. Pipes and Redirection
 
 ### Pipes
 1. Introduction to Pipes
 
-Lumesh uses the same pipe symbol as bash, but it is more powerful:
+Lumesh uses the same pipe operator as bash, but is more powerful:
 
 - Smart Pipe `|`
-    Automatically determines the appropriate behavior and can transmit structured data.
+    Automatically determines the appropriate behavior, can transmit structured data.
 
-    + Left Side: Can automatically read from the result of operations or standard output;
+    + Left side: can automatically read from operation result or standard output;
       > *Reading Principle*:
-      > For functions, built-in commands, and operations, read from the structured data channel.
-      > For third-party system commands, read from standard output.
+      > For functions, built-in commands, and operations, read structured data channels.
+      > For system third-party commands, read standard output.
 
-    + Right Side:
+    + Right side:
       > *Output Principle*:
-      > If it is a third-party command, the data is passed as standard input.
-      > If it is a function, the data is passed as the last parameter.
+      > If it's a third-party command, pass data as standard input
+      > If it's a function, pass as *first* argument.
 
-|   Data          |  Functions, Operations, Built-in Commands  |     Third-party Commands       |
-|-----------------|--------------------------------------------|--------------------------------|
-|   Input (Left)  |   Reads from the structured data channel   |    Reads from standard output   |
-|   Output (Right) |   Outputs to the last parameter            |    Outputs to standard input    |
+|   Data          |  Function, Operation, Built-in Command  |     Third-party Command       |
+|-----------------|----------------------------------------|-------------------------------|
+|   Input (Left)  |   Read structured data channel          |    Read standard output       |
+|   Output (Right) |   Output to first argument             |    Output to standard input   |
 
 
-- Position Pipe `|_`
-    Forces the use of positional parameters in the pipe, directing the pipe to a specified position in the right-side function, using `_` as a placeholder. If not specified, it appends to the end of the parameters.
-    In most cases, manual specification is unnecessary. Using `|` is sufficient.
-    However, if the right-side command cannot read standard input or requires specified parameter positions, this pipe must be used.
+  **Placeholder `_`**
+  
+    When piping to a function on the right at a specific position, use `_` as a placeholder. If not specified, it's inserted at the first argument position.
+    In most cases, manual specification is not needed. Using `|` is sufficient.
+    But if the right-side command cannot read standard input, or needs to specify argument position, use this pipe.
 
   ```bash
-  3 | print a _ b               # Prints result: a 3 b
+  2 | print 1 _ 3               # Output: 1 2 3
   ```
 
 - Loop Dispatch Pipe `|>`
-    Used to loop dispatch tasks from the left-side list to the right-side command.
-    Also supports `_` placeholders.
+    Used to loop dispatch left-side list tasks to the right-side command.
+    Also supports `_` placeholder.
 
   ```bash
-    0...8 |> print lineNo          # Will print 8 lines
-    ls -1 *.txt |> cp _ /tmp/      # Will copy the listed files
+    0...8 |> print lineNo          # This will print 8 lines
+    ls -1 *.txt |> cp _ /tmp/            # This will copy the listed files
   ```
 
+
 - PTY Pipe `|^`
-    Forces the right-side command to use PTY mode.
-    Some programs require complete terminal control permissions to function correctly, thus requiring PTY mode.
-    The smart pipe maintains a list of such programs, so generally, there is no need to force PTY mode, but if you find a program not functioning correctly, you can try forcing PTY mode.
+    Forces right-side command to use PTY mode.
+    Some programs require full terminal control permissions to work properly, thus requiring PTY mode.
+    The smart pipe maintains a list of such programs, so generally no need to force PTY mode, but if you find a program not working properly, try forcing PTY mode.
 
-2. Basic Usage of Pipes
+2. Basic Pipe Usage
 
-Traditional bash pipes, to maintain compatibility with more commands, can only handle byte streams. Byte streams are text data output by third-party commands, which the shell dispatches to the next program for processing. This mode greatly facilitates data transmission between different programs.
+Traditional bash pipes, for compatibility with more commands, can only handle byte streams. Byte streams are text data output by third-party commands, passed to the next program via pipe. This mode greatly facilitates data transmission between different programs.
 
-In fact, structured pipes are more efficient because they eliminate the need to convert plain text into structured data; some can even save time interacting with input/output devices.
+Actually structured pipes are more efficient, because they save the work of converting from plain text to structured data; even some can save the time dealing with input/output devices.
 
 **Structured Pipes are More Efficient**
 For example:
   ```bash
-  # -- This is a text stream pipe --
-  echo 3+5 | bat              # This is a third-party command, and requires the pipe to read from standard output, resulting in double inefficiency
+  # --This is a text stream pipe--
+  echo 3+5 | bat              # This is a third-party command and needs to pipe from standard output, double efficiency reduction
 
-  # -- This is a structured pipe -- *Recommended usage*
-  3+5 | bat                   # The operation result is directly sent to the next program
+  # --This is a structured pipe-- *Recommended Usage*
+  3+5 | bat                   # Operation result directly passed to next program
 
-  # -- This is incorrect usage --
-  print 3+5 | bat             # The print statement outputs to standard output, while also passing none as the operation result; bat captures the none result from the print statement
+  # --This is incorrect usage--
+  print 3+5 | bat             # print statement prints to standard output, passing none as operation result, bat catches none (the operation result of print statement)
 
-  # -- This is a structured pipe --
-  tap 3+5 | bat               # The tap statement prints to standard output while passing the result down, bat correctly captures this operation result
-  3+5 | tap | bat             # Equivalent to the previous statement
+  # --This is a structured pipe--
+  tap 3+5 | bat               # tap statement prints to standard output, while passing result downward, bat correctly catches this operation result
+  3+5 | tap | bat             # Equivalent to previous line
   ```
 From the examples above, we can see:
-  + If the operation result does not need to be printed and only needs to be passed down, use the pipe directly.
-  + If the operation result needs to be printed and passed down, use tap before the pipe.
-  + If the operation result is printed and does not need to be passed down, use print.
-  + Avoid using echo unless advanced options like echo -e are needed.
+  + If operation result doesn't need printing, just pass it down, use pipe directly.
+  + If operation result needs printing AND passing down, use tap then pipe.
+  + If operation result is printed but doesn't need passing down, use print.
+  + Should avoid using echo, unless you need echo -e or other advanced options.
 
-3. Advanced Usage of Pipes
+3. Advanced Pipe Usage
 
 - **Filtering**
   ```bash
   # Filter data by size and display specified columns:
-  fs.ls -l | where(size > 5K) | select(name,size,modified)
+  fs.ls -lh | where(size > 5K) | select(name,size,modified)
 
   # Output
   +--------------------------------------+
@@ -109,7 +111,7 @@ From the examples above, we can see:
 - **Sorting**
   ```bash
   # Filter data by time and sort by specified columns
-  fs.ls -l | where( fs.diff('d',modified) > 3 ) | sort(size,name)
+  fs.ls -lh | where( modified.diff(time.now(),'d') > 3 ) | .sort(size,name)
 
   # Output
   +-------------------------------------------------------+
@@ -128,7 +130,7 @@ From the examples above, we can see:
 - **Grouping**
   ```bash
   # Group by type
-  fs.ls -l | group 'type'     # type is a function name, so the quotes cannot be omitted
+  fs.ls -lh | group 'type'     # type is a function name, so quotes cannot be omitted
 
   +-----------------------------------------------------------------+
   | KEY        VALUE                                                |
@@ -159,13 +161,13 @@ From the examples above, we can see:
 
   ```
 
-- **Compatible with Third-party System Commands**
-> You can use from.cmd or into.table or chained calls .table() to convert text into structured data. It can accept a sequence of column names as parameters.
+- **Compatible Third-party Commands**
+> Can use from.cmd or into.table or chained call .table() to convert text to structured data. Can accept column name sequences as parameters.
 
-> However, when comparing data, you need to manually convert types.
+> But when comparing data, need to manually convert types.
 
   ```bash
-  ls -l --time-style=long-iso | .table() | where(int C4>1000)
+  ls -l --time-style=long-iso | .to_table() | where(int C4>1000)
 
   # Output
   +------------------------------------------------------------------+
@@ -181,87 +183,88 @@ From the examples above, we can see:
   ```
 
 ### Redirection
-- `<<` Read
+- `<<` Read Here
 - `>>` Append Output
 - `>!` Overwrite Output
 `1 + 2 >> result.txt`
 
-*Error Redirection: Combined with Error Handling Symbols*
-For specific usage, please refer to the error handling section.
+*Error Redirection: Combining with error handling operators*
+Please refer to the Error Handling chapter for specific usage.
 
-| Redirection Type          | Lume                  | Bash                    |
-|---------------------------|-----------------------|-------------------------|
-| Standard Output, Append    | cmd >> out.txt        | cmd  >> out.txt         |
-| Standard Output, Overwrite  | cmd >! out.txt        | cmd  > out.txt          |
-| Error Redirect to Standard Output |  cmd ?> >> out.log    | command 2>&1 >> out.log |
-| Separate Error Output      |  cmd ?? >> out.log    | cmd 2>> out.log         |
-| Merge Standard and Error Output |  cmd ?+ >> out.log    | cmd >> out.log 2>&1     |
+| Redirection Type               | Lume                  | Bash                    |
+|--------------------------------|-----------------------|-------------------------|
+| Standard Output, Append       | cmd >> out.txt        | cmd  >> out.txt         |
+| Standard Output, Overwrite     | cmd >! out.txt        | cmd  > out.txt          |
+| Error redirects to stdout      |  cmd ?> >> out.log    | command 2>&1 >> out.log |
+| Error output only             |  cmd ?? >> out.log    | cmd 2>> out.log         |
+| Merge stdout and stderr        |  cmd ?+ >> out.log    | cmd >> out.log 2>&1     |
 
 
 ## X. Error Handling
 
 ### Error Capture: `?:`
-  A statement followed by `?: expr`,
+  Statement followed by `?: expr`,
 
-  - Typically, `expr` can be a lambda function that accepts an Error object. This Error object is a Map object, and you can index specific properties using `.` or `@` or `[]`.
+  - Usually expr can be a lambda function, which can accept an Error object. This Error object is a Map object, can be indexed with `.` or `@` or `[]` to get specific properties.
       This object contains three properties:
       > + `code`
       > + `msg`
       > + `expr`
 
- - If `expr` is of a regular type, it provides a default value in case of an exception.
+ - If expr is a regular type, it provides a default value when an exception occurs.
 
-### Error Ignoring: `?.`
+### Error Ignore: `?.`
   Equivalent to `?: {}`
 
-### Error Printing: `?+`, `??`, `?>`
-  - Print error to standard output: `?+`
+### Error Print: `?+` `??` `?>`
+  - Print error to stdout: `?+`
   Equivalent to `?: e -> echo e.msg`
 
-  - Print error to error output: `??`
+  - Print error to stderr: `??`
   Equivalent to `?: e -> eprint e.msg`
 
   - Output error as operation result: `?>`
   Equivalent to `?: e -> e.msg`
 
-### Error Termination: `?!`
-  - Silently terminate the pipeline when encountering an error
+### Error Terminate: `?!`
+  - When encountering an error, silently terminate the pipeline
   `fs.ls -l | ui.pick ?! |_ cp _ /tmp`
-  > When the user cancels the selection, subsequent pipeline operations terminate upon encountering an error.
+  > When user cancels selection, error terminates subsequent pipeline operations.
 
-  *The above methods can apply to any statement or function at the end*.
-  *Error handling symbols have a higher priority than pipes*.
+
+  *The above methods can be applied to any statement or function end*.
+  *Error handling operators have higher priority than pipes*.
 
   ```bash
 
-  6 / 0 ?.    # ignore error
-  6 / 0 ?+    # print error to stdout
-  6 / 0 ??    # print error to stderr
-  6 / 0 ?!    # use this error message as result
+  6 / 0 ?.    # ignore err
+  6 / 0 ?+    # print err to stdout
+  6 / 0 ??    # print err to stderr
+  6 / 0 ?!    # use this err msg as result
 
   let e = x -> echo x.code
-  6 / 0 ?: e   # dealing with the error using a function/lambda
+  6 /0 ?: e   # handle error with a function/lambda
 
-  # also functions could use error handling too.
+  # also functions could use error handling.
   fn divide(x,y){
       x / y
-  } ?: e
+  }?: e
 
   ```
 **Tips**
-- Utilizing the characteristics of error handling symbols, you can also provide default values for failed calculations:
+- Leveraging error handling operator characteristics, can also provide default values when calculation fails:
 
   ```bash
   let e = x -> 0
-  let result = 6 / 0 ?: e
-  echo result              # Outputs default value: 0
+  let result = 6 /0 ?: e
+  echo result              # output default value: 0
 
-  # Equivalent to
-  let result = 6 / 0 ?: 0
-  echo result              # Outputs default value: 0
+  # equivalent to
+  let result = 6 /0 ?: 0
+  echo result              # output default value: 0
   ```
 
-- Use error handling when defining functions
+- In function definition, use error handling
   ```bash
   let e = x -> {print x.code}
 
@@ -269,14 +272,14 @@ For specific usage, please refer to the error handling section.
       a / b
   } ?: e
 
-  div(3,0)                # the defined error handling will be executed here.
+  div(3,0)                # the defined error handling will be executed on every call.
   ```
 ### Error Debugging:
 - Error Messages
-  Generally, observing the error message is sufficient to identify the problem.
+  Generally, observing error messages is enough to identify the problem.
 For example:
   ```bash
-  [PARSE FAILED]                        # Syntax parsing error
+  [PARSE FAILED]                        # syntax parse error
   unexpected syntax error: expect "{"
         ▏
       1 ▏ fn assert(actual, expected, test_name, test_count=0) {
@@ -290,7 +293,7 @@ For example:
 
 
   > 0...8 x
-  [ERROR]                                # Runtime error
+  [ERROR]                                # runtime error
   Message   [1]: type error, expected Symbol as command, found 0...8: List
   Expression[1]: 0...8  x
 
@@ -302,8 +305,8 @@ For example:
   ```
 
 
-- `debug` Command
-  For further debugging, you can use the debug command.
+- `debug` command
+  For further debugging, can use `debug` and `ddebug`, `typeof`/`symof` commands.
 
   ```bash
   # Simple data debugging:
@@ -311,34 +314,35 @@ For example:
   debug c                     # Output: Range〈0..9,1〉
 
   # Complex statement debugging:
-  let a := if a {3 + 5} else { print a is False}
-  debug a
+  let a = fs.ls -l
+  /home/tix |> debug a
 
   # Output:
-  if (Symbol〈"a"〉) {
-
-    {
-
-        Integer〈3〉
-        +
-        Integer〈5〉
-    }
-
-  }else{
-
-    {
-
-      Cmd 〈Symbol〈"print"〉〉
-      〖
-        Symbol〈"a"〉
-        Symbol〈"is"〉
-        Boolean〈false〉
-      〗
-
-    }
-
-  }
+  List
+    Map
+      mode:
+        Integer〈511〉
+      modified:
+        DateTime〈2025-02-20T03:26:13.582549757〉
+      name:
+        String〈"Documents"〉
+      size:
+        FileSize〈FileSize { size: 21, unit: B }〉
+      type:
+        String〈"symlink"〉
+  ,
+    Map
+      mode:
+        Integer〈448〉
+      modified:
+        DateTime〈2026-01-31T03:57:48.270299425〉
+      name:
+        String〈"Downloads"〉
+      size:
+        FileSize〈FileSize { size: 0, unit: B }〉
+      type:
+        String〈"directory"〉
 
   ```
-- Log Module
-  The use of the Log module is also beneficial for error debugging; please refer to the [Log Module Documentation](/doc/libs/log).
+- Log module
+  Using the Log module also helps with error debugging, please refer to [Log module documentation](/zh-cn/doc/libs/api/log) for details

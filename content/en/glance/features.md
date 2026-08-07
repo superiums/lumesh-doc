@@ -1,199 +1,49 @@
 ---
-title: Lumesh Syntax Features Introduction
-type: glance
-date: 2025-07-05 19:16:45
+title: What is Lume, Is It Worth Trying?
+date: 2026-07-31 14:31:00
 highlight: true
 weight: 2
 tags:
- - glance
+ - feature
 categories:
  - wiki
- - why
- - syntax
+ - feature
 ---
 
-Lumesh is a modern shell and scripting language that implements complex expression parsing using a Pratt parser.
+One-sentence summary:
+> **Lume (Lumesh) is a modern Shell and scripting language that writes like JS, uses like Bash, and runs as fast as light**, designed to replace Bash and tackle all the historical baggage and counter-intuitive designs.
 
-### Unique Syntax Features
+## Highlights (Compared to Bash)
 
-#### 1. Multiple Pipeline Operators
-Unlike traditional shells, Lumesh provides various types of pipelines:
+| Pain Point | Bash Issues | Lume Solution |
+|---|---|---|
+| **Syntax** | Space-sensitive, `[ ]`/`[[ ]]`/`(( ))` confusion, no spaces in assignments | Optional spaces, `==` for unified type comparison, no bracket magic |
+| **Type System** | Everything is string, arithmetic requires `$(( ))`, no floats, no error on overflow | Complete types: integers/floats/arrays/maps/ranges/regex/timestamps/file sizes, direct writing |
+| **Strings** | Implicit splitting + glob expansion easily "mines", nested interpolation escape hell | Three string types (single-quoted raw/double-quoted escaped/backticked template interpolation), `StringSafe` type prevents injection |
+| **Data Structures** | Array/associative array syntax cumbersome, no nested access | Intuitive array/map literals, supports `select` (like SQL) and `get` dot-path access to nested structures |
+| **Flow Control** | `case` pitfalls, only wildcard matching | `match` supports multiple values/ranges/regex; `if`/`for` can return expression values |
+| **Functions** | Only positional parameters, return values must be 0-255 exit codes | Named parameters, defaults, variadic, arbitrary return values, Lambda/closures/currying, decorators |
+| **Scope** | Variables default to global pollution | Functions default to isolated scope, modify parent explicitly with `set` |
+| **Pipes/Subprocesses** | Right side runs in subshell, variable changes lost; only text streams | Four types of pipes (standard/positional/distributed/PTY), structured data (List/Map) flows directly, no subprocesses |
+| **Error Handling** | Relies on exit codes, need manual `set -euo pipefail` | Compiler-level error hints + 7 error capture operators (`?.` `?:` `?+` `??` `?>` `?!` `?~`) |
+| **Modularization** | `source` global namespace pollution, no module system | `use ... as` module imports + 17 built-in modules loaded on-demand (`list`/`string`/`fs`/`time`/`math`/`regex`/`ui`, etc.) |
+| **Performance** | ~2200ms for 1M iterations | ~200ms, 10x faster |
 
-```bash
-cmd1 | cmd2      # Standard pipeline, transferring structured data or text streams
-cmd1 |_ cmd2     # Positional pipeline, transferring to specified parameter positions
-cmd1 |> cmd2     # Single dispatch pipeline, looping through list data
-cmd1 |^ cmd2     # PTY pipeline
-```
-Structured pipelines:
-```bash
-ls -l | into.table() | where(size > 5K)
-fs.ls -l | where(size > 5K) | select(name,size,modified)
-ls -1 |> adb push _ /sdcard/Download/
-```
+## More Features
 
-#### 2. Error Handling Operators
-Lumesh has a rich built-in error handling mechanism:
+- **Modern Interactive Experience**: abbreviation expansion, programmable hotkeys/slash commands, programmable prompt, syntax highlighting themes, auto-completion, and **AI assistant** for command completion and intelligent suggestions.
+- **Automatic Background Task Cleanup**: background tasks automatically terminate when main process exits, no `trap` needed.
+- **Cross-platform**: consistent experience anywhere.
+- **Daily Habit Compatibility**: provides CFM (Command-First Mode) for everyday CLI scenarios, compatible with simple `include` inline syntax.
 
-```bash
-command ?.        # Ignore error
-command ?: e      # Error capture or default value
-command ?+        # Print to standard output
-command ??        # Print to error output
-command ?>        # Override print (data channel)
-command ?!        # Terminate on error (terminate pipeline)
-```
+## Who Should Use Lume?
 
-#### 3. Delayed Assignment
-Use `:=` for delayed assignment; the expression will not execute immediately:
+- People tired of Bash quote hell, space traps, and implicit variable expansion pitfalls.
+- Those who need to handle structured data (JSON/tables) in Shell scripts without switching to Python.
+- Anyone wanting a fast-start, high-performance loop, with modern programming language features (Lambda/closures/decorators/pattern matching) for daily interactive Shell.
 
-```bash
-let cmd := ls -l    # Delayed execution
-```
+## Getting Started
 
-#### 4. Chained Calls
-Supports chained method calls similar to object-oriented languages:
+Provides two forms: `lume` (full REPL Shell) and `lume-se` (lightweight script executor), supporting source compilation, `cargo install`, precompiled packages, or installation scripts.
 
-```bash
-"hello world".split(' ').join(',')
-data | .filter(x -> x > 0)
-```
-
-#### 5. Destructuring Assignment
-Supports destructuring assignment for arrays and maps:
-
-```bash
-let [a, b, c] = [1, 2, 3]
-let {name, age} = user_data
-```
-
-#### 6. Range Operators
-Provides various range operators:
-
-```bash
-1..=10      # Inclusive of end
-1..10     # Exclusive of end
-1..10:2    # With step
-1...10     # Directly create an array
-```
-
-#### 7. Function Decorators
-Supports function decorator syntax:
-
-```bash
-@decorator_name
-@decorator_with_args(param1, param2)
-fn my_function() { ... }
-```
-
-#### 8. Pattern Matching
-Built-in powerful pattern matching capabilities, supporting regular expressions:
-
-```bash
-match value {
-    pattern1 => result1,
-    pattern2 => result2,
-    _ => default
-}
-```
-
-#### 9. Overloaded Operators
-Utilizes regular arithmetic operators to handle more common tasks:
-```bash
-"1" + [2,3]
-[1,2] + 3
-[1,2] + [3,4,5]
-{a:b} + c
-{a:b} + {c:d}
-```
-
-#### 10. Functional Programming
-
-```bash
-0...10 | list.filter(x -> x % 2 == 0)
-0..10 | .map(x -> x * 2)
-```
-
-Lumesh includes a wealth of practical function libraries to facilitate convenient functional programming, such as:
-- **Collection Operations**: `list.reduce, list.map`
-- **File System**: `fs.ls, fs.read, fs.write`
-- **String Handling**: `string.split, string.join`, regex module, formatting module
-- **Time Operations**: `time.now, time.format`
-- **Data Conversion**: Into module, From module
-- **Mathematical Calculations**: Complete mathematical function library
-- **Logging**: Log module
-- **UI Operations**: `ui.pick, ui.confirm`
-
-### Control Flow Structures
-
-```bash
-# Conditional statements
-if condition { action } else { alternative }
-match expr { a => branchA; ... }
-# Loop statements
-for item in collection { process(item) }
-while condition { body }
-loop { infinite_loop }
-# Simple repetition
-repeat 10 {a += 1}
-```
-
-### Expression Precedence
-Lumesh uses a precisely defined operator precedence system:
-
-- Assignment operators (`=`, `:=`, `+=`, etc.) - Priority 1
-- Redirection and pipeline (`|`, `>>`, `>!`) - Priority 2
-- Error handling (`?.`, `?+`, `??`) - Priority 3
-- Lambda expressions (`->`) - Priority 4
-- ...
-
-### Data Types
-
-#### Strings
-Supports three types of strings:
-- Double-quoted strings: `"hello world"`
-- Raw strings: `'raw string'`
-- Template strings: `` `template $variable` ``
-
-#### Collection Types
-
-```bash
-[1, 2, 3]                    # Array
-{key: value, name: "test"}   # Map
-1..10                        # Range
-1...10                       # Array
-```
-
-#### Functions
-- Supports parameter collection and default parameters
-- Supports lambda functions
-- Supports nested functions
-```bash
-fn add(x) { x + 1 }
-(x, y) -> x + y
-```
-
-### Module System
-
-Supports module import and usage:
-
-```bash
-use module_name
-
-fs.ls("/path")      # Use built-in module
-```
-
-## Notes
-
-The syntax design of Lumesh integrates features of modern programming languages with the practicality of shell scripting. Its unique pipeline operators, error handling mechanisms, and chained call syntax are the biggest differences from traditional shells.
-
-The parser uses the Pratt algorithm to support complex expression nesting and precedence handling.
-
-Learn more:
-- [Lume vs Bash, ppt](/rv/en.html)
-- [Syntax Overview](/glance)
-- [Feature Overview](/feature)
-- [Application Examples](/cases)
-- [Syntax Demonstration for Writing lf Configuration Files in Lumesh](/cases/case_lf)
-- [Syntax Manual](/doc/syntax)
-- [Built-in Functions](/doc/libs/)
+Overall, Lume's design philosophy is "safe defaults, explicit is better than implicit," contrasting sharply with Bash's "everything is text, everything is command" philosophy — if you believe "correct writing should also be the most natural writing," Lume is worth trying.
