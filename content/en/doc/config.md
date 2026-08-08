@@ -81,29 +81,36 @@ set LUME_WELCOME = 'Welcome to my shell!'
 - **Type**: Map
 - **Fields**:
   - `starship`: Whether to enable starship
-    - `0`: Disable
-    - `1`: Enable [starship](https://starship.rs/) prompt
-  - `ttl`: Prompt cache time (seconds), default `2`
-  - `prompt_template`: Template rendering, can be function or string
-  - `prompt_continuation`: Continuation symbol, string
+    - false: Disable
+    - true: Enable [starship](https://starship.rs/) prompt
+  - `lazy`: Prompt refresh level, default `0`
+  - `template`: Template rendering, can be function or string
+  - `continuation`: Continuation symbol, string
 
-- **Description**: `prompt_template` takes effect when starship is disabled.
-  - **String mode**: Supports the following placeholders:
-    - `$CWD`: Full current path
-    - `$CWD_SHORT`: Shortened path
-    - `$CFM_TAG`: CFM mode marker (`"CFM"` or empty)
-    - `$STRICT_TAG`: Strict mode marker (`"S"` or empty)
-    - `$STATUS`: Status marker (`"OK"` or "Fail")
-    - `$DUARATION`: Command execution duration (ms)
-    - `$JOBS`: Number of background tasks
-  - **Lambda mode**: Receives `(dir, ctx)` two parameters, `ctx` contains `cfm` and `strict` two boolean fields, and `status`/`duration`/`jobs` three integer fields, called every time a prompt is rendered.
+- **Description**: 
+
+  - `lazy` 
+    - 0: always refresh while render
+    - 1: refresh only status, refresh path only after cd
+    - 2: refresh only after refresh
+
+  - `template` takes effect when starship is disabled.
+    - **String mode**: Supports the following placeholders:
+      - `$CWD`: Full current path
+      - `$CWD_SHORT`: Shortened path
+      - `$CFM_TAG`: CFM mode marker (`"CFM"` or empty)
+      - `$STRICT_TAG`: Strict mode marker (`"S"` or empty)
+      - `$STATUS`: Status marker (`"OK"` or "Fail")
+      - `$DUARATION`: Command execution duration (ms)
+      - `$JOBS`: Number of background tasks
+    - **Lambda mode**: Receives `(dir, ctx)` two parameters, `ctx` contains `cfm` and `strict` two boolean fields, and `status`/`duration`/`jobs` three integer fields, called every time a prompt is rendered.
 
 ```bash
 # String template
-set prompt_template = '$CWD_SHORT|$CFM_TAG> '
+set template = '$CWD_SHORT|$CFM_TAG> '
 
 # Lambda template (dynamic, supports git branches, etc.)
-set prompt_template = (dir, ctx) -> {
+set template = (dir, ctx) -> {
     string.blue($dir) + ' |'.green().bold()
     + ($ctx.cfm ? 'CFM'.green() + '|' : '')
     + (if (fs.exists '.git') { git branch --show-current | .cyan() } else '')
@@ -112,9 +119,9 @@ set prompt_template = (dir, ctx) -> {
 
 set LUME_PROMPT_SETTINGS = {
     starship: 0,
-    ttl: 2
-    prompt_template,
-    prompt_continuation: '... '
+    lazy: 0,
+    template,
+    continuation: '... '
 }
 ```
 
@@ -486,12 +493,12 @@ if IS_LOGIN {
 if IS_INTERACTIVE {
 
     # --- Appearance ---
-    set LUME_PROMPT_SETTINGS = { MODE: 1, TTL_SECS: 2 }
-    set LUME_PROMPT_TEMPLATE = (dir, ctx) -> {
+    let template = (dir, ctx) -> {
         string.blue($dir)
         + ($ctx.cfm ? ' CFM'.green() : '')
         + '> '.bold()
     }
+    set LUME_PROMPT_SETTINGS = { starship: 0, lazy: 0, template }
     LUME_THEME = 'ayu_dark'
 
     # --- Interactive Behavior ---

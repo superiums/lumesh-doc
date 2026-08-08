@@ -81,29 +81,34 @@ set LUME_WELCOME = 'Welcome to my shell!'
 - **类型**：Map
 - **字段**：
   - `starship`：是否启用starship
-    - `0`：禁用
-    - `1`：启用 [starship](https://starship.rs/) 提示符
-  - `ttl`：提示符缓存时间（秒），默认 `2`
-  - `prompt_template`: 模板渲染，可以是函数或字符串
-  - `prompt_continuation`: 续行符号，字符串
+    - `false`：禁用
+    - `true`：启用 [starship](https://starship.rs/) 提示符
+  - `lazy`：刷新等级，默认 `0`
+  - `template`: 模板渲染，可以是函数或字符串
+  - `continuation`: 续行符号，字符串
 
-- **说明**：prompt_template在禁用starship时生效。
-  - **字符串模式**：支持以下占位符：
-    - `$CWD`：当前完整路径
-    - `$CWD_SHORT`：缩短的路径
-    - `$CFM_TAG`：CFM 模式标记（`"CFM"` 或空）
-    - `$STRICT_TAG`：严格模式标记（`"S"` 或空）
-    - `$STATUS`：状态标记（`"OK"` 或"Fail"）
-    - `$DUARATION`：命令执行时长（ms）
-    - `$JOBS`：后台任务数量
-  - **Lambda 模式**：接收 `(dir, ctx)` 两个参数，`ctx` 包含 `cfm` 和 `strict` 两个布尔字段，以及`status`/`duration`/`jobs`三个整数字段，每次渲染提示符时都会调用。
+- **说明**：
+  - lazy
+    - 0: 每次渲染prompt都刷新
+    - 1: 每次使用缓存的路径，直到cd命令执行。其余status每次刷新。
+    - 2: 路径和status都只在cd命令之后刷新。
+  - template 在禁用starship时生效。
+    - **字符串模式**：支持以下占位符：
+      - `$CWD`：当前完整路径
+      - `$CWD_SHORT`：缩短的路径
+      - `$CFM_TAG`：CFM 模式标记（`"CFM"` 或空）
+      - `$STRICT_TAG`：严格模式标记（`"S"` 或空）
+      - `$STATUS`：状态标记（`"OK"` 或"Fail"）
+      - `$DUARATION`：命令执行时长（ms）
+      - `$JOBS`：后台任务数量
+    - **Lambda 模式**：接收 `(dir, ctx)` 两个参数，`ctx` 包含 `cfm` 和 `strict` 两个布尔字段，以及`status`/`duration`/`jobs`三个整数字段，每次渲染提示符时都会调用。
 
 ```bash
 # 字符串模板
-set prompt_template = '$CWD_SHORT|$CFM_TAG> '
+let template = '$CWD_SHORT|$CFM_TAG> '
 
 # Lambda 模板（动态，支持 git 分支等）
-set prompt_template = (dir, ctx) -> {
+let template = (dir, ctx) -> {
     string.blue($dir) + ' |'.green().bold()
     + ($ctx.cfm ? 'CFM'.green() + '|' : '')
     + (if (fs.exists '.git') { git branch --show-current | .cyan() } else '')
@@ -112,9 +117,9 @@ set prompt_template = (dir, ctx) -> {
 
 set LUME_PROMPT_SETTINGS = {
     starship: 0,
-    ttl: 2
-    prompt_template,
-    prompt_continuation: '... '
+    lazy: 0,
+    template,
+    continuation: '... '
 }
 ```
 
@@ -479,12 +484,12 @@ if IS_LOGIN {
 if IS_INTERACTIVE {
 
     # --- 外观 ---
-    set LUME_PROMPT_SETTINGS = { MODE: 1, TTL_SECS: 2 }
-    set LUME_PROMPT_TEMPLATE = (dir, ctx) -> {
+    let template = (dir, ctx) -> {
         string.blue($dir)
         + ($ctx.cfm ? ' CFM'.green() : '')
         + '> '.bold()
     }
+    set LUME_PROMPT_SETTINGS = { template, lazy:2, starship:0 }
     LUME_THEME = 'ayu_dark'
 
     # --- 交互行为 ---

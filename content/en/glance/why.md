@@ -518,13 +518,18 @@ Need simple include? Lume satisfies you too: `include`
 ### Lume's Ease
 ```bash
 # Prompt: a Lambda function, dynamically calculated, rich colors, clear logic
-set LUME_PROMPT_TEMPLATE = (dir, ctx) -> {
+let template = (dir, ctx) -> {
     string.blue(dir) + ' |'.green().bold()
     + (ctx.cfm ? 'CFM'.green() + '|' : '')
     + (if (fs.exists '.git') { git branch --show-current | .cyan() } else '')
     + '> '.green().bold()
 }
-
+let LUME_PROMPT_SETTINGS = {
+    starship: false,
+    lazy: 0,
+    template,
+    continuation: '... '
+}
 # Abbreviations: type xi space, auto-expand to full command, efficiency doubled
 set LUME_ABBREVIATIONS = {
     xi: 'doas pacman -S',

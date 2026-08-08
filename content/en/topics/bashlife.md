@@ -1127,11 +1127,17 @@ set LUME_SLASH_BINDINGS = {
 **Programmable Prompt**
 
 ```bash
-set LUME_PROMPT_TEMPLATE = (dir, ctx) -> {
+let template = (dir, ctx) -> {
     string.blue($dir) + ' |'.green().bold()
     + ($ctx.cfm ? 'CFM'.green() + '|' : '')
     + (if (fs.exists '.git') {git branch --show-current | .cyan()} else '')
     + '> '.green().bold()
+}
+let LUME_PROMPT_SETTINGS = {
+    starship: false,
+    lazy: 0,
+    template,
+    continuation: '... '
 }
 ```
 

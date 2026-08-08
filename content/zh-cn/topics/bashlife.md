@@ -1122,12 +1122,14 @@ set LUME_SLASH_BINDINGS = {
 **可编程提示符**
 
 ```bash
-set LUME_PROMPT_TEMPLATE = (dir, ctx) -> {
+let template = (dir, ctx) -> {
     string.blue($dir) + ' |'.green().bold()
     + ($ctx.cfm ? 'CFM'.green() + '|' : '')
     + (if (fs.exists '.git') {git branch --show-current | .cyan()} else '')
     + '> '.green().bold()
 }
+set LUME_PROMPT_SETTINGS = { template, lazy:2, starship:0 }
+
 ```
 
 **语法高亮主题**
