@@ -31,7 +31,6 @@ lume          # 完整交互式
 像bash一样，你可以尝试键入日常命令：
 ```bash
 ls -l
-cd /tmp
 thunar &
 # 看起来和bash一样，但多了一些东西，比如语法高亮
 
@@ -59,12 +58,12 @@ if a ~: 5 {
 # 多行编辑也支持呢
 
 list.from(a).sum()
+'lume'.upper().green()
 # 还能链式调用？比管道还方便！
 
 5/0 ?: 0
 # 错误处理太自然啦！
 
-'lume'.upper().green()
 help
 help libs
 help string

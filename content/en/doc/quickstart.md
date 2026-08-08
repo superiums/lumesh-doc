@@ -31,7 +31,6 @@ lume          # Full interactive
 Like bash, you can try typing daily commands:
 ```bash
 ls -l
-cd /tmp
 thunar &
 # Looks like bash, but with some extra features, like syntax highlighting
 
@@ -59,12 +58,12 @@ if a ~: 5 {
 # Multi-line editing is supported too
 
 list.from(a).sum()
+'lume'.upper().green()
 # Can also chain calls? Even more convenient than pipes!
 
 5/0 ?: 0
 # Error handling is so natural!
 
-'lume'.upper().green()
 help
 help libs
 help string

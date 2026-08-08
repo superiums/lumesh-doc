@@ -258,19 +258,21 @@ risky_command ?: (e) -> {
 let config = fs.read "config.json" ?: (e) -> { "{}" }
 
 # Chained error handling, logic flows smoothly
-if validate(input) ?~ {
-   process(input)
-}else{ cleanup() }
+if validate(input) ?~ {     # go on while on success
+    process(input)
+} else {
+    cleanup() 
+}
 
 # or
-validate(input) ?~ ? process(input) ?~ : cleanup()
+validate(input) &: process(input) ?: cleanup()
 
 # Proactively throw errors, clear semantics
 fn divide(a, b) {
-    if b == 0 { throw "denominator cannot be zero" }
+    if b < 0 { throw "denominator cannot be negative" }
     a / b
 }
-divide(10, 0) ?: (e) -> { println e.msg }
+divide(10, -1) ?: (e) -> { println e.msg }
 ```
 
 ---
@@ -460,12 +462,13 @@ Compiler-level error messages make debugging an enjoyment.
 
 # Type errors reported immediately, complete info
 let x = "hello"
-x + 1
-# RuntimeError: Cannot add String:"hello" and Integer:1
+x + yy
+# RuntimeError: command `+` failed:
+#  Cannot add hello:String and yy:Symbol
 # Type, value, operation, clear as day, no more blind groping.
 ```
 
-Debug-specific statements: `debug` `ddebug` `typeof` `assert` `condition` all present, not enough? Check `log` module
+Debug-specific statements: `debug` `ddebug` `typeof` `assert` `when` all present, not enough? Check `log` module
 
 ---
 
@@ -572,7 +575,7 @@ echo "Time required: $((end_time - start_time)) ms"
 # lume loop summing 1 million times: ~200 ms (10x faster, silky smooth)
 let start = time.stamp_ms()
 let sum = 0
-for i in 0..1000000 { sum += i }
+for i in 0..1000000 { set sum = sum + i }
 let end = time.stamp_ms()
 print "Time required: " end - start "ms"
 # Time required: 199 ms

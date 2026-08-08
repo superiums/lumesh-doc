@@ -261,19 +261,21 @@ risky_command ?: (e) -> {
 let config = fs.read "config.json" ?: (e) -> { "{}" }
 
 # 链式错误处理，逻辑如流水般顺畅
-if validate(input) ?~ {
-   process(input)
-}else{ cleanup() }
+if validate(input) ?~ {     # 成功后执行
+    process(input)
+} else {
+    cleanup() 
+}
 
 # 或
-validate(input) ?~ ? process(input) ?~ : cleanup()
+validate(input) &: process(input) ?: cleanup()
 
 # 主动抛出错误，语义清晰
 fn divide(a, b) {
-    if b == 0 { throw "除数不能为零" }
+    if b < 0 { throw "除数不能小于零" }
     a / b
 }
-divide(10, 0) ?: (e) -> { println e.msg }
+divide(10, -1) ?: (e) -> { println e.msg }
 ```
 
 ---
@@ -463,12 +465,13 @@ echo $((x + 1))   # bash: hello: syntax error in expression
 
 # 类型错误立即报告，信息完整无缺
 let x = "hello"
-x + 1
-# RuntimeError: Cannot add String:"hello" and Integer:1
+x + yy
+# RuntimeError: command `+` failed:
+#  Cannot add hello:String and yy:Symbol
 # 类型、值、操作，一目了然，再也不用盲人摸象。
 ```
 
-调试专用语句：`debug` `ddebug` `typeof` `assert` `condition` 一应俱全，还不够？看看`log`模块
+调试专用语句：`debug` `ddebug` `typeof` `assert` `when` 一应俱全，还不够？看看`log`模块
 
 ---
 
@@ -571,7 +574,7 @@ echo "所需时间: $((end_time - start_time)) 毫秒"
 # lume 循环求和 100万次：约 200 毫秒（快 10 倍以上，丝滑流畅）
 let start = time.stamp_ms()
 let sum = 0
-for i in 0..1000000 { sum += i }
+for i in 0..1000000 { set sum = sum + i }
 let end = time.stamp_ms()
 print "所需时间: " end - start "毫秒"
 # 所需时间: 199 毫秒
