@@ -17,6 +17,9 @@ date: 2026-08-07 16:42:00
 - `find_all <pattern> <text>`
 	all matches, list of {start,end,found}
 
+- `from <pattern_string> [flag]`
+  build regex from pattern and flag
+
 - `is_match <pattern> <text>`
 	contains a match?
 
@@ -31,4 +34,3 @@ date: 2026-08-07 16:42:00
 
 - `split <pattern> <text>`
 	split by pattern
-

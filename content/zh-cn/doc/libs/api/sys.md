@@ -11,11 +11,8 @@ date: 2026-08-07 16:42:00
 - `dirs `
 	system directories map
 
-- `ecodes_lm `
-	list Lmerror codes
-
-- `ecodes_rt `
-	list runtime error codes
+- `error_codes `
+	list lume error codes
 
 - `env [var]`
 	root env map, or var value
@@ -49,4 +46,3 @@ date: 2026-08-07 16:42:00
 
 - `vars `
 	vars defined in current scope
-
