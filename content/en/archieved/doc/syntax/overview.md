@@ -192,23 +192,25 @@ cmd1 |^ interactive_program
 Lumesh has a powerful built-in error handling mechanism:
 
 ```bash
-# Ignore errors and continue execution
-risky_command ?.
+# success/failure hooks
+risky_call() &: next       # execute function on success
+risky_call() ?: handler    # execute function on error OR return default value (lazy evaluation)
 
-# Print error to standard output
-command ?+
+# flow control (ignore/terminate)
+risky_call() ?.        # ignore error
+risky_call() ?!        # terminate on error (needed in pipes)
 
-# Print error to standard error output
-command ??
+# output conversion
+risky_call() ?~        # execute success/failure to boolean
+risky_call() ?>        # replace return value with error info
 
-# Print error and override result
-command ?>
+# printing helpers
+risky_call() ?+        # print error to standard output
+risky_call() ??        # print error to standard error
 
-# Terminate the program on error
-command ?!
-
-# Custom error handling, can be used to provide default values
-command ?: error_handler
+# empty handler
+risky_call() _: handler   # execute/return replacement on empty
+risky_call() _! | next    # terminate on empty
 ```
 
 ## Control Flow

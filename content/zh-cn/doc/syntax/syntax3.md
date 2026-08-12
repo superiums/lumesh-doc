@@ -104,7 +104,15 @@ categories:
     fs.cp i /tmp/
   }
   ```
-  支持*扩展
+  - 支持*扩展
+  - 支持`shift`语句
+  ```bash
+  for a in $argv {                   # argv = ['-c','myprofile',...]
+    if a.starts_with('-') { shift }
+    value = a                        # 'myprofile'
+  }
+  ```
+  
 #### **While 循环**
   ```bash
   let count = 0

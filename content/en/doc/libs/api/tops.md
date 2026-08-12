@@ -109,6 +109,9 @@ date: 2026-08-07 16:40:11
 - `symof <value>`
 	type name before eval
 
+- `shift`
+  shift to next in iter
+
 - `tap <args>...`
 	print then return value(s)
 

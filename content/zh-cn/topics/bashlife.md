@@ -998,14 +998,28 @@ Bash 依赖退出码判断成败，错误处理粗糙。
 7 种后缀错误捕获操作符：
 
 ```bash
-cmd ?.            # 忽略错误，返回 none
-cmd ?: handler    # 将错误信息（Map）传给 handler 函数
-cmd &: onsuccess  # 成功后执行
-cmd ?+            # 打印错误到 stdout，返回 none
-cmd ??            # 打印错误到 stderr（红色），返回 none
-cmd ?>            # 合并错误到 stdout
-cmd ?!            # 遇错终止管道
-cmd ?~            # 成功→true，失败→false（用于条件判断）
+```bash
+# 成败钩子（成功/失败时）
+risky_call() &: next       # 成功时执行函数
+risky_call() ?: handler    # 出错时执行函数或返回默认值（惰性求值）
+
+# 流程控制（忽略/终止）
+risky_call() ?.        # 忽略错误
+risky_call() ?!        # 出错终止（管道中才需要）
+
+# 输出转换
+risky_call() ?~        # 执行成败转布尔
+risky_call() ?>        # 以错误信息替代返回值
+
+# 打印辅助
+risky_call() ?+        # 出错打印到标准输出
+risky_call() ??        # 出错打印到标准错误
+
+# 空值钩子
+risky_call() _: handler   # 遇空值时执行
+risky_call() _! | next    # 遇空值时终止（管道中才需要）
+```
+
 ```
 
 实用模式：

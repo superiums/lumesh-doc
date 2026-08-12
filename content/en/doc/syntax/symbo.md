@@ -112,12 +112,16 @@ risky_call() ?.        # ignore error
 risky_call() ?!        # terminate on error (needed in pipes)
 
 # output conversion
-risky_call() ?~        # execute success/failure to boolean
+risky_call() ?~        # success -> true, failure -> false
 risky_call() ?>        # replace return value with error info
 
 # printing helpers
 risky_call() ?+        # print error to standard output
 risky_call() ??        # print error to standard error
+
+# empty handler
+risky_call() _: handler   # execute/return replacement on empty
+risky_call() _! | next    # terminate on empty
 ```
 Writing requirements: operator itself must be written as whole (no space in `?.`), but can have space between operator and preceding expression. Can also directly hang at end of `fn` declaration as that function's default error handler:
 

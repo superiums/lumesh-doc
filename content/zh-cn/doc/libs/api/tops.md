@@ -106,6 +106,9 @@ date: 2026-08-07 16:42:00
 - `set_root <var> <val>`
 	define var in root env
 
+- `shift`
+  shift to next in iter
+
 - `symof <value>`
 	type name before eval
 

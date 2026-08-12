@@ -104,7 +104,16 @@ categories:
     fs.cp i /tmp/
   }
   ```
-  Supports * expansion
+
+  - Supports * expansion
+  - Supports `shift`
+  ```bash
+  for a in $argv {                   # argv = ['-c','myprofile',...]
+    if a.starts_with('-') { shift }
+    value = a                        # 'myprofile'
+  }
+  ```
+  
 #### **While Loop**
   ```bash
   let count = 0

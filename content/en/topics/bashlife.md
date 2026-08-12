@@ -1000,17 +1000,28 @@ Bash relies on exit codes to determine success/failure; error handling is coarse
 
 **Lume's Ease:**
 
-7 suffix error capture operators:
+10 suffix error capture operators:
 
 ```bash
-cmd ?.            # ignore error, return none
-cmd ?: handler    # pass error info (Map) to handler function
-cmd &: onsuccess  # execute after success
-cmd ?+            # print error to stdout, return none
-cmd ??            # print error to stderr (red), return none
-cmd ?>            # merge error to stdout
-cmd ?!            # terminate pipeline on error
-cmd ?~            # success→true, failure→false (for conditionals)
+# success/failure hooks
+risky_call() &: next       # execute function on success
+risky_call() ?: handler    # execute function on error OR return default value (lazy evaluation)
+
+# flow control (ignore/terminate)
+risky_call() ?.        # ignore error
+risky_call() ?!        # terminate on error (needed in pipes)
+
+# output conversion
+risky_call() ?~        # success -> true, failure -> false
+risky_call() ?>        # replace return value with error info
+
+# printing helpers
+risky_call() ?+        # print error to standard output
+risky_call() ??        # print error to standard error
+
+# empty handler
+risky_call() _: handler   # execute/return replacement on empty
+risky_call() _! | next    # terminate on empty
 ```
 
 Practical patterns:
