@@ -1,16 +1,15 @@
 ---
-title: 内置库 boolean
-date: 2026-08-07 16:42:00
+title: 内置库 布尔
+date: 2026-08-14 11:29:46
 ---
-	
+
 ## Builtin Functions for Lib: boolean
 
 - `and <boolean1>...`
-	logic and
+	逻辑与
 
 - `not <boolean1>...`
-	logic not
+	逻辑非
 
 - `or <boolean1>...`
-	logic or
-
+	逻辑或

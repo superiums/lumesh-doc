@@ -92,11 +92,14 @@
         <span class="lume-tag lume-tag-lume rounded px-2.5 py-1 text-xs font-bold">lumesh</span>
         <span class="text-neutral-500 text-sm">结构化管道，一气呵成</span>
       </div>
-      <pre class="text-sm leading-7"><code>fs.ls -lah *.log ?. \
-    | where(size &gt; 1M) \
+      <pre class="text-sm leading-7"><code>fs.ls -lah *.log _! \
+    | where(size &gt; 1M) _! \
     | .sort('-size') \
     | .first(5)</code></pre>
     </div>
+  </div>
+  <div class="mt-8 text-xs flex" style="justify-content: end">
+    <a href="glance/why" class="lume-anchor">更多对比</a>
   </div>
 </section>
 
@@ -110,12 +113,12 @@
       <div class="mt-1 text-xs text-neutral-500">bash 约 2200ms，快 10 倍+</div>
     </div>
     <div class="lume-metric-card lume-metric-item rounded-2xl p-6 text-center">
-      <div class="lume-metric-value text-3xl font-extrabold">3.9<span class="text-base text-neutral-500 ml-1">MB</span></div>
+      <div class="lume-metric-value text-3xl font-extrabold">4.3<span class="text-base text-neutral-500 ml-1">MB</span></div>
       <div class="mt-2 text-sm text-white">lume 完整 Shell 体积</div>
       <div class="mt-1 text-xs text-neutral-500">REPL / 补全 / 高亮全带</div>
     </div>
     <div class="lume-metric-card lume-metric-item rounded-2xl p-6 text-center">
-      <div class="lume-metric-value text-3xl font-extrabold">2.7<span class="text-base text-neutral-500 ml-1">MB</span></div>
+      <div class="lume-metric-value text-3xl font-extrabold">3.8<span class="text-base text-neutral-500 ml-1">MB</span></div>
       <div class="mt-2 text-sm text-white">lume-se 脚本执行器</div>
       <div class="mt-1 text-xs text-neutral-500">极速启动，最小依赖</div>
     </div>

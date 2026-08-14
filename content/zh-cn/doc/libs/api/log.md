@@ -1,40 +1,39 @@
 ---
 title: 内置库 log
-date: 2026-08-07 16:42:00
+date: 2026-08-14 11:29:46
 ---
-	
+
 ## Builtin Functions for Lib: log
 
 - `debug <msg>`
-	log debug
+	记录调试日志
 
 - `disable `
-	disable all log
+	禁用所有日志
 
 - `echo <msg>`
-	print message without formatting
+	打印消息（无格式化）
 
 - `enable [int]`
-	enable all log, or level
+	启用所有日志，或指定级别
 
 - `error <msg>`
-	log error
+	记录错误日志
 
 - `info <msg>`
-	log info
+	记录信息日志
 
 - `is_enabled <level>`
-	log level is enabled?
+	日志级别已启用？
 
 - `level [int]`
-	get/set the log level
+	获取/设置日志级别
 
 - `levels `
-	view all levels
+	查看所有级别
 
 - `trace <msg>`
-	log trace
+	记录跟踪日志
 
 - `warn <msg>`
-	log warning
-
+	记录警告日志

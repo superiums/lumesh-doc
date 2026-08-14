@@ -1,238 +1,237 @@
 ---
 title: 内置库 string
-date: 2026-08-07 16:42:00
+date: 2026-08-14 11:29:46
 ---
-	
+
 ## Builtin Functions for Lib: string
 
 - `black <string>`
-	black fg
+	黑色前景色
 
 - `blink <string>`
-	blink
+	闪烁
 
 - `blue <string>`
-	blue fg
+	蓝色前景色
 
 - `bold <string>`
-	bold
+	粗体
 
 - `center <string> <length> [pad_char=' ']`
-	pad both ends
+	两端填充
 
 - `chars <string>`
-	to char list
+	转换为字符列表
 
 - `clr <string> <0..256>`
-	256-color fg, code 0-255
+	256色前景色，代码 0-255
 
 - `clr_bg <string> <0..256>`
-	256-color bg, code 0-255
+	256色背景色，代码 0-255
 
 - `color <string> <#hex|name|r,g,b>`
-	true color fg. e.g. #ff0000, red, 255,0,0
+	真彩色前景色。例如 #ff0000, red, 255,0,0
 
 - `color_bg <string> <#hex|name|r,g,b>`
-	true color bg. e.g. #ff0000, red, 255,0,0
+	真彩色背景色。例如 #ff0000, red, 255,0,0
 
 - `colors [swatches?]`
-	list color names, or with swatches
+	列出颜色名称，或显示色块
 
 - `concat <string>...`
-	join strings
+	连接字符串
 
 - `contains <string> <substring>`
-	contains?
+	包含？
 
 - `cyan <string>`
-	cyan fg
+	青色前景色
 
 - `dim <string>`
-	dim
+	变暗
 
 - `ends_with <string> <substring>`
-	ends with?
+	以...结尾？
 
 - `escape <string>`
-	escape control chars to \n \t \xNN etc.
+	转义控制字符为 \n \t \xNN 等
 
 - `get <string> <index>`
-	char at index. negative counts from end
+	索引处的字符。负索引从末尾计数
 
 - `green <string>`
-	green fg
+	绿色前景色
 
 - `grep <string> <substring>`
-	lines matching substring
+	匹配子串的行
 
 - `href <url> <text>`
-	terminal hyperlink
+	终端超链接
 
 - `insert <string> <index> <string>`
-	insert string at index
+	在索引处插入字符串
 
 - `invert <string>`
-	invert fg/bg
+	反转前景/背景
 
 - `is_alpha <string>`
-	is alphabetic?
+	是字母？
 
 - `is_alphanumeric <string>`
-	is alphanumeric?
+	是字母数字？
 
 - `is_ascii <string>`
-	is ascii?
+	是 ASCII？
 
 - `is_ascii_control <string>`
-	is ascii control char?
+	是 ASCII 控制字符？
 
 - `is_ascii_digit <string>`
-	is ascii digit?
+	是 ASCII 数字？
 
 - `is_ascii_hexdigit <string>`
-	is ascii hexdigit?
+	是 ASCII 十六进制数字？
 
 - `is_ascii_punctuation <string>`
-	is ascii punctuation?
+	是 ASCII 标点符号？
 
 - `is_empty <string>`
-	is empty?
+	是否为空？
 
 - `is_lower <string>`
-	is lowercase?
+	是小写？
 
 - `is_numeric <string>`
-	is numeric?
+	是数字？
 
 - `is_title <string>`
-	is title case?
+	是标题大写？
 
 - `is_upper <string>`
-	is uppercase?
+	是大写？
 
 - `is_whitespace <string>`
-	is whitespace?
+	是空白字符？
 
 - `italic <string>`
-	italic
+	斜体
 
 - `len <string>`
-	char count
+	字符计数
 
 - `lines <string>`
-	to line list
+	转换为行列表
 
 - `lower <string>`
-	to lowercase
+	转换为小写
 
 - `magenta <string>`
-	magenta fg
+	洋红色前景色
 
 - `max_len <string>`
-	max line length
+	最长行长度
 
 - `pad_end <string> <length> [pad_char=' ']`
-	pad at end
+	右填充
 
 - `pad_start <string> <length> [pad_char=' ']`
-	pad at start
+	左填充
 
 - `paragraphs <string>`
-	to paragraph list
+	转换为段落列表
 
 - `position <string> <substring> [start]`
-	index of substring, or None. search from [start]
+	子串的索引，或 None。从 [start] 开始搜索
 
 - `red <string>`
-	red fg
+	红色前景色
 
 - `repeat <string> <count>`
-	repeat n times
+	重复 n 次
 
 - `replace <string> <old> <new>`
-	replace all matches
+	替换所有匹配项
 
 - `rev <string>`
-	reverse
+	反转
 
 - `slice <string> <start> [end]`
-	substring [start,end)
+	子字符串 [start,end)
 
 - `sort <string> ['+'|'-'|key_fn]`
-	sort lines
+	对行排序
 
 - `split <string> [delimiter]`
-	split by delimiter/whitespace
+	按分隔符/空白字符分割
 
 - `split_at <string> <index>`
-	split at index
+	在索引处分割
 
 - `starts_with <string> <substring>`
-	starts with?
+	以...开头？
 
 - `strike <string>`
-	strikethrough
+	删除线
 
 - `strip_ansi <string>`
-	remove ANSI codes
+	移除 ANSI 转义码
 
 - `strip_prefix <string> <prefix>`
-	remove prefix
+	移除前缀
 
 - `strip_suffix <string> <suffix>`
-	remove suffix
+	移除后缀
 
 - `title <string>`
-	to title case
+	转换为标题大写
 
 - `to_filesize <size_str>`
-	to filesize. e.g. 1.5GB, 500K
+	转换为文件大小。例如 1.5GB, 500K
 
 - `to_float <value>`
-	to float. % as /100, _ as sep. e.g. 12.5%
+	转换为浮点数。% 作为除以100，_ 作为分隔符。例如 12.5%
 
 - `to_int <value>`
-	to int. radix ok(0x/0o/0b), _ as sep. e.g. 0xff_80
+	转换为整数。支持进制前缀(0x/0o/0b)，_ 作为分隔符。例如 0xff_80
 
 - `to_safe <str>`
-	wrap str, never eval
+	包装字符串，永不求值
 
 - `to_table <output> [regex] [headers...]`
-	parse cmd output to table
+	将命令输出解析为表格
 
 - `to_time <str> [fmt]`
-	to datetime
+	转换为日期时间
 
 - `trim <string>`
-	trim both ends
+	修剪两端
 
 - `trim_end <string>`
-	trim end
+	修剪末尾
 
 - `trim_start <string>`
-	trim start
+	修剪开头
 
 - `underline <string>`
-	underline
+	下划线
 
 - `unescape <string>`
-	reverse of escape, parses \n \t \xNN \uXXXX
+	转义的逆操作，解析 \n \t \xNN \uXXXX
 
 - `upper <string>`
-	to uppercase
+	转换为大写
 
 - `white <string>`
-	white fg
+	白色前景色
 
 - `words <string>`
-	to word list
+	转换为单词列表
 
 - `words_quoted <string>`
-	to word list, quoted as one
+	转换为单词列表，作为一项引用
 
 - `wrap <string> <width>`
-	wrap to width
+	在指定宽度处换行
 
 - `yellow <string>`
-	yellow fg
-
+	黄色前景色

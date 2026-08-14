@@ -8,6 +8,7 @@ tags:
  - bash
 categories:
  - bash
+layout: why
 ---
 
 ## 序：那些被 Bash 折磨到怀疑人生的日子
@@ -179,7 +180,7 @@ let str = "hello world"
 
 str.upper()                    # "HELLO WORLD"
 str.contains("world")          # true
-str ~: r'^hello'               # 正则匹配，true
+str ~: g'^hello'               # 正则匹配，true
 str.replace("world", "lume")   # "hello lume"
 str.split(' ')                 # ["hello", "world"]
 
@@ -395,7 +396,7 @@ output=$(some_command | tee /dev/tty)
 
 ```bash
 # 结构化数据直接在管道里流动，告别列号焦虑
-fs.ls -l | list.filter(f -> f.size > 1M) | list.sort_by(.size) | list.last(5)
+fs.ls -l | .filter(f -> f.size > 1M) | .sort(.size) | .last(5)
 # 不需要记列号，不需要 awk，数据是带有清晰字段名的对象
 
 # 函数式管道，可读性极强，逻辑一目了然
@@ -619,8 +620,8 @@ rm /tmp/large_logs.txt  # 别忘了清理临时文件，否则就是技术债
 ### Lume 的方式（优雅与掌控）
 ```bash
 #!/usr/bin/env lume
-let files = fs.ls -lh | where(name ~: '.log' && size > 1M)
-    | .sort_by('size') \
+let files = fs.ls -lh *.log | where(size > 1M)
+    | .sort('size') \
     | .last(5)
 
 if $files.is_empty() {
@@ -659,10 +660,7 @@ Lume 的出现，不是为了傲慢地替代所有工具，而是为了让你**�
 
 ```bash
 # 这就是 lume 的日常，简单，强大，优雅
-fs.ls -lh \
-    | where(size > 5M) \
-    | .sort_by('modified') \
-    | pprint 
+fs.ls -lh | where(size > 5M) | .sort('modified')
 ```
 
 **夺回对工具的控制权。你的代码，本该如此优雅。**

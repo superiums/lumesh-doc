@@ -1,79 +1,78 @@
 ---
 title: 内置库 map
-date: 2026-08-07 16:42:00
+date: 2026-08-14 11:29:46
 ---
-	
+
 ## Builtin Functions for Lib: map
 
 - `contains_key <map> <key>`
-	has key?
+	包含键？
 
 - `contains_value <map> <value>`
-	has value?
+	包含值？
 
 - `difference <map1> <map2>`
-	keys in map1 not in map2
+	map1 中存在但在 map2 中不存在的键
 
 - `dig <map|list|range> <path>`
-	get nested value by dot path. e.g. dig m 'a.b.0'
+	通过点路径获取嵌套值。例如 dig m 'a.b.0'
 
 - `filter <map> <fn>`
-	keep pairs where fn(k,v)->bool
+	保留满足 fn(k,v)->bool 的键值对
 
 - `find <map> <fn>`
-	first pair matching fn(k,v)->bool, returns [k,v]
+	第一个满足 fn(k,v)->bool 的键值对，返回 [k,v]
 
 - `first <map>`
-	first key-value pair by key order, returns [k,v]
+	按键顺序的第一个键值对，返回 [k,v]
 
 - `flatten <map>`
-	flatten nested structure
+	扁平化嵌套结构
 
 - `from_list <list>`
-	create map from list of [k,v] pairs
+	从 [k,v] 对列表创建映射
 
 - `get <map> <key>`
-	value by key
+	根据键获取值
 
 - `insert <map> <key> <value>`
-	insert key-value, returns new map
+	插入键值对，返回新映射
 
 - `intersection <map1> <map2>`
-	keys in both, values from map1
+	两个映射中都存在的键，值来自 map1
 
 - `is_empty <map>`
-	is empty?
+	是否为空？
 
 - `keys <map>`
-	list of keys
+	键列表
 
 - `last <map>`
-	last key-value pair by key order, returns [k,v]
+	按键顺序的最后一个键值对，返回 [k,v]
 
 - `len <map>`
-	map size
+	映射大小
 
-- `map <map> <map_fn>`
-	transform keys/values, fn(k,v)->[k,v]
+- `map <map> <fn(k,v)>`
+	转换键/值，fn(k,v)->[k,v]
 
 - `merge <map1> <map2> [<map3>...]`
-	deep merge maps, recurse on nested maps
+	深度合并映射，递归处理嵌套映射
 
 - `remove <map> <key>`
-	remove key, returns new map
+	删除键，返回新映射
 
 - `set <map> <key> <value>`
-	set existing key's value, returns new map
+	设置现有键的值，返回新映射
 
 - `to_hmap <map>`
-	to hashMap (unordered)
+	转换为 hashMap（无序）
 
 - `to_list <map>`
-	to list of [k,v] pairs
+	转换为 [k,v] 对列表
 
 - `union <map1> <map2>`
-	combine maps, map2 wins on conflict
+	合并映射，冲突时 map2 优先
 
 - `values <map>`
-	list of values
-
+	值列表

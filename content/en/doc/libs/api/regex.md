@@ -1,6 +1,6 @@
 ---
 title: Builtin Lib REGEX
-date: 2026-08-07 16:40:11
+date: 2026-08-14 11:26:54
 ---
 	
 ## Builtin Functions for Lib: regex
@@ -17,8 +17,8 @@ date: 2026-08-07 16:40:11
 - `find_all <pattern> <text>`
 	all matches, list of {start,end,found}
 
-- `from <pattern_string> [flag]`
-  build regex from pattern and flag
+- `from <pattern_string> [i|m|s|x|R|U]`
+	build regex from string pattern
 
 - `is_match <pattern> <text>`
 	contains a match?
@@ -34,3 +34,4 @@ date: 2026-08-07 16:40:11
 
 - `split <pattern> <text>`
 	split by pattern
+

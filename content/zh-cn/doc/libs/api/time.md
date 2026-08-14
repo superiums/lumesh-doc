@@ -1,67 +1,66 @@
 ---
 title: 内置库 time
-date: 2026-08-07 16:42:00
+date: 2026-08-14 11:29:46
 ---
-	
+
 ## Builtin Functions for Lib: time
 
 - `add [datetime] <duration>`
-	add a signed duration string (e.g. '1d2h30m', '-1h') or integer seconds to a datetime (defaults to now)
+	向日期时间添加有符号持续时间字符串（例如 '1d2h30m', '-1h'）或整数秒（默认为现在）
 
 - `day [datetime]`
-	get day of month (1-31)
+	获取月份中的第几天（1-31）
 
 - `diff <datetime1> [datetime2] <unit>`
-	calculate difference between two datetimes in given unit
+	计算两个日期时间在指定单位下的差异
 
 - `display [datetime]`
-	get preformatted datetime as map with time/date/datetime/etc.
+	获取预格式化的日期时间，返回带有时间/日期/日期时间等字段的映射
 
 - `fmt [datetime] <format_string>`
-	format datetime (current or specified) using chrono format string
+	使用 chrono 格式字符串格式化日期时间（当前或指定）
 
 - `hour [datetime]`
-	get hour (0-23)
+	获取小时（0-23）
 
 - `is_leap [year]`
-	check if a year is a leap year
+	检查某年是否为闰年
 
 - `minute [datetime]`
-	get minute (0-59)
+	获取分钟（0-59）
 
 - `month [datetime]`
-	get month (1-12)
+	获取月份（1-12）
 
 - `now [format_string]`
-	get current datetime as DateTime object or formatted string
+	获取当前日期时间作为 DateTime 对象或格式化字符串
 
 - `parse <datetime_string> [format_string]`
-	parse datetime string, optionally with a chrono format string
+	解析日期时间字符串，可选择使用 chrono 格式字符串
 
 - `second [datetime]`
-	get second (0-59)
+	获取秒（0-59）
 
 - `seconds [datetime]`
-	get seconds since midnight
+	获取自午夜以来的秒数
 
 - `sleep <duration>`
-	sleep for a given number of milliseconds [ms] or duration string (e.g. '1s', '2m')
+	休眠指定的毫秒数 [ms] 或持续时间字符串（例如 '1s', '2m'）
 
 - `stamp [datetime]`
-	get Unix timestamp in seconds
+	获取 Unix 时间戳（秒）
 
 - `stamp_ms [datetime]`
-	get Unix timestamp in milliseconds
+	获取 Unix 时间戳（毫秒）
 
 - `timezone [datetime] <offset_hours> [format_string]`
-	convert datetime to a different timezone offset (in hours)
+	将日期时间转换为不同时区偏移量（小时）
 
 - `to_string <datetime> [format_string]`
-	convert DateTime to string
+	将 DateTime 转换为字符串
 
 - `weekday [datetime]`
-	get weekday (1-7, Monday=1)
+	获取星期几（1-7，周一=1）
 
 - `year [datetime]`
-	get year (current or from specified datetime)
-
+	获取年份（当前或从指定日期时间获取）

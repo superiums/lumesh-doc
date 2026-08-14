@@ -86,6 +86,9 @@ This is the most significant set of changes in this release, evolved over three 
 ### Standard Library Enhancement (0.17.3)
 
 - `fs.ls` supports directly specifying files (`fs.ls file(s)`)
+- `log` supports write to file, print timestamp
+- `pprint` supports group print of table/list
+- improve `group` of `table` and `list`
 - Built-in libraries support wildcard expansion
 
 ### Prompt Integration (0.17.3)

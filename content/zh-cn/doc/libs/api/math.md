@@ -1,69 +1,69 @@
 ---
 title: 内置库 math
-date: 2026-08-07 16:42:00
+date: 2026-08-14 11:29:46
 ---
-	
+
 ## Builtin Functions for Lib: math
 
 - `abs <number>`
-	absolute value
+	绝对值
 
 - `acos <value>`
-	inverse cosine
+	反余弦
 
 - `acosh <value>`
-	inverse hyperbolic cosine
+	反双曲余弦
 
 - `asin <value>`
-	inverse sine
+	反正弦
 
 - `asinh <value>`
-	inverse hyperbolic sine
+	反双曲正弦
 
 - `atan <value>`
-	inverse tangent
+	反正切
 
 - `atanh <value>`
-	inverse hyperbolic tangent
+	反双曲正切
 
 - `average <num1> <num2>... | <array>`
-	average of numbers
+	数字平均值
 
 - `bit_and <int1> <int2>`
-	bitwise AND
+	按位与
 
 - `bit_not <integer>`
-	bitwise NOT
+	按位非
 
 - `bit_or <int1> <int2>`
-	bitwise OR
+	按位或
 
 - `bit_shl <integer> <bits>`
-	shift left, bits 0-63
+	左移，位数 0-63
 
 - `bit_shr <integer> <bits>`
-	shift right, bits 0-63
+	右移，位数 0-63
 
 - `bit_xor <int1> <int2>`
-	bitwise XOR
+	按位异或
 
 - `cbrt <number>`
-	cube root
+	立方根
 
 - `ceil <number>`
-	round up
+	向上取整
 
 - `clamp <value> <min> <max>`
-	clamp value into [min,max]
+	限制值在 [min,max] 范围内
 
 - `cos <radians>`
-	cosine
+	余弦
 
 - `cos_pi <x>`
 	cos(x*π)
 
 - `cosh <value>`
-	hyperbolic cosine
+	双曲余弦
 
 - `eq <a> <b>`
 	a == b?
@@ -75,10 +75,10 @@ date: 2026-08-07 16:42:00
 	2^x
 
 - `floor <number>`
-	round down
+	向下取整
 
 - `gcd <int1> <int2>`
-	greatest common divisor
+	最大公约数
 
 - `ge <a> <b>`
 	a >= b?
@@ -90,86 +90,85 @@ date: 2026-08-07 16:42:00
 	sqrt(x^2+y^2)
 
 - `is_even <integer>`
-	is even?
+	是偶数？
 
 - `is_odd <integer>`
-	is odd?
+	是奇数？
 
 - `lcm <int1> <int2>`
-	least common multiple
+	最小公倍数
 
 - `le <a> <b>`
 	a <= b?
 
 - `ln <number>`
-	natural log
+	自然对数
 
 - `log <number> <base>`
-	log base of number
+	对数（指定底数）
 
 - `log10 <number>`
-	log base 10
+	以 10 为底的对数
 
 - `log2 <number>`
-	log base 2
+	以 2 为底的对数
 
 - `lt <a> <b>`
 	a < b?
 
 - `max <num1> <num2>... | <array>`
-	max value
+	最大值
 
 - `min <num1> <num2>... | <array>`
-	min value
+	最小值
 
 - `ne <a> <b>`
 	a != b?
 
 - `pow <base> <exponent>`
-	base^exponent
+	底数^指数
 
 - `rem <a> <b>`
-	euclidean remainder
+	欧几里得余数
 
 - `round <number>`
-	round to nearest
+	四舍五入
 
 - `signum <number>`
-	sign: -1, 0, or 1
+	符号：-1、0 或 1
 
 - `sin <radians>`
-	sine
+	正弦
 
 - `sin_pi <x>`
 	sin(x*π)
 
 - `sinh <value>`
-	hyperbolic sine
+	双曲正弦
 
 - `sqrt <number>`
-	square root
+	平方根
 
 - `sum <num1> <num2>... | <array>`
-	sum of numbers
+	数字求和
 
 - `tan <radians>`
-	tangent
+	正切
 
 - `tan_pi <x>`
 	tan(x*π)
 
 - `tanh <value>`
-	hyperbolic tangent
+	双曲正切
 
 - `to_degrees <radians>`
-	radians to degrees
+	弧度转角度
 
 - `to_radians <degrees>`
-	degrees to radians
+	角度转弧度
 
 - `to_string <number>`
-	to string
+	转换为字符串
 
 - `trunc <number>`
-	truncate decimal
-
+	截断小数

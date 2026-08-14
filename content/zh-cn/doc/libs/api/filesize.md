@@ -1,28 +1,27 @@
 ---
 title: 内置库 filesize
-date: 2026-08-07 16:42:00
+date: 2026-08-14 11:29:46
 ---
-	
+
 ## Builtin Functions for Lib: filesize
 
 - `b <filesize>`
-	bytes
+	字节
 
 - `from <size_str|byte_int>`
-	to Filesize
+	转换为 Filesize
 
 - `gb <filesize>`
-	gigabytes
+	吉字节
 
 - `kb <filesize>`
-	kilobytes (integer, truncated)
+	千字节（整数，截断）
 
 - `mb <filesize>`
-	megabytes
+	兆字节
 
 - `tb <filesize>`
-	terabytes
+	太字节
 
 - `to_string <filesize>`
-	to human readable string
-
+	转换为人类可读的字符串

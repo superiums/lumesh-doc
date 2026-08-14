@@ -1,6 +1,6 @@
 ---
 title: Builtin Lib LIST
-date: 2026-08-07 16:40:11
+date: 2026-08-14 11:26:54
 ---
 	
 ## Builtin Functions for Lib: list
@@ -53,7 +53,7 @@ date: 2026-08-07 16:40:11
 - `get <list> <index>`
 	nth element, negative index from end
 
-- `group <list> <key_fn|key>`
+- `group <list> <fn|key>`
 	group by key fn or map field, e.g.  fn(item)->string
 
 - `insert <list> <index> <value>`
@@ -65,7 +65,7 @@ date: 2026-08-07 16:40:11
 - `items <list>`
 	index-value pairs
 
-- `join <list> <separator>`
+- `join <list> [sep=' ']`
 	join strings with separator
 
 - `last <list> [n=1]`
@@ -125,7 +125,7 @@ date: 2026-08-07 16:40:11
 - `slice <list> <start> <end>`
 	sub-list [start,end), negative index ok
 
-- `sort <list> [key_fn|±key...]`
+- `sort <list> [fn|±key...]`
 	sort, optional fn(a,b)->[-1/0/1]. e.g. sort list 'name'
 
 - `splice <list> <start> <delete_count> [items...]`
@@ -146,11 +146,11 @@ date: 2026-08-07 16:40:11
 - `take <list> <count>`
 	first n elements
 
-- `to_hmap <list> [key_fn] [val_fn]`
-	to hashMap, default pairs [k,v,k,v...]
+- `to_hmap <list> [fn(k,v)]`
+	to hashMap, pairs [k,v,k,v...]
 
-- `to_map <list> [key_fn] [val_fn]`
-	to btreeMap, default pairs [k,v,k,v...]
+- `to_map <list> [fn(k,v)]`
+	to btreeMap, pairs [k,v,k,v...]
 
 - `to_set <list>`
 	to btreeSet

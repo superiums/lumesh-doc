@@ -1,6 +1,6 @@
 ---
 title: Builtin Lib MAP
-date: 2026-08-07 16:40:11
+date: 2026-08-14 11:26:54
 ---
 	
 ## Builtin Functions for Lib: map
@@ -53,7 +53,7 @@ date: 2026-08-07 16:40:11
 - `len <map>`
 	map size
 
-- `map <map> <map_fn>`
+- `map <map> <fn(k,v)>`
 	transform keys/values, fn(k,v)->[k,v]
 
 - `merge <map1> <map2> [<map3>...]`

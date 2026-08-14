@@ -1,48 +1,48 @@
 ---
 title: 内置库 sys
-date: 2026-08-07 16:42:00
+date: 2026-08-14 11:29:46
 ---
-	
+
 ## Builtin Functions for Lib: sys
 
 - `defined <var>`
-	defined in scope chain?
+	在作用域链中定义？
 
 - `dirs `
-	system directories map
-
-- `error_codes `
-	list lume error codes
+	系统目录映射
 
 - `env [var]`
-	root env map, or var value
+	根环境映射，或变量值
+
+- `error_codes `
+	列出 lume 错误代码
 
 - `has <var>`
-	defined in current scope?
+	在当前作用域中定义？
 
 - `info `
-	os info
+	操作系统信息
 
 - `max_runtime [depth]`
-	get/set max runtime recursion depth
+	获取/设置最大运行时递归深度
 
 - `max_syntax [depth]`
-	get/set max syntax recursion depth
+	获取/设置最大语法递归深度
 
 - `max_usemode [depth]`
-	get/set max use-mode recursion depth
+	获取/设置最大使用模式递归深度
 
 - `modes `
-	current mode flags {cfm,strict,pdm}
+	当前模式标志 {cfm,strict,pdm}
 
 - `set_cfm <boolean|none>`
-	set Cmd First Mode
+	设置命令优先模式
 
 - `set_pdm <boolean>`
-	enable/disable print direct mode
+	启用/禁用直接打印模式
 
 - `set_strict <boolean>`
-	enable/disable strict mode
+	启用/禁用严格模式
 
 - `vars `
-	vars defined in current scope
+	当前作用域中定义的变量

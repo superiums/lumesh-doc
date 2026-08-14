@@ -1,6 +1,6 @@
 ---
 title: Builtin Lib SYS
-date: 2026-08-07 16:40:11
+date: 2026-08-14 11:26:54
 ---
 	
 ## Builtin Functions for Lib: sys
@@ -11,11 +11,11 @@ date: 2026-08-07 16:40:11
 - `dirs `
 	system directories map
 
-- `error_codes `
-	list lume error codes
-
 - `env [var]`
 	root env map, or var value
+
+- `error_codes `
+	list lume error codes
 
 - `has <var>`
 	defined in current scope?
@@ -46,3 +46,4 @@ date: 2026-08-07 16:40:11
 
 - `vars `
 	vars defined in current scope
+

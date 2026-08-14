@@ -1,131 +1,131 @@
 ---
 title: 顶层内置库
-date: 2026-08-07 16:42:00
+date: 2026-08-14 11:29:46
 ---
-	
-## Top level Builtin Functions
+
+## 顶层内置函数
 
 
 - `assert <expr> [expr] [message]`
-	throw if not equal/truthy
+	如果不相等或为假则抛出错误
 
 - `cd [path=~]`
-	change dir. '-' for previous
+	切换目录。'-' 表示上一个目录
 
 - `cwd `
-	current dir
+	当前目录
 
 - `ddebug <args>...`
-	eval & show expr,type,value(pretty fmt)
+	求值并显示表达式、类型、值（美化格式）
 
 - `debug <args>...`
-	eval & show expr,type,value(debug fmt)
+	求值并显示表达式、类型、值（调试格式）
 
 - `dig <map|list|set|range|table> <path>`
-	get nested value by dot path. e.g. dig m 'a.b.0'
+	通过点路径获取嵌套值。例如 dig m 'a.b.0'
 
 - `eprint <args>...`
-	print to stderr, red, no newline
+	打印到标准错误，红色，无换行
 
 - `eprintln <args>...`
-	print to stderr, red, with newline
+	打印到标准错误，红色，带换行
 
 - `eval <expr>`
-	eval expr in current env
+	在当前环境中求值表达式
 
 - `eval_str <string>`
-	parse & eval string in current env
+	在当前环境中解析并求值字符串
 
 - `exec <expr>`
-	eval expr in forked env
+	在派生环境中求值表达式
 
 - `exec_str <string>`
-	parse & eval string in forked env
+	在派生环境中解析并求值字符串
 
 - `exit [status=0]`
-	exit shell
+	退出 shell
 
 - `flatten <collection>`
-	flatten nested list/map to flat list
+	将嵌套列表/映射扁平化为平铺列表
 
 - `format <template> <args>...`
-	fmt string. {name}/{} for named/positional, :spec for align.
-	e.g. format '{:0>5}' 3 -> 00003
+	格式化字符串。{name}/{} 用于命名/位置参数，:spec 用于对齐。
+	例如 format '{:0>5}' 3 -> 00003
 
 - `get_env <var>`
-	get var from env
+	从环境获取变量
 
 - `get_local <var>`
-	get local var value
+	获取局部变量值
 
 - `get_var <var>`
-	get var, local first then env
+	获取变量，先查局部再查环境
 
 - `help [libs|tops|doc|<lib>|<lib>.<func>|<top_func>]`
-	show help. e.g. help string.split
+	显示帮助。例如 help string.split
 
 - `import <path>`
-	eval file in forked env
+	在派生环境中求值文件
 
 - `include <path>`
-	eval file in current env
+	在当前环境中求值文件
+
+- `is_empty <expr>`
+	是否为空？
 
 - `jobs [-k id]`
-	list/kill jobs
+	列出/终止作业
 
 - `len <list|set|map|table|range|string|bytes>`
-	size of collection
+	集合大小
 
 - `not <boolean>...`
-	logic not
+	逻辑非
 
 - `pprint <value>...`
-	pretty print table/list/map
+	美化打印表格/列表/映射
 
 - `print <args>...`
-	print, space-sep, no newline
+	打印，空格分隔，无换行
 
 - `println <args>...`
-	print, space-sep, with newline
+	打印，空格分隔，带换行
 
 - `quote <expr>`
-	quote expr, eval later
+	引用表达式，稍后求值
 
 - `read [-p prompt] [-n max_chars] [-s silent] [-t timeout_secs]`
-	read input
+	读取输入
 
 - `repeat <expr> <n>`
-	eval expr n times, collect non-None results
+	求值表达式 n 次，收集非 None 结果
 
 - `rev <string|list|table|bytes>`
-	reverse
+	反转
 
 - `select <table> <columns...>`
-	select columns from table
+	从表格选择列
 
 - `set_root <var> <val>`
-	define var in root env
-
-- `shift`
-  shift to next in iter
+	在根环境中定义变量
 
 - `symof <value>`
-	type name before eval
+	求值前显示类型名称
 
 - `tap <args>...`
-	print then return value(s)
+	打印然后返回值
 
 - `throw <msg>`
-	raise a runtime error
+	抛出运行时错误
 
 - `typeof <value>`
-	type name after eval
+	求值后显示类型名称
 
 - `unset_root <var>`
-	undefine var in root env
+	在根环境中取消定义变量
 
 - `when <condition> <execute>`
-	conditional execute
+	条件执行
 
 - `where <table> <condition>`
-	filter table rows. `NR/<col_name>` injected. e.g. where t (NR>1 and col>0)
+	过滤表格行。注入了 `NR/<列名>`。例如 `where t (NR>1 and col>0)`

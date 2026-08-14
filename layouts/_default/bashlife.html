@@ -1,0 +1,853 @@
+{{ define "main" }}
+
+<style>
+  
+  h1,p,div,span {
+    text-decoration: none !important;
+  }
+  .slides-root {
+    width: 100%;
+    max-width: 900px;
+    margin: 100px auto;
+  }
+  .slide-container {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 14px;
+    overflow: hidden;
+    min-height: 460px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    position: relative;
+  }
+  .slide {
+    display: none;
+    padding: 40px 44px;
+    animation: fadeIn 0.35s ease-out;
+  }
+  .slide.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Hero */
+  .slide-hero {
+    text-align: center;
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-size: 12px;
+    color: #999;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    border: 1px solid #e0e0e0;
+    padding: 5px 14px;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+  .slide-hero h1 {
+    font-size: 38px;
+    font-weight: 600;
+    margin: 0 0 14px 0;
+    line-height: 1.2;
+    color: #1a1a1a;
+  }
+  .hero-sub {
+    font-size: 18px;
+    color: #888;
+    margin-bottom: 36px;
+  }
+  .hero-quote {
+    font-size: 16px;
+    color: #666;
+    font-style: italic;
+    max-width: 540px;
+    margin: 0 auto;
+    line-height: 1.8;
+    border-left: 3px solid #ddd;
+    padding-left: 22px;
+    text-align: left;
+  }
+
+  /* Compare slides */
+  .slide-compare h2 {
+    font-size: 26px;
+    font-weight: 600;
+    margin: 0 0 24px 0;
+    color: #1a1a1a;
+  }
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .compare-card {
+    border-radius: 10px;
+    padding: 20px 22px;
+    border: 1px solid #e8e8e8;
+  }
+  .compare-card.bash-side {
+    background: #fdf5f5;
+    border-color: #f0cccc;
+  }
+  .compare-card.lume-side {
+    background: #f0fafa;
+    border-color: #cce8e8;
+  }
+  .compare-label {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .compare-label.bash-label { color: #d44; }
+  .compare-label.lume-label { color: #2a9d8f; }
+  .compare-code {
+    font-family: "SF Mono", "Fira Code", "JetBrains Mono", "Consolas", monospace;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: #222;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  .compare-comment { color: #999; }
+
+  /* Performance */
+  .slide-perf h2 {
+    font-size: 26px;
+    font-weight: 600;
+    margin: 0 0 28px 0;
+    color: #1a1a1a;
+  }
+  .perf-chart {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 80px;
+    padding: 30px 0 50px;
+    height: 280px;
+  }
+  .perf-bar-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .perf-bar {
+    width: 110px;
+    border-radius: 8px 8px 0 0;
+  }
+  .perf-bar.bash-bar {
+    background: #e85d5d;
+    height: 160px;
+  }
+  .perf-bar.lume-bar {
+    background: #4ecdc4;
+    height: 16px;
+  }
+  .perf-value {
+    font-size: 24px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .perf-value.bash-val { color: #e85d5d; }
+  .perf-value.lume-val { color: #2a9d8f; }
+  .perf-label {
+    font-size: 14px;
+    color: #999;
+    margin-top: 4px;
+  }
+  .perf-speedup {
+    text-align: center;
+    font-size: 34px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-top: 10px;
+  }
+  .perf-speedup span { color: #2a9d8f; }
+
+  /* CTA */
+  .slide-cta {
+    text-align: center;
+    padding-top: 56px;
+  }
+  .slide-cta h2 {
+    font-size: 32px;
+    font-weight: 600;
+    margin: 0 0 18px 0;
+    color: #1a1a1a;
+  }
+  .cta-sub {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 36px;
+    line-height: 1.8;
+  }
+  .cta-sub strong { color: #1a1a1a; }
+  .cta-code {
+    font-family: "SF Mono", "Fira Code", "JetBrains Mono", "Consolas", monospace;
+    font-size: 14px;
+    background: #f8f8f8;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 18px 28px;
+    display: inline-block;
+    text-align: left;
+    margin-bottom: 28px;
+    color: #333;
+    line-height: 1.7;
+  }
+  .cta-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .cta-link {
+    font-size: 14px;
+    color: #666;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: all 0.2s;
+    background: #fff;
+  }
+  .cta-link:hover {
+    border-color: #999;
+    color: #1a1a1a;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .cta-slogan {
+    font-size: 13px;
+    color: #bbb;
+    margin-top: 32px;
+    letter-spacing: 0.06em;
+  }
+
+  /* Navigation */
+  .slide-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 18px;
+    padding: 0 4px;
+  }
+  .nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    color: #666;
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .nav-btn:hover:not(:disabled) {
+    border-color: #999;
+    color: #1a1a1a;
+  }
+  .nav-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  .slide-dots {
+    display: flex;
+    gap: 8px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ddd;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .dot.active {
+    background: #333;
+    width: 22px;
+    border-radius: 4px;
+  }
+  .slide-counter {
+    font-size: 13px;
+    color: #bbb;
+    font-variant-numeric: tabular-nums;
+    margin: 0 6px;
+  }
+
+  .slide-caption {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 14px;
+    color: #999;
+    font-style: italic;
+  }
+
+  @media (max-width: 640px) {
+    .compare-grid { grid-template-columns: 1fr; }
+    .slide-hero h1 { font-size: 26px; }
+    .slide { padding: 24px; }
+    .perf-chart { gap: 40px; }
+    .perf-bar { width: 70px; }
+  }
+
+.summary-table { width:100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
+.summary-table th, .summary-table td { border: 1px solid #e0e0e0; padding: 8px 10px; text-align: left; }
+.summary-table th { background: #f8f8f8; font-weight: 600; }
+</style>
+
+<div class="slides-root">
+  <div class="slide-container">
+
+    <!-- 1. Title -->
+    <div class="slide slide-hero active" data-index="0">
+      <div class="hero-tag">深度对比 · 2026</div>
+      <h1>Bash 泥泞人生路</h1>
+      <p class="hero-sub">系统梳理 Bash 的常见陷阱与反直觉设计</p>
+      <div class="hero-quote">
+        "Bash 的生存法则是——凡是允许省略的，最终都会炸。"
+      </div>
+    </div>
+
+    <!-- 2. 空格敏感 & 赋值语法 -->
+    <div class="slide slide-compare" data-index="1">
+      <h2>语法基础：空格敏感 &amp; 赋值语法</h2>
+      <div class="compare-grid">
+        <div class="compare-card bash-side">
+          <div class="compare-label bash-label">● Bash</div>
+          <div class="compare-code">if[$a==$b]; then ...  <span class="compare-comment"># ❌ 报错</span>
+if [ "$a" == "$b" ]; then ...
+
+a = 1   <span class="compare-comment"># ❌ 当作命令执行</span>
+a=1     <span class="compare-comment"># ✅ 不能有空格</span></div>
+        </div>
+        <div class="compare-card lume-side">
+          <div class="compare-label lume-label">● Lume</div>
+          <div class="compare-code">a == b
+if $a == $b { ... }
+
+a=1
+a = 1    <span class="compare-comment"># 两种写法均合法</span></div>
+        </div>
+      </div>
+      <p class="slide-caption">空格完全可选，表达式直接书写</p>
+    </div>
+
+    <!-- 3. 隐式分割 & IFS -->
+    <div class="slide slide-compare" data-index="2">
+      <h2>字符串：隐式分割与 IFS 陷阱</h2>
+      <div class="compare-grid">
+        <div class="compare-card bash-side">
+          <div class="compare-label bash-label">● Bash</div>
+          <div class="compare-code">file="a b"
+rm $file    <span class="compare-comment"># ❌ 删除两个文件</span>
+rm "$file"  <span class="compare-comment"># ✅ 引号是护身符</span>
+<span class="compare-comment"># IFS 是全局的，牵一发动全身</span></div>
+        </div>
+        <div class="compare-card lume-side">
+          <div class="compare-label lume-label">● Lume</div>
+          <div class="compare-code">rm $file
+<span class="compare-comment"># 解析为 rm 'a b'，符合直觉</span>
+
+set LUME_IFS_MODE = 2
+<span class="compare-comment"># 按场景精细控制分割行为</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. 引号地狱 & 模板字符串 -->
+    <div class="slide slide-compare" data-index="3">
+      <h2>引号地狱 vs 模板字符串</h2>
+      <div class="compare-grid">
+        <div class="compare-card bash-side">
+          <div class="compare-label bash-label">● Bash</div>
+          <code class="compare-code">echo "Today is $(date "+%Y-%m-%d")"
+sed "s/foo/bar \"$var\"/g" file.txt
+curl -X POST -d "{\"name\":\"$name\",\"msg\":\"Hello '$msg'\"}" http://example.com
+          <span class="compare-comment"># 嵌套超过两层就难以维护</span>
+          </code>
+        </div>
+        <div class="compare-card lume-side">
+          <div class="compare-label lume-label">● Lume</div>
+          <code class="compare-code">print `Today is {date '+%Y-%m-%d'}`
+sed `s/foo/bar "$var"/g` file.txt
+curl -X POST -d r#`{"name":"{name}", "msg": "Hello '$msg'"}`# http://example.com
+<span class="compare-comment"># 内部引号直接书写</span>
+</code>
+        </div>
+      </div>
+      <p class="slide-caption">三种字符串引号均原生支持#包裹和多行文本</p>
+    </div>
+
+    <!-- 5. 默认字符串类型 / 浮点 / 溢出 -->
+    <div class="slide slide-compare" data-index="4">
+      <h2>类型系统：一切皆字符串的代价</h2>
+      <div class="compare-grid">
+        <div class="compare-card bash-side">
+          <div class="compare-label bash-label">● Bash</div>
+          <div class="compare-code">c=$a+$b        <span class="compare-comment"># "1+2" 拼接</span>
+echo $((1/2))   <span class="compare-comment"># 0，无浮点</span>
+echo $((99999999999999999999))
+<span class="compare-comment"># 溢出静默发生，不报错</span></div>
+        </div>
+        <div class="compare-card lume-side">
+          <div class="compare-label lume-label">● Lume</div>
+          <div class="compare-code">c = a + b
+20 / 2.0        <span class="compare-comment"># 浮点全支持</span>
+
+echo 99999999999999999999999
+<span class="compare-comment"># error: number too large to fit</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. 数组与映射 -->
+    <div class="slide slide-compare" data-index="5">
+      <h2>数组与映射：记不完的特殊符号</h2>
+      <div class="compare-grid">
+        <div class="compare-card bash-side">
+          <div class="compare-label bash-label">● Bash</div>
+          <div class="compare-code">${arr[@]:1:2}   <span class="compare-comment"># 切片</span>
+${#arr[@]}      <span class="compare-comment"># 长度</span>
+unset arr[1]    <span class="compare-comment"># 下标不重排</span>
+declare -A map  <span class="compare-comment"># 关联数组需提前声明</span></div>
+        </div>
+        <div class="compare-card lume-side">
+          <div class="compare-label lume-label">● Lume</div>
+          <div class="compare-code">arr[1..-1]      <span class="compare-comment"># 切片</span>
+arr.len()
+arr.remove_at(1) <span class="compare-comment"># 自动重排</span>
+m = {a: 1, b: 2} <span class="compare-comment"># 独立映射类型</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. 特殊字面量类型 -->
+    <div class="slide slide-compare" data-index="6">
+      <h2>特殊类型：范围 / 文件大小 / 正则 / 时间</h2>
+      <div class="compare-grid">
+        <div class="compare-card bash-side">
+          <div class="compare-label bash-label">● Bash</div>
+          <div class="compare-code"><span class="compare-comment"># 范围、正则、时间均以字符串表示</span>
+<span class="compare-comment"># 无专用类型，无法直接参与运算</span></div>
+        </div>
+        <div class="compare-card lume-side">
+          <div class="compare-label lume-label">● Lume</div>
+          <div class="compare-code">1..=10        <span class="compare-comment"># 闭区间 Range</span>
+3M            <span class="compare-comment"># FileSize(3MB)</span>
+g'\d+'        <span class="compare-comment"># 正则字面量</span>
+t'08:10' - t'08:09'  <span class="compare-comment"># 时间差 60000</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. 条件判断 -->
+    <div class="slide slide-compare" data-index="7">
+      <h2>条件判断：[ ] vs [[ ]] vs (( ))</h2>
+      <div class="compare-grid">
+        <div class="compare-card bash-side">
+          <div class="compare-label bash-label">● Bash</div>
+          <div class="compare-code">[ "$a" -eq "123" ]   <span class="compare-comment"># 整数比较</span>
+[ "$a" = 123 ]       <span class="compare-comment"># 字符串比较</span>
+[[ "$a" =~ ^[0-9]+$ ]]
+<span class="compare-comment"># 三套语法，语义容易混淆</span></div>
+        </div>
+        <div class="compare-card lume-side">
+          <div class="compare-label lume-label">● Lume</div>
+          <div class="compare-code">a ~: g'\d+'
+a > 0 && b < 0
+a == b
+<span class="compare-comment"># 无需括号，== 统一比较所有类型</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. 返回值语义 -->
+    <div class="slide slide-compare" data-index="8">
+      <h2>返回值语义：退出码 vs 布尔值</h2>
+      <div class="compare-grid">
+        <div class="compare-card bash-side">
+          <div class="compare-label bash-label">● Bash</div>
+          <div class="compare-code">grep "abc" file.txt
+echo $?   <span class="compare-comment"># 0 = 成功，与直觉相反</span>
+if grep "abc" file.txt; then ...</div>
+        </div>
+        <div class="compare-card lume-side">
+          <div class="compare-label lume-label">● Lume</div>
+          <div class="compare-code">let found = fs.read file.txt | .grep('abc')
+if found { echo 'found' }
+<span class="compare-comment"># 直接判断内容，不关心退出码</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10. 模式匹配 & 流程控制表达式 -->
+    <div class="slide slide-compare" data-index="9">
+      <h2>流程控制：case 陷阱 vs match 表达式</h2>
+      <div class="compare-grid">
+        <div class="compare-card bash-side">
+          <div class="compare-label bash-label">● Bash</div>
+          <div class="compare-code">case $1 in
+    a) echo "a" ;;&
+    b|c) echo "bc" ;;
+esac
+<span class="compare-comment"># ;; / ;& / ;;& 极易混淆</span></div>
+        </div>
+        <div class="compare-card lume-side">
+          <div class="compare-label lume-label">● Lume</div>
+          <code class="compare-code">match x {
+    1, 2, 3   => "small"
+    4..10     => "medium"
+    r'^\d+$'  => "numeric"
+    _         => "other"
+}
+let r = if x > 0 { "pos" } else { "neg" }
+        </code>
+        </div>
+      </div>
+    </div>
+
+    <!-- 11. 函数：参数与返回值 -->
+    <div class="slide slide-compare" data-index="10">
+      <h2>函数：没有形参、只有退出码</h2>
+      <div class="compare-grid">
+        <div class="compare-card bash-side">
+          <div class="compare-label bash-label">● Bash</div>
+          <div class="compare-code">foo() { echo "$1"; }   <span class="compare-comment"># 无参数名</span>
+foo() { return 100; }  <span class="compare-comment"># 只能返回 0-255</span>
+time() { echo "my time"; }
+<span class="compare-comment"># 函数名会覆盖外部命令</span></div>
+        </div>
+        <div class="compare-card lume-side">
+          <div class="compare-label lume-label">● Lume</div>
+          <div class="compare-code">fn greet(name, greeting="Hello") {
+    println greeting ", " name "!"
+}
+fn sum(*nums) { nums | list.fold((a,x)->a+x, 0) }
+
+time()   <span class="compare-comment"># 调用函数</span>
+time _   <span class="compare-comment"># 调用外部命令</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 12. Lambda / 闭包 / 柯里化 -->
+    <div class="slide slide-compare" data-index="11">
+      <h2>Lambda、闭包与柯里化</h2>
+      <div class="compare-grid">
+        <div class="compare-card bash-side">
+          <div class="compare-label bash-label">● Bash</div>
+          <div class="compare-code"><span class="compare-comment"># 不支持 Lambda</span>
+<span class="compare-comment"># 不支持闭包</span>
+<span class="compare-comment"># 不支持柯里化 / 装饰器</span></div>
+        </div>
+        <div class="compare-card lume-side">
+          <div class="compare-label lume-label">● Lume</div>
+          <div class="compare-code">fn make_adder(base) { x -> x + base }
+let add5 = make_adder(5)
+add5(3)   <span class="compare-comment"># 8</span>
+
+let multiply = (x, y) -> x * y
+let double = multiply(2)
+double(7) <span class="compare-comment"># 14，柯里化</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 13. 作用域与未定义变量 -->
+    <div class="slide slide-compare" data-index="12">
+      <h2>作用域：全局污染 &amp; 未定义变量</h2>
+      <div class="compare-grid">
+        <div class="compare-card bash-side">
+          <div class="compare-label bash-label">● Bash</div>
+          <div class="compare-code">func() { a=1; }
+func; echo $a   <span class="compare-comment"># 1，全局污染</span>
+
+rm -rf /$undefined_dir
+<span class="compare-comment"># 未定义变量展开为空，灾难发生</span></div>
+        </div>
+        <div class="compare-card lume-side">
+          <div class="compare-label lume-label">● Lume</div>
+          <div class="compare-code">let a = 5
+fn add() { a = 1 }
+add(); print a   <span class="compare-comment"># 5，函数默认隔离</span>
+
+rm -rf /$undefined_dir
+<span class="compare-comment"># 识别为字面量，不会展开</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 14. 管道与子 Shell 陷阱 -->
+    <div class="slide slide-compare" data-index="13">
+      <h2>管道：子 Shell 陷阱 &amp; 纯文本流</h2>
+      <div class="compare-grid">
+        <div class="compare-card bash-side">
+          <div class="compare-label bash-label">● Bash</div>
+          <div class="compare-code">count=0
+seq 10 | while read i; do ((count++)); done
+echo "$count"   <span class="compare-comment"># 0，子 Shell 修改丢失</span>
+<span class="compare-comment"># 必须 echo 才能传出数据</span></div>
+        </div>
+        <div class="compare-card lume-side">
+          <div class="compare-label lume-label">● Lume</div>
+          <div class="compare-code">fs.ls -lh | where(size > 5K)
+[1,2,3] | .filter(x -> x > 1) | .map(x -> x*x)
+<span class="compare-comment"># 不启动子进程，结构化数据不丢失</span>
+ls -1 |> cp -r _ /tmp/   <span class="compare-comment"># 分发管道</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 15. IO 与重定向 -->
+    <div class="slide slide-compare" data-index="14">
+      <h2>IO：echo 陷阱 &amp; 重定向噪音</h2>
+      <div class="compare-grid">
+        <div class="compare-card bash-side">
+          <div class="compare-label bash-label">● Bash</div>
+          <div class="compare-code">echo "-n"        <span class="compare-comment"># 被当作参数</span>
+cmd > out.txt    <span class="compare-comment"># 静默覆盖</span>
+cmd > all.log 2>&1  <span class="compare-comment"># 符号密集</span></div>
+        </div>
+        <div class="compare-card lume-side">
+          <div class="compare-label lume-label">● Lume</div>
+          <div class="compare-code">print "-n"
+cmd _ >! out.txt   <span class="compare-comment"># 显式覆盖</span>
+command &+ > all.log  <span class="compare-comment"># 合并输出</span>
+command &.            <span class="compare-comment"># 忽略错误</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 16. 通配符与文件操作 -->
+    <div class="slide slide-compare" data-index="15">
+      <h2>通配符：未匹配时原样保留的地雷</h2>
+      <div class="compare-grid">
+        <div class="compare-card bash-side">
+          <div class="compare-label bash-label">● Bash</div>
+          <div class="compare-code">rm *.log
+<span class="compare-comment"># 无 .log 文件时，尝试删除名为 '*.log' 的文件</span>
+shopt -s nullglob   <span class="compare-comment"># 需手动防御</span></div>
+        </div>
+        <div class="compare-card lume-side">
+          <div class="compare-label lume-label">● Lume</div>
+          <div class="compare-code">rm *.log
+<span class="compare-comment"># 报错：wildcard not matched</span>
+rm *.log ?.   <span class="compare-comment"># 忽略错误，继续执行</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 17. 模块导入 -->
+    <div class="slide slide-compare" data-index="16">
+      <h2>模块导入：source 全局污染</h2>
+      <div class="compare-grid">
+        <div class="compare-card bash-side">
+          <div class="compare-label bash-label">● Bash</div>
+          <div class="compare-code">source utils.sh
+<span class="compare-comment"># 同名函数无声覆盖</span>
+<span class="compare-comment"># 没有模块系统、没有命名空间</span></div>
+        </div>
+        <div class="compare-card lume-side">
+          <div class="compare-label lume-label">● Lume</div>
+          <div class="compare-code">use myutils as utils
+utils::my_function()
+<span class="compare-comment"># 17 个内置模块，按需加载</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 18. 错误处理与调试 -->
+    <div class="slide slide-compare" data-index="17">
+      <h2>错误处理与调试</h2>
+      <div class="compare-grid">
+        <div class="compare-card bash-side">
+          <div class="compare-label bash-label">● Bash</div>
+          <div class="compare-code">set -euo pipefail
+echo "DEBUG: x=$x"
+set -x   <span class="compare-comment"># 噪音如海啸</span>
+<span class="compare-comment"># syntax error near unexpected token '('</span></div>
+        </div>
+        <div class="compare-card lume-side">
+          <div class="compare-label lume-label">● Lume</div>
+          <div class="compare-code">risky_command ?: (e) -> {
+    println "错误码：" e.code
+    default_value
+}
+[1,2,3] | .map(x->x*2) | tap | .filter(x->x>3)
+<span class="compare-comment"># 7 种错误捕获操作符 + 编译器级提示</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 19. 后台任务 -->
+    <div class="slide slide-compare" data-index="18">
+      <h2>后台任务：不随主进程退出</h2>
+      <div class="compare-grid">
+        <div class="compare-card bash-side">
+          <div class="compare-label bash-label">● Bash</div>
+          <div class="compare-code">sleep 1000 &
+exit   <span class="compare-comment"># sleep 仍在运行</span>
+trap 'kill $(jobs -p)' EXIT   <span class="compare-comment"># 必须手动清理</span></div>
+        </div>
+        <div class="compare-card lume-side">
+          <div class="compare-label lume-label">● Lume</div>
+          <div class="compare-code">sleep 1000 &
+exit   <span class="compare-comment"># sleep 自动随之退出</span>
+jobs -k id    <span class="compare-comment"># 可选清理</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 20. 交互与 UI -->
+    <div class="slide slide-compare" data-index="19">
+      <h2>交互体验：停留在 1989 年</h2>
+      <div class="compare-grid">
+        <div class="compare-card bash-side">
+          <div class="compare-label bash-label">● Bash</div>
+          <div class="compare-code"><span class="compare-comment"># 手写 ANSI 转义码</span>
+<span class="compare-comment"># 无缩写展开 / 无可编程热键</span>
+<span class="compare-comment"># 无 AI 补全</span></div>
+        </div>
+        <div class="compare-card lume-side">
+          <div class="compare-label lume-label">● Lume</div>
+          <div class="compare-code">'lume'.green()
+<span class="compare-comment"># 原生支持：缩写展开 / 热键 / 斜杠命令</span>
+<span class="compare-comment"># Alt+I/O 触发 AI 补全/生成</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 21. 性能 -->
+    <div class="slide slide-perf" data-index="20">
+      <h2>性能：100 万次循环求和</h2>
+      <div class="perf-chart">
+        <div class="perf-bar-wrap">
+          <div class="perf-value bash-val">2224 ms</div>
+          <div class="perf-bar bash-bar"></div>
+          <div class="perf-label">Bash</div>
+        </div>
+        <div class="perf-bar-wrap">
+          <div class="perf-value lume-val">199 ms</div>
+          <div class="perf-bar lume-bar"></div>
+          <div class="perf-label">Lume</div>
+        </div>
+      </div>
+      <div class="perf-speedup">快 <span>11.2</span> 倍</div>
+    </div>
+
+    <!-- 22. 小结（表格） -->
+    <div class="slide slide-cta" data-index="21" style="text-align:left;">
+      <h2 style="text-align:center;">小结：两种设计哲学的对撞</h2>
+      <p class="cta-sub" style="text-align:center;">
+        Bash："一切皆文本，一切皆命令" ——省略即地雷。<br>
+        Lume："安全默认，显式优于隐式" ——正确即自然。
+      </p>
+      <div style="margin: 0 auto">
+      <table class="summary-table">
+        <tr><th>维度</th><th>Bash</th><th>Lume</th></tr>
+        <tr><td>类型系统</td><td>一切皆字符串</td><td>完整类型系统</td></tr>
+        <tr><td>默认行为</td><td>宽松，需手动防御</td><td>严格，安全优先</td></tr>
+        <tr><td>算术运算</td><td><code>$(( ))</code> / <code>bc</code></td><td>直接书写</td></tr>
+        <tr><td>条件判断</td><td><code>[ ]</code>/<code>[[ ]]</code>/<code>(( ))</code></td><td>直接书写</td></tr>
+        <tr><td>管道</td><td>文本流，子进程</td><td>结构化数据，无子进程</td></tr>
+        <tr><td>错误处理</td><td>只有退出码</td><td>错误可捕获，精准定位</td></tr>
+        <tr><td>函数</td><td>位置参数，退出码返回</td><td>具名参数，任意类型返回</td></tr>
+        <tr><td>字符串插值</td><td>引号地狱</td><td>反引号模板/#包裹，无需嵌套转义</td></tr>
+      </table>
+      </div>
+    </div>
+
+    <!-- 23. CTA -->
+    <div class="slide slide-cta" data-index="22">
+      <h2>正确的写法，本该是最自然的写法</h2>
+      <p class="cta-sub">
+        Bash 的生存法则是"凡是允许省略的，最终都会炸"。<br>
+        Lume 的设计目标是让你<strong>不再和工具的默认行为搏斗</strong>。
+      </p>
+      <div class="cta-code">curl -fsSL https://www.lumesh.cc.cd/install.sh | bash</div>
+      <div class="cta-links">
+        <a class="cta-link" href="https://github.com/superiums/lumesh" target="_blank">GitHub 仓库</a>
+        <a class="cta-link" href="../doc/quickstart">快速开始</a>
+        <a class="cta-link" href="../topics/whylume">为什么你需要 Lume</a>
+      </div>
+      <p class="cta-slogan">Lightweight · Ultimate · Modern · Efficient</p>
+    </div>
+
+  </div>
+
+  <!-- Navigation（与前一份幻灯片完全一致，无需修改） -->
+  <div class="slide-nav">
+    <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      上一页
+    </button>
+    <div style="position:relative;flex:1;display:flex;justify-content:center;">
+      <div class="slide-dots" id="dotsContainer"></div>
+    </div>
+    <span class="slide-counter" id="slideCounter">1 / 23</span>
+    <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">
+      下一页
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+  const dotsContainer = document.getElementById('dotsContainer');
+  const counter = document.getElementById('slideCounter');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goToSlide(i);
+    dotsContainer.appendChild(dot);
+  }
+
+  function updateUI() {
+    slides.forEach((s, i) => s.classList.toggle('active', i === currentSlide));
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+    counter.textContent = (currentSlide + 1) + ' / ' + totalSlides;
+    prevBtn.disabled = currentSlide === 0;
+    nextBtn.disabled = currentSlide === totalSlides - 1;
+  }
+
+  function changeSlide(dir) {
+    const next = currentSlide + dir;
+    if (next >= 0 && next < totalSlides) {
+      currentSlide = next;
+      updateUI();
+    }
+  }
+
+  function goToSlide(index) {
+    currentSlide = index;
+    updateUI();
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') changeSlide(-1);
+    if (e.key === 'ArrowRight') changeSlide(1);
+  });
+
+  updateUI();
+</script>
+
+{{ end }}

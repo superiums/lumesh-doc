@@ -1,79 +1,75 @@
 ---
 title: 内置库 set
-date: 2026-08-07 16:42:00
+date: 2026-08-14 11:29:46
 ---
-	
+
 ## Builtin Functions for Lib: set
 
 - `all <set> <fn>`
-	all items pass fn(item)->bool?
+	所有项都通过 fn(item)->bool 检查？
 
 - `any <set> <fn>`
-	any item passes fn(item)->bool?
+	有项通过 fn(item)->bool 检查？
 
 - `contains <set> <item>`
-	contains item?
+	包含项？
 
 - `difference <set1> <set2>`
-	items in set1 not in set2
+	set1 中存在但在 set2 中不存在的项
 
 - `filter <set> <fn>`
-	keep items where fn(item)->bool
+	保留满足 fn(item)->bool 的项
 
 - `find <set> <fn>`
-	first item matching fn(item)->bool
+	第一个满足 fn(item)->bool 的项
 
 - `first <set>`
-	smallest item
+	最小的项
 
 - `from_list <list>`
-	create set from list
+	从列表创建集合
 
 - `get <set> <index>`
-	nth element, negative index from end
+	第 n 个元素，负索引从末尾开始
 
 - `insert <set> <item>`
-	add item, returns new set
+	添加项，返回新集合
 
 - `intersection <set1> <set2>`
-	intersection
+	交集
 
 - `is_disjoint <set1> <set2>`
-	no common items?
+	没有共同项？
 
 - `is_empty <set>`
-	is empty?
+	是否为空？
 
 - `is_subset <set1> <set2>`
-	set1 ⊆ set2?
+	set1 ⊆ set2？
 
 - `is_superset <set1> <set2>`
-	set1 ⊇ set2?
+	set1 ⊇ set2？
 
 - `last <set>`
-	largest item
+	最大的项
 
 - `len <set>`
-	set size
+	集合大小
 
 - `map <set> <fn>`
-	apply fn(item)->new_item to each
+	对每个项应用 fn(item)->new_item
 
 - `remove <set> <item>`
-	remove item, returns new set
+	移除项，返回新集合
 
 - `split_first <set>`
-	pop smallest, returns [item,rest]
+	弹出最小的，返回 [item,rest]
 
 - `split_last <set>`
-	pop largest, returns [item,rest]
+	弹出最大的，返回 [item,rest]
 
 - `symmetric_difference <set1> <set2>`
-	items in either but not both
+	在 set1 或 set2 中但不在两者中的项
 
 - `to_list <set>`
-	to list, sorted order
-
-- `union <set1> <set2>`
-	union
-
+	转换为列表，排序顺序

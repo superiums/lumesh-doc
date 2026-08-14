@@ -1,36 +1,36 @@
 ---
 title: 内置库 regex
-date: 2026-08-07 16:42:00
+date: 2026-08-14 11:29:46
 ---
-	
+
 ## Builtin Functions for Lib: regex
 
 - `capture <pattern> <text>`
-	first match's groups [full,g1,g2,...]
+	第一个匹配的分组 [完整匹配,g1,g2,...]
 
 - `captures <pattern> <text>`
-	all matches' groups [[full,g1,...],...]
+	所有匹配的分组 [[完整匹配,g1,...],...]
 
 - `find <pattern> <text>`
-	first match, returns {start,end,found}
+	第一个匹配，返回 {start,end,found}
 
 - `find_all <pattern> <text>`
-	all matches, list of {start,end,found}
+	所有匹配，返回 {start,end,found} 列表
 
-- `from <pattern_string> [flag]`
-  build regex from pattern and flag
+- `from <pattern_string> [i|m|s|x|R|U]`
+	从字符串模式构建正则表达式
 
 - `is_match <pattern> <text>`
-	contains a match?
+	包含匹配？
 
 - `named_captures <pattern> <text>`
-	named groups as map. e.g. g'(?<y>\d+)'
+	命名分组映射。例如 g'(?<y>\d+)'
 
 - `replace <text> <pattern> <replacement>`
-	replace first match
+	替换第一个匹配
 
 - `replace_all <text> <pattern> <replacement>`
-	replace all matches
+	替换所有匹配
 
 - `split <pattern> <text>`
-	split by pattern
+	按模式分割

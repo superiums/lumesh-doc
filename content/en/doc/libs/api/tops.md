@@ -1,10 +1,9 @@
 ---
-title: Top Level Builtin Lib
-date: 2026-08-07 16:40:11
+title: Builtin Lib TOPS
+date: 2026-08-14 11:26:54
 ---
 	
 ## Top level Builtin Functions
-
 
 - `assert <expr> [expr] [message]`
 	throw if not equal/truthy
@@ -70,6 +69,9 @@ date: 2026-08-07 16:40:11
 - `include <path>`
 	eval file in current env
 
+- `is_empty <expr>`
+	is empty?
+
 - `jobs [-k id]`
 	list/kill jobs
 
@@ -108,9 +110,6 @@ date: 2026-08-07 16:40:11
 
 - `symof <value>`
 	type name before eval
-
-- `shift`
-  shift to next in iter
 
 - `tap <args>...`
 	print then return value(s)

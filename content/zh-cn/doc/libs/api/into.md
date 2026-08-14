@@ -1,52 +1,51 @@
 ---
 title: 内置库 into
-date: 2026-08-07 16:42:00
+date: 2026-08-14 11:29:46
 ---
-	
+
 ## Builtin Functions for Lib: into
 
 - `boolean <value>`
-	to bool
+	转换为 bool
 
 - `caesar <string> [shift=13]`
-	caesar cipher
+	凯撒密码
 
 - `csv <expr>`
-	to CSV
+	转换为 CSV
 
 - `filesize <size_str|int>`
-	to filesize. e.g. 1.5GB, 500K
+	转换为文件大小。例如 1.5GB, 500K
 
 - `float <str|num|bool>`
-	to float. % as /100, _ as sep. e.g. 12.5% -> 0.125
+	转换为浮点数。% 作为除以100，_ 作为分隔符。例如 12.5% -> 0.125
 
 - `highlight <script>`
-	ANSI highlight script
+	ANSI 高亮脚本
 
 - `int <str|num|bool>`
-	to int. radix ok(0x/0o/0b), _ as sep. e.g. 0xff_80
+	转换为整数。支持进制前缀(0x/0o/0b)，_ 作为分隔符。例如 0xff_80
 
 - `json <expr>`
-	to JSON
+	转换为 JSON
 
 - `pretty <expr>`
-	to pretty string
+	转换为美观格式字符串
 
 - `safe <str>`
-	wrap str, never eval
+	包装字符串，永不求值
 
 - `string <value>`
-	to string
+	转换为字符串
 
 - `strip <string>`
-	remove ANSI codes
+	移除 ANSI 转义码
 
 - `table <output> [split_regex] [headers...]`
-	parse cmd output to table
+	将命令输出解析为表格
 
 - `time <str> [fmt]`
-	to datetime
+	转换为日期时间
 
 - `toml <expr>`
-	to TOML
-
+	转换为 TOML

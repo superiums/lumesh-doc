@@ -1,22 +1,21 @@
 ---
-title: 内置库 about
-date: 2026-08-07 16:42:00
+title: 内置库 简介
+date: 2026-08-14 11:29:46
 ---
-	
+
 ## Builtin Functions for Lib: about
 
 - `bin `
-	bin path
+	bin 路径
 
 - `history `
-	history path
+	历史记录路径
 
 - `info `
-	all info
+	所有信息
 
 - `prelude `
-	prelude path
+	配置文件路径
 
 - `version `
-	version
-
+	版本

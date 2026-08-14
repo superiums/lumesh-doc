@@ -1,50 +1,49 @@
 ---
 title: 内置库 ui
-date: 2026-08-07 16:42:00
+date: 2026-08-14 11:29:46
 ---
-	
+
 ## Builtin Functions for Lib: ui
 
 - `confirm <msg>`
-	ask yes/no
+	询问是/否
 
 - `date_pick [msg|cfg_map]`
-	pick a date.
+	选择一个日期。
 	cfg: {msg,starting_date,min_date,max_date,week_start,formatter,validator}
 
 - `editor [msg|cfg_map]`
-	open external editor for multiline text.
+	为多行文本打开外部编辑器。
 	cfg: {msg,predefined_text,editor_command,validators...}
 
 - `float <msg> [decimal_places=2]`
-	read a float
+	读取浮点数
 
 - `int <msg>`
-	read an int
+	读取整数
 
 - `join_flow <max_width> <widgets...>`
-	flow-wrap widgets into rows
+	将小部件流动换行到行中
 
 - `joinx <widget1> <widget2>`
-	join two widgets side by side
+	水平连接两个小部件
 
 - `joiny <widget1> <widget2>`
-	stack two widgets vertically
+	垂直堆叠两个小部件
 
 - `multi_pick <options> [msg|cfg_map]`
-	select multi, same options/cfg as pick.
-	cfg Adds: {all_selected_by_default,keep_filter,validator}
+	多选，选项/配置与 pick 相同。
+	cfg 新增: {all_selected_by_default,keep_filter,validator}
 
 - `password <msg> [confirm=false]`
-	read password, masked
+	读取密码，已屏蔽输入
 
 - `pick <options> [msg|cfg_map]`
-	select one from list/set/range/map/table/glob/string.
+	从列表/集合/范围/映射/表格/通配符/字符串中选择一个。
 	cfg: {msg,page_size,vim_mode,formatter,scorer,sorter...}
 
 - `text <msg> [init_value]`
-	read text
+	读取文本
 
 - `widget <content> <title> [width] [height]`
-	draw a bordered text box
-
+	绘制带边框的文本框

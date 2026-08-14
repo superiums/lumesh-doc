@@ -1,6 +1,6 @@
 ---
 title: Builtin Lib MATH
-date: 2026-08-07 16:40:11
+date: 2026-08-14 11:26:54
 ---
 	
 ## Builtin Functions for Lib: math

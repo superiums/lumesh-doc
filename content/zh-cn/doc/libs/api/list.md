@@ -1,172 +1,171 @@
 ---
 title: 内置库 list
-date: 2026-08-07 16:42:00
+date: 2026-08-14 11:29:46
 ---
-	
+
 ## Builtin Functions for Lib: list
 
 - `all <list> <fn>`
-	all elements pass?
+	所有元素都通过检查？
 
 - `any <list> <fn>`
-	any element passes?
+	有元素通过检查？
 
 - `average <num1> <num2>... | <array>`
-	average of numbers
+	数字平均值
 
 - `chunks <list> <size>`
-	split into chunks of size n
+	拆分为大小为 n 的块
 
 - `concat <list1|item1> <list2|item2>...`
-	concat lists/items into one list
+	连接列表/项为单个列表
 
 - `contains <list> <item>`
-	contains item?
+	包含项？
 
 - `dig <map|list|range> <path>`
-	get nested value by dot path. e.g. dig m 'a.b.0'
+	通过点路径获取嵌套值。例如 dig m 'a.b.0'
 
 - `fill <value> <n>`
-	repeat value n times
+	重复值 n 次
 
 - `filter <list> <fn>`
-	filter by fn([index],item)
+	按 fn([index],item) 过滤
 
 - `filter_map <list> <fn>`
-	filter+map, drop None results
+	过滤+映射，丢弃 None 结果
 
 - `find <list> <item|fn> [skip_n=0]`
-	first matched item
+	第一个匹配的项
 
 - `first <list> [n=1]`
-	first n elements
+	前 n 个元素
 
 - `flatten <collection>`
-	flatten nested structure
+	扁平化嵌套结构
 
 - `fold <list> <fn> [init=0]`
-	fold left, fn(acc,item)
+	左折叠，fn(acc,item)
 
 - `from <range>`
-	list from range
+	从范围生成列表
 
 - `get <list> <index>`
-	nth element, negative index from end
+	第 n 个元素，负索引从末尾开始
 
-- `group <list> <key_fn|key>`
-	group by key fn or map field, e.g.  fn(item)->string
+- `group <list> <fn|key>`
+	按键函数或映射字段分组，例如 fn(item)->string
 
 - `insert <list> <index> <value>`
-	insert value at index
+	在指定索引插入值
 
 - `is_empty <list>`
-	is empty?
+	是否为空？
 
 - `items <list>`
-	index-value pairs
+	索引-值对
 
-- `join <list> <separator>`
-	join strings with separator
+- `join <list> [sep=' ']`
+	用分隔符连接字符串
 
 - `last <list> [n=1]`
-	last n elements
+	后 n 个元素
 
 - `len <list>`
-	list length
+	列表长度
 
 - `map <list> <fn>`
-	apply fn([index],item) per element
+	对每个元素应用 fn([index],item)
 
 - `max <num1> <num2>... | <array>`
-	max value
+	最大值
 
 - `min <num1> <num2>... | <array>`
-	min value
+	最小值
 
 - `position <list> <item|fn> [skip_n=0]`
-	first matched index
+	第一个匹配的索引
 
 - `push <list> <element>`
-	append element
+	追加元素
 
 - `remove <list> <item> [all=false]`
-	remove item, default first-only
+	移除项，默认只移除第一个
 
 - `remove_at <list> <index> [count=1]`
-	remove n items from index
+	从索引处移除 n 个项
 
 - `rev <list>`
-	reverse
+	反转
 
 - `rfind <list> <item|fn> [skip_n=0]`
-	last matched item
+	最后一个匹配的项
 
 - `rfold <list> <fn> [init=0]`
-	fold right, fn(acc,item)
+	右折叠，fn(acc,item)
 
 - `rotate <list> <n>`
-	rotate, n>0 right, n<0 left
+	旋转，n>0 右旋，n<0 左旋
 
 - `rposition <list> <item|fn> [skip_n=0]`
-	last matched index
+	最后一个匹配的索引
 
 - `sample <list> <n>`
-	pick n distinct random elements
+	选取 n 个不同的随机元素
 
 - `set <list> <index> <value>`
-	set value at existing index
+	设置现有索引的值
 
 - `shuffle <list>`
-	shuffle order
+	随机打乱顺序
 
 - `skip <list> <count>`
-	skip first n elements
+	跳过前 n 个元素
 
 - `slice <list> <start> <end>`
-	sub-list [start,end), negative index ok
+	子列表 [start,end)，支持负索引
 
-- `sort <list> [key_fn|±key...]`
-	sort, optional fn(a,b)->[-1/0/1]. e.g. sort list 'name'
+- `sort <list> [fn|±key...]`
+	排序，可选 fn(a,b)->[-1/0/1]。例如 sort list 'name'
 
 - `splice <list> <start> <delete_count> [items...]`
-	delete & optionally insert at index, returns new list
+	在索引处删除并可选插入，返回新列表
 
 - `split_at <list> <index>`
-	split at index, returns [left,right]
+	在索引处分割，返回 [left,right]
 
 - `split_first <list>`
-	split head/tail, returns [head,rest]
+	分割头部/尾部，返回 [head,rest]
 
 - `sum <num1> <num2>... | <array>`
-	sum of numbers
+	数字求和
 
 - `swap <list> <i> <j>`
-	swap two elements by index
+	交换两个元素
 
 - `take <list> <count>`
-	first n elements
+	前 n 个元素
 
-- `to_hmap <list> [key_fn] [val_fn]`
-	to hashMap, default pairs [k,v,k,v...]
+- `to_hmap <list> [fn(k,v)]`
+	转换为 hashMap，键值对 [k,v,k,v...]
 
-- `to_map <list> [key_fn] [val_fn]`
-	to btreeMap, default pairs [k,v,k,v...]
+- `to_map <list> [fn(k,v)]`
+	转换为 btreeMap，键值对 [k,v,k,v...]
 
 - `to_set <list>`
-	to btreeSet
+	转换为 btreeSet
 
 - `transpose <matrix>`
-	transpose matrix (list of lists)
+	转置矩阵（列表的列表）
 
 - `unique <list>`
-	dedupe, preserve order
+	去重，保持顺序
 
 - `unzip <list_of_pairs>`
-	unzip pairs into two lists
+	解压对为两个列表
 
 - `windows <list> <size>`
-	overlapping sliding windows of size n
+	大小为 n 的重叠滑动窗口
 
 - `zip <list1> <list2>`
-	zip two lists into pairs
-
+	将两个列表压缩为对

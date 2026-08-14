@@ -1,79 +1,78 @@
 ---
 title: 内置库 table
-date: 2026-08-07 16:42:00
+date: 2026-08-14 11:29:46
 ---
-	
+
 ## Builtin Functions for Lib: table
 
 - `filter <table> <cell|fn>`
-	filter rows by cell/fn(row_map)->bool
+	按单元格/fn(row_map)->bool 过滤行
 
 - `first <table> [n=1]`
-	first n rows as lists
+	前 n 行作为列表
 
 - `first_map <table> [n=1]`
-	first n rows as maps
+	前 n 行作为映射
 
 - `from_maps <list_of_maps>`
-	build table from maps, headers = union of keys
+	从映射构建表，表头 = 键的并集
 
 - `get <table> <index>`
-	nth row as list
+	第 n 行作为列表
 
 - `get_cell <table> <row_index> <header|index>`
-	single cell, negative row index ok
+	单个单元格，负行索引支持
 
 - `get_column <table> <header|index>`
-	column by header/index
+	按表头/索引获取列
 
 - `get_map <table> <index>`
-	nth row as map
+	第 n 行作为映射
 
 - `grep <table> <string>`
-	rows containing string
+	包含字符串的行
 
 - `header_len <table>`
-	column count
+	列数
 
 - `headers <table>`
-	list headers
+	表头列表
 
 - `is_empty <table>`
-	has no rows?
+	没有行？
 
 - `last <table> [n=1]`
-	last n rows as lists
+	后 n 行作为列表
 
 - `last_map <table> [n=1]`
-	last n rows as maps
+	后 n 行作为映射
 
 - `len <table>`
-	row count
+	行数
 
 - `position <table> <cell|fn> [start=0]`
-	first row index matching cell/fn(row_map)->bool
+	第一个匹配单元格/fn(row_map)->bool 的行索引
 
 - `push <table> <list|set>`
-	append a row
+	追加一行
 
 - `rows <table>`
-	rows as lists
+	行作为列表
 
 - `rows_map <table>`
-	rows as maps
+	行作为映射
 
 - `rposition <table> <cell|fn> [start=0]`
-	last row index matching cell/fn(row_map)->bool
+	最后一个匹配单元格/fn(row_map)->bool 的行索引
 
 - `select <table> <cols...>`
-	select columns
+	选择列
 
 - `slice <table> <start> <end>`
-	row range as maps [start,end), negative index ok
+	行范围作为映射 [start,end)，支持负索引
 
 - `sort <list> [key_fn|±key...]`
-	sort, optional fn(a,b)->[-1/0/1]. e.g. sort table 'name'
+	排序，可选 fn(a,b)->[-1/0/1]。例如 sort table 'name'
 
 - `to_csv <table>`
-	serialize to CSV
-
+	序列化为 CSV
