@@ -788,20 +788,40 @@ jobs -k id    <span class="compare-comment"># 可选清理</span></div>
 
   </div>
 
-  <!-- Navigation（与前一份幻灯片完全一致，无需修改） -->
+  <!-- Navigation -->
   <div class="slide-nav">
-    <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
-      上一页
-    </button>
     <div style="position:relative;flex:1;display:flex;justify-content:center;">
       <div class="slide-dots" id="dotsContainer"></div>
     </div>
-    <span class="slide-counter" id="slideCounter">1 / 23</span>
-    <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">
-      下一页
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
-    </button>
+  </div>
+  <div class="slide-nav">
+      <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">
+          <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+          >
+              <path d="M15 18l-6-6 6-6" />
+          </svg>
+          上一页
+      </button>
+      <span class="slide-counter" id="slideCounter">1 / 10</span>
+      <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">
+          下一页
+          <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+          >
+              <path d="M9 18l6-6-6-6" />
+          </svg>
+      </button>
   </div>
 </div>
 
