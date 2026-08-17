@@ -9,8 +9,7 @@ showTableOfContents: false
 ---
 
 {{< slide type="hero" tag="Deep Dive Comparison · 2026" sub="Bringing scripts back to nature and simplicity" >}}
-A systematic review of Bash's common pitfalls and counter-intuitive designs
-
+A systematic review of Bash's common pitfalls and counter-intuitive designs,
 Compared with Lume's solutions
 {{< /slide >}}
 
@@ -30,7 +29,8 @@ if [ "$a" == "$b" ]; then ... fi
 ```bash
 a == b
 if $a == $b { ... }
-# Spaces are entirely optional, expressions written directly
+# Spaces are entirely optional
+# expressions written directly
 ```
 {{< /code >}}
 {{< /slide >}}
@@ -43,7 +43,8 @@ a = 1
 
 # Correct
 a=1
-# No spaces allowed in assignment, otherwise a is treated as a command
+# No spaces allowed in assignment,
+# otherwise a is treated as a command
 ```
 {{< /code >}}
 {{< code side="lume" >}}
@@ -69,7 +70,8 @@ rm "$file"
 {{< /code >}}
 {{< code side="lume" >}}
 ```bash
-rm $file   # Parsed as rm 'a b', matches intuition
+rm $file   
+# Parsed as rm 'a b', matches intuition
 # Unless IFS and LUME_IFS_MODE are modified
 # Whitespace in arguments is not split
 ```
@@ -80,8 +82,12 @@ rm $file   # Parsed as rm 'a b', matches intuition
 Bash's `IFS` is global, affecting all strings; Lume uses `LUME_IFS_MODE` to independently control each scenario:
 
 ```bash
-# IFS affect: 0:never; 2:cmd args; 4:for; 8:string.split; 16:csv; 32:pick; 62:all
-set LUME_IFS_MODE = 2    # Only splits in command args, other scenarios unaffected
+# IFS affect: 0:never; 2:cmd args;
+# 4:for; 8:string.split; 16:csv;
+# 32:pick; 62:all
+set LUME_IFS_MODE = 2
+# Only splits in command args, 
+# other scenarios unaffected
 ```
 
 | Bit | Scenario | Meaning |
@@ -104,8 +110,10 @@ eval "echo $input"   # Boom
 ```bash
 let input = '(rm -rf /)'
 let safe = into.safe $input
-eval_str `echo $safe`   # Prints the safe string s'(rm -rf /)'
-# StringSafe type guarantees eval won't accidentally detonate
+eval_str `echo $safe`
+# Prints the safe string s'(rm -rf /)'
+# StringSafe type guarantees eval
+# won't accidentally detonate
 ```
 {{< /code >}}
 {{< /slide >}}
@@ -127,11 +135,14 @@ str='hello world'
 {{< code side="lume" >}}
 ```bash
 str='hello world'
-# Single quotes: raw string, only \' is escaped
+# Single quotes: raw string,
+# only \' is escaped
 "hello\nworld"
-# Double quotes: handle escape sequences only
+# Double quotes: 
+# handle escape sequences only
 `output: $var {var * 2}`
-# Backticks: template string, escaping + variable interpolation
+# Backticks: template string, 
+# escaping + variable interpolation
 
 r#'...'#  r#"..."#
 # Inner quotes need no escaping
@@ -160,7 +171,8 @@ curl -X POST -d \
 r#`{"name":"{name}", \
 "msg": "Hello '$msg'"}`# \
 http://example.com
-# Backtick interpolation + hashed string, inner quotes written directly
+# Backtick interpolation + hashed string,
+# inner quotes written directly
 
 let data = {name, msg: `Hello '$msg'`}
 curl -X POST -d into.json($data) \
@@ -182,7 +194,8 @@ EOF
 ```bash
 let a = 'line1
 line2'
-# All three string quote types directly support multi-line text
+# All three string quote types 
+# directly support multi-line text
 # No heredoc patch needed
 ```
 {{< /code >}}
@@ -207,7 +220,8 @@ a.lower() == b.lower()
 a=1
 b=2
 c=$a+$b
-echo $c   # 1+2 (string concatenation, not addition)
+echo $c
+# 1+2 (string concatenation, not addition)
 
 # ✅ Must
 ((c=a+b))
@@ -216,7 +230,9 @@ c=$((a+b))
 {{< /code >}}
 {{< code side="lume" >}}
 ```bash
-# Variables have explicit types, operations written directly, no special syntax needed
+# Variables have explicit types,
+# operations written directly, 
+# no special syntax needed
 a + b
 ```
 {{< /code >}}
@@ -229,15 +245,18 @@ echo $((1/2))   # 0 (integer division)
 echo "scale=2; 1/2" | bc   # 0.50
 
 echo $((99999999999999999999999))
-# Bizarre number (integer overflow happens silently)
+# Bizarre number 
+# (integer overflow happens silently)
 ```
 {{< /code >}}
 {{< code side="lume" >}}
 ```bash
 1 / 2         # 0   integer division
 1 / 2.0       # 0.5 float division
-a - b / c * d ^ 2    # Written naturally, no external tools needed
-math.sin(x)   # Advanced math, using the math library
+a - b / c * d ^ 2
+# Written naturally, no external tools needed
+math.sin(x)
+# Advanced math, using the math library
 
 echo 99999999999999999999999     # Error
 # syntax error: expect Integer,
@@ -280,14 +299,16 @@ print arr[1..-1]    # slice
 ```bash
 arr=(a b c)
 unset arr[1]
-echo "${arr[@]}"   # a c (indices remain 0 2, not 0 1)
+echo "${arr[@]}"
+# a c (indices remain 0 2, not 0 1)
 ```
 {{< /code >}}
 {{< code side="lume" >}}
 ```bash
 arr = [a, b, c]
 arr.remove_at(1)
-# → [a, c], indices become 0, 1, automatically reordered
+# → [a, c], indices become 0, 1,
+# automatically reordered
 ```
 {{< /code >}}
 {{< /slide >}}
@@ -304,7 +325,8 @@ map["a"]=1       # ✅ associative array
 ```bash
 a = [1, 2]          # array
 m = {a: 1, b: 2}    # map
-# Array and map types are independent, syntax is intuitive
+# Array and map types are independent,
+# syntax is intuitive
 ```
 {{< /code >}}
 {{< /slide >}}
@@ -313,7 +335,8 @@ m = {a: 1, b: 2}    # map
 Bash does not support accessing nested data structures. Lume supports SQL-style `select` and dot-path `get`:
 
 ```bash
-# select: pick columns from List[Map] (similar to SQL SELECT)
+# select: pick columns from List[Map]
+# (similar to SQL SELECT)
 fs.ls -l | select name size modified
 
 # get: dot-path access into nested structures
@@ -332,7 +355,8 @@ In Bash, ranges, regex, and time are all represented as strings with no dedicate
 
 ```bash
 # Range type
-1..10       # half-open interval [1, 10), lazy Range object
+1..10       # half-open interval [1, 10),
+# lazy Range object
 1..=10      # closed interval [1, 10]
 
 1..10:2     # step of 2: 1, 3, 5, 7, 9
@@ -372,7 +396,8 @@ a > 0 && b < 0  # logical operation
 # No brackets, no double-bracket syntax
 
 
-a == b          # unified comparison across all types, no brackets needed
+a == b          # unified comparison
+# across all types, no brackets needed
 ```
 {{< /code >}}
 {{< /slide >}}
@@ -391,7 +416,9 @@ for f in *.log { ... }
 
 $a ~: '.log'        # string contains
 $a ~: r'.log$'      # regex match
-# ~: can also check whether sets/lists/ranges/map keys contain the right-hand expression
+# ~: can also check whether 
+# sets/lists/ranges/map keys contain
+#  the right-hand expression
 ```
 {{< /code >}}
 {{< /slide >}}
@@ -469,20 +496,28 @@ let result = if x > 0 { "positive" } else { "non-positive" }
 {{< code side="bash" >}}
 ```bash
 foo() {
-    echo "$1"   # no parameter names, no types, no default values
+    echo "$1"
+    # no parameter names, no types,
+    #  no default values
 }
 
 foo() {
-    return 100  # can only return exit codes 0-255
+    return 100 
+    # can only return exit codes 0-255
 }
 
 foo() { echo "hello"; }
 res=$(foo)
-# returning strings requires global variables or command substitution
+# returning strings requires 
+# global variables
+# or command substitution
 
 time() { echo "my time"; }
-time          # calls the function, shadowing the external command of the same name
-command time  # forces calling the external command
+time          # calls the function, 
+# shadowing the external command
+# of the same name
+command time
+# forces calling the external command
 ```
 {{< /code >}}
 {{< code side="lume" >}}
@@ -498,7 +533,8 @@ fn sum(*nums) {
 }
 sum(1, 2, 3, 4, 5)   # 15
 
-time()   # calls the function, doesn't affect external command time
+time()   # calls the function,
+# doesn't affect external command time
 time _   # calls the external command
 ```
 {{< /code >}}
@@ -513,7 +549,8 @@ let double = x -> x * 2
 let add = (x, y) -> x + y
 
 let base = 10
-let adder = x -> x + base  # closure: automatically captures free variables
+let adder = x -> x + base
+# closure: automatically captures free variables
 
 fn make_adder(base) {
     x -> x + base          # returns a lambda that remembers base
@@ -544,7 +581,8 @@ fn my_function(x) {
     x * 2
 }
 # Decorators return a [before_fn, after_fn] list
-# NAME, ARGS, RESULT variables accessible within the decorator environment
+# NAME, ARGS, RESULT variables accessible 
+# within the decorator environment
 ```
 {{< /code >}}
 {{< /slide >}}
@@ -564,7 +602,9 @@ echo $a   # 1 (global pollution)
 let a = 5
 fn add() { a = 1 }
 add()
-print a   # 5 (the a inside the function is local; modifying the parent requires explicit set)
+print a   # 5 
+# the a inside the function is local;
+# modifying the parent requires explicit set
 ```
 {{< /code >}}
 {{< /slide >}}
@@ -573,17 +613,20 @@ print a   # 5 (the a inside the function is local; modifying the parent requires
 {{< code side="bash" >}}
 ```bash
 rm -rf /$undefined_dir
-# if undefined_dir is empty, this is equivalent to rm -rf /
+# if undefined_dir is empty,
+# this is equivalent to rm -rf /
 # set -u can save you
 ```
 {{< /code >}}
 {{< code side="lume" >}}
 ```bash
 rm -rf /$undefined_dir
-# recognized as a literal: rm -rf '/$undefined_dir'
+# recognized as a literal:
+# rm -rf '/$undefined_dir'
 rm -rf `/$undefined_dir`
 # error: undeclared variable `undefined_dir`
-# the default value of an undefined variable is none, not an empty string
+# the default value of an undefined variable
+# is none, not an empty string
 ```
 {{< /code >}}
 {{< /slide >}}
@@ -605,7 +648,8 @@ while read x; do a=1; done <<< "123"
 ```bash
 a=1
 b=$(a=2; echo $a)
-echo "$a"   # 1 (subshell can't modify the parent shell's variable)
+echo "$a"   # 1 
+# subshell can't modify the parent shell's variable
 
 (a=1)
 echo "$a"   # empty (changes in subshell are lost)
@@ -665,7 +709,8 @@ printf "%s\n" "$var"
 {{< code side="lume" >}}
 ```bash
 print "-n"
-# print statement is faster and safer than third-party echo
+# print statement is faster and safer
+# than third-party echo
 ```
 {{< /code >}}
 {{< /slide >}}
@@ -704,7 +749,8 @@ command &.                # ignore
 # If no .log files exist
 
 rm *.log
-# Attempts to delete a file literally named '*.log'
+# Attempts to delete a file
+# literally named '*.log'
 
 # Solution: defensive coding
 shopt -s nullglob
@@ -718,8 +764,10 @@ rm *.log
 # Error: wildcard not matched: `*.log`
 
 # Solution: ignore or catch
-rm *.log ?.             # Ignore the error, continue execution
-rm *.log ?: do_handler  # Continue only after handling the exception
+rm *.log ?.
+# Ignore the error, continue execution
+rm *.log ?: do_handler
+# Continue only after handling the exception
 ```
 {{< /code >}}
 {{< /slide >}}
@@ -728,7 +776,8 @@ rm *.log ?: do_handler  # Continue only after handling the exception
 {{< code side="bash" >}}
 ```bash
 for f in *; do
-    echo "$f"   # variables always need quotes
+    echo "$f"
+    # variables always need quotes
 done
 ```
 {{< /code >}}
@@ -753,10 +802,13 @@ my_func() { echo "util function"; }
 source utils.sh
 # Now, MY_CONSTANT and my_func
 # are exposed naked in the global namespace.
-# If two libraries define functions with the same name,
-# the latter mercilessly overwrites the former, with no warning at all.
+# If two libraries define functions
+#  with the same name,
+# the latter mercilessly overwrites 
+#  the former, with no warning at all.
 # No module system, no namespaces.
-# Large bash script projects inevitably evolve into
+# Large bash script projects
+#  inevitably evolve into
 # one giant global-namespace junkyard.
 ```
 {{< /code >}}
@@ -766,15 +818,24 @@ source utils.sh
 use myutils as utils
 utils::my_function()
 
-# 17 built-in modules, loaded on demand, never pollute the global environment
-list.map(...)                 # list operations
-string.split(...)             # string operations
-fs.read(...)                  # file operations
-time.now()                    # time operations
-math.sqrt(16)                 # math functions
-regex.find(g'\d+', text)      # regex operations
-ui.pick("Choose one:", options)  # interactive selection
-# Used to simple merging? Lume supports that too: include
+# 17 built-in modules, loaded on demand,
+#  never pollute the global environment
+list.map(...)
+# list operations
+string.split(...)
+# string operations
+fs.read(...)
+# file operations
+time.now()
+# time operations
+math.sqrt(16)
+# math functions
+regex.find(g'\d+', text)
+# regex operations
+ui.pick("Choose one:", options)
+# interactive selection
+# Used to simple merging? 
+# Lume supports that too: include
 ```
 {{< /code >}}
 {{< /slide >}}
@@ -782,22 +843,30 @@ ui.pick("Choose one:", options)  # interactive selection
 {{< slide type="compare" title="11. Error Handling & Debugging · Doesn't Error or Stop by Default" >}}
 {{< code side="bash" >}}
 ```bash
-# Bash by default doesn't error, doesn't stop, doesn't warn
-# Strongly recommended to add at the top of scripts:
+# Bash by default doesn't error,
+#  doesn't stop, doesn't warn
+# Strongly recommended to add 
+# at the top of scripts:
 set -euo pipefail
 # -e: exit immediately on command failure
 # -u: error on undefined variables
-# -o pipefail: pipeline fails if any command in it fails
+# -o pipefail: pipeline fails 
+# if any command in it fails
 ```
 {{< /code >}}
 {{< code side="lume" >}}
 ```bash
-# Compiler-level error messages, out of the box:
-# 3 lines of context before and after the error
+# Compiler-level error messages,
+#  out of the box:
+# 3 lines of context 
+# before and after the error
 # Precise line and column numbers
-# Red-highlighted error location, ^~~~ pointer arrow
-# Specific error description and fix suggestions
-# Automatically terminates on error, unless the exception has been handled
+# Red-highlighted error location,
+#  ^~~~ pointer arrow
+# Specific error description 
+# and fix suggestions
+# Automatically terminates on error,
+#  unless the exception has been handled
 ```
 {{< /code >}}
 {{< /slide >}}
@@ -807,8 +876,10 @@ set -euo pipefail
 ```bash
 echo "DEBUG: x=$x"
 echo $?
-set -x    # extremely noisy, like a tsunami
-# bash: syntax error near unexpected token '('
+set -x    
+# extremely noisy, like a tsunami
+# bash: syntax error near
+#  unexpected token '('
 # Do you know which line it is?
 ```
 {{< /code >}}
@@ -820,7 +891,8 @@ set -x    # extremely noisy, like a tsunami
 
 [1, 2, 3] | list.map(x -> x * 2) \
 | tap | list.filter(x -> x > 3)
-#  ↑ prints the intermediate result, data continues flowing without loss
+#  ↑ prints the intermediate result,
+#  data continues flowing without loss
 ```
 {{< /code >}}
 {{< /slide >}}
@@ -831,24 +903,34 @@ Bash relies on exit codes to judge success/failure, with crude error handling. L
 
 ```bash
 # Success/failure hooks
-risky_call() &: next       # execute function on success
-risky_call() ?: handler    # execute function or return default on error (lazy evaluation)
+risky_call() &: next
+# execute function on success
+risky_call() ?: handler
+# execute function or return default on error (lazy evaluation)
 
 # Flow control (ignore/terminate)
-risky_call() ?.        # ignore the error
-risky_call() ?!        # terminate on error (only needed within a pipeline)
+risky_call() ?.
+# ignore the error
+risky_call() ?!
+# terminate on error (only needed within a pipeline)
 
 # Output conversion
-risky_call() ?~        # convert success/failure into a boolean
-risky_call() ?>        # replace the return value with the error message
+risky_call() ?~
+# convert success/failure into a boolean
+risky_call() ?> 
+# replace the return value with the error message
 
 # Print helpers
-risky_call() ?+        # print error to stdout
-risky_call() ??        # print error to stderr
+risky_call() ?+
+# print error to stdout
+risky_call() ?? 
+# print error to stderr
 
 # None-value hooks
-risky_call() _: handler   # execute on encountering none
-risky_call() _! | next    # terminate on encountering none (only needed within a pipeline)
+risky_call() _: handler
+# execute on encountering none
+risky_call() _! | next
+# terminate on encountering none (only needed within a pipeline)
 ```
 {{< /code >}}
 {{< /slide >}}
@@ -901,7 +983,8 @@ exit        # sleep exits along with it
 
 jobs        # view background tasks
 jobs -k id  # terminate a background task
-# All background tasks automatically exit when the main process ends
+# All background tasks automatically exit
+#  when the main process ends
 ```
 {{< /code >}}
 {{< /slide >}}
@@ -910,7 +993,8 @@ jobs -k id  # terminate a background task
 {{< code side="bash" >}}
 ```bash
 "\033[31;1merror\033[m"
-# Color display requires hand-writing ANSI escape codes
+# Color display requires 
+# hand-writing ANSI escape codes
 
 
 read -p "your choose:"
@@ -924,7 +1008,8 @@ COLOR.red + 'hello'
 STYLE.BOLD + 'lume'
 
 fs.ls -lh | ui.pick 'select a file'
-# Built-in color functions and COLOR constants, integrated interactive UI
+# Built-in color functions and 
+# COLOR constants, integrated interactive UI
 ```
 {{< /code >}}
 {{< /slide >}}

@@ -186,10 +186,13 @@ utils::MY_CONSTANT
 {{< slide type="compare" title="Interactive Experience: Terminal Stuck in 1989" >}}
 {{< code side="bash" >}}
 ```bash
-# PS1 escape sequences, wrong edits = gibberish
+# PS1 escape sequences,
+# wrong edits = gibberish
 # No native syntax highlighting
-# No abbreviation expansion, no AI completion
-# Argument completion relies on hundreds of lines of scripts
+# No abbreviation expansion
+# No AI completion
+# Argument completion relies on
+# hundreds of lines of scripts
 ```
 {{< /code >}}
 {{< code side="lume" >}}
@@ -198,7 +201,8 @@ set LUME_PROMPT_SETTINGS = { template }
 set LUME_ABBREVIATIONS = { gp: 'git push' }
 set LUME_HOT_BINDINGS = { CTRL_q: 'exit' }
 set LUME_THEME = 'ayu_dark'
-# Prompt / abbreviations / hotkeys / AI completion
+# Prompt / abbreviations /
+# hotkeys / AI completion
 ```
 {{< /code >}}
 {{< /slide >}}
