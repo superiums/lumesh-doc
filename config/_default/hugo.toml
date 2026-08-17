@@ -1,4 +1,4 @@
-baseURL = "https://lumesh.codeberg.page/"
+baseURL = "https://www.lumesh.cc.cd/"
 title = "Lumesh"
 enableGitInfo = true
 hasCJKLanguage = true
@@ -16,12 +16,20 @@ pluralizeListTitles = true # hugo function useful for non-english languages, fin
 enableRobotsTXT = true
 summaryLength = 100
 
+
 buildDrafts = false
 buildFuture = false
 
 enableEmoji = true
 
 # googleAnalytics = "G-XXXXXXXXX"
+
+[build]
+  [build.buildStats]
+    disableClasses = false
+    disableIDs = true
+    disableTags = false
+    enable = true
 
 [pagination]
   pagerSize = 100

@@ -1,0 +1,8 @@
+<div class="rounded-lg shadow-md p-4 bg-border-primary bg-neutral-100">
+    {{ with .Get "title" }}
+    <div class="text-xl font-bold mb-2">{{ . }}</div>
+    {{ end }}
+    <div class="text-gray-700">
+        {{ .Inner | strings.TrimSpace | .Page.RenderString }}
+    </div>
+</div>

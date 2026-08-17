@@ -1,0 +1,69 @@
+{{- $type := .Get "type" -}}
+{{- $title := .Get "title" -}}
+
+{{- if eq $type "hero" }}
+<div class="slide slide-hero">
+  {{ with .Get "tag" }}<div class="hero-tag">{{ . }}</div>{{ end }}
+  {{ with $title }}<h1>{{ . }}</h1>{{ end }}
+  {{ with .Get "sub" }}<p class="hero-sub">{{ . }}</p>{{ end }}
+  <div class="hero-quote">{{ .Page.RenderString .Inner }}</div>  
+</div>
+
+{{- else if eq $type "compare" }}
+<div class="slide slide-compare">
+  {{ with $title }}<h2>{{ . }}</h2>{{ end }}
+  <div class="compare-grid">
+    {{ .Inner }}
+  </div>
+  {{ with .Get "caption" }}<p class="slide-caption">{{ . }}</p>{{ end }}
+</div>
+
+{{- else if eq $type "perf" }}
+{{- $bashMs := .Get "bashMs" | float | default 0 -}}
+{{- $lumeMs := .Get "lumeMs" | float | default 0 -}}
+{{- $max := $bashMs -}}
+{{- if gt $lumeMs $max }}{{ $max = $lumeMs }}{{ end -}}
+{{- $bashH := 160 -}}
+{{- $lumeH := 16 -}}
+{{- if gt $max 0.0 }}
+  {{- $bashH = mul (div $bashMs $max) 160 -}}
+  {{- $lumeH = mul (div $lumeMs $max) 160 -}}
+  {{- if lt $lumeH 6.0 }}{{ $lumeH = 6.0 }}{{ end -}}
+{{- end }}
+<div class="slide slide-perf">
+  {{ with $title }}<h2>{{ . }}</h2>{{ end }}
+  <div class="perf-chart">
+    <div class="perf-bar-wrap">
+      <div class="perf-value bash-val">{{ .Get "bashMs" }} ms</div>
+      <div class="perf-bar bash-bar" style="height: {{ $bashH }}px;"></div>
+      <div class="perf-label">Bash</div>
+    </div>
+    <div class="perf-bar-wrap">
+      <div class="perf-value lume-val">{{ .Get "lumeMs" }} ms</div>
+      <div class="perf-bar lume-bar" style="height: {{ $lumeH }}px;"></div>
+      <div class="perf-label">Lume</div>
+    </div>
+  </div>
+  <div class="perf-speedup">快 <span>{{ .Get "speedup" }}</span> 倍</div>
+  {{ with .Get "note" }}<p class="perf-note">{{ . }}</p>{{ end }}
+</div>
+
+{{- else if eq $type "cta" }}
+<div class="slide slide-cta">
+  {{ with $title }}<h2>{{ . }}</h2>{{ end }}
+  <div class="cta-sub">{{ .Page.RenderString .Inner }}</div>  
+  <div class="cta-links">
+    {{ range (.Get "links" | default slice) }}
+      <a class="cta-link" href="{{ .href }}" {{ if .external }}target="_blank"{{ end }}>{{ .text }}</a>
+    {{ end }}
+  </div>
+  {{ with .Get "slogan" }}<p class="cta-slogan">{{ . }}</p>{{ end }}
+</div>
+
+{{- else if eq $type "text" }}  
+<div class="slide slide-text">  
+  {{ with $title }}<h2>{{ . }}</h2>{{ end }}  
+  <div class="text-content">{{ .Page.RenderString .Inner }}</div>  
+</div>
+
+{{- end -}}

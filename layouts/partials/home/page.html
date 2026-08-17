@@ -1,4 +1,14 @@
-{{ define "main" }}
+<article class="max-w-full prose dark:prose-invert">
+  {{ with .Title }}
+    <header>
+      <h1>{{ . | emojify }}</h1>
+    </header>
+  {{ end }}
+
+
+  <section class="w-full">
+
+
 <header class="lume-hero relative overflow-hidden">
   <div class="lume-hero-glow pointer-events-none absolute -z-10"></div>
 
@@ -19,11 +29,12 @@
         Write as js · works as Bash · run as light
       </p>
       <h1 class="text-3xl sm:text-4xl lg:text-4xl font-extrabold leading-tight tracking-tight text-white">
-        A modern shell and scripting language that runs as light as a photon
+        像<span class="lume-glow-text">光</span> 一样运行的<br>
+        现代 Shell 与脚本语言
       </h1>
       <p class="mt-5 text-base text-neutral-300 max-w-md">
-        Born for high performance and modern programming experience --
-        end the quote hell, implicit traps, and text stream pipelining of Bash.
+        为高性能与现代编程体验而生 ——
+        终结 Bash 的引号地狱、隐式陷阱与文本流管道。
       </p>
 
       <div class="lume-install-box mt-8 flex items-center gap-3 rounded-full px-5 py-3 max-w-xl">
@@ -36,7 +47,7 @@
 
       <div class="mt-8 flex flex-wrap gap-4">
         <a href="#compare" class="lume-btn lume-btn-primary rounded-lg px-6 py-3 font-semibold text-sm">
-          See one-line comparison
+          查看一行代码对比
         </a>
         <a href="https://github.com/superiums/lumesh" class="lume-btn lume-btn-ghost rounded-lg px-6 py-3 font-semibold text-sm">
           GitHub ⭐
@@ -49,7 +60,7 @@
         <em class="text-neutral-300 not-italic">M</em>odern ·
         <em class="text-neutral-300 not-italic">E</em>fficient
         &nbsp;|&nbsp;
-        <a href="features/" class="lume-anchor">Learn more</a>
+        <a href="features/" class="lume-anchor">了解更多特性</a>
       </p>
     </div>
 
@@ -62,24 +73,24 @@
           <span class="ml-2 text-xs text-neutral-500">lume — bash vs lumesh</span>
         </div>
 
-        <img src="{{ "images/demo.gif" | relURL }}" alt="Lumesh structured pipeline demo" class="block w-full h-auto">
+        <img src="{{ "images/demo.gif" | relURL }}" alt="Lumesh 结构化管道演示" class="block w-full h-auto">
       </div>
     </div>
   </div>
 </header>
 
 <section id="compare" class="lume-section py-20 px-6 lg:px-16">
-  <h2 class="text-center text-2xl lg:text-3xl font-extrabold text-white">Same task, world of difference</h2>
-  <p class="text-center mt-3 text-neutral-400">Filter .log files larger than 1MB, get the top 5 by size</p>
+  <h2 class="text-center text-2xl lg:text-3xl font-extrabold text-white">同一个任务，天壤之别</h2>
+  <p class="text-center mt-3 text-neutral-400">筛选大于 1MB 的 .log 文件，取体积最大的 5 个</p>
 
   <div class="mt-12 mx-auto max-w-7xl flex flex-col lg:flex-row gap-6 items-stretch">
     <div class="lume-code-card lume-code-card-bash grow rounded-2xl p-6 overflow-x-auto lg:flex-1">
       <div class="flex items-center gap-3 mb-4">
         <span class="lume-tag lume-tag-bash rounded px-2.5 py-1 text-xs font-bold">bash</span>
-        <span class="text-neutral-500 text-sm">awk + sort + pipe concatenation</span>
+        <span class="text-neutral-500 text-sm">awk + sort + 管道拼接</span>
       </div>
-      <pre class="text-sm leading-7"><code>ls -la *.log 2>/dev/null \
-    | awk '$5 > 1048576 {print $5, $9}' \
+      <pre class="text-sm leading-7"><code>ls -la *.log 2&gt;/dev/null \
+    | awk '$5 &gt; 1048576 {print $5, $9}' \
     | sort -n | tail -5 | \
     | awk '{print $2, $1}'</code></pre>
     </div>
@@ -89,88 +100,90 @@
     <div class="lume-code-card lume-code-card-lume grow rounded-2xl p-6 overflow-x-auto lg:flex-1">
       <div class="flex items-center gap-3 mb-4">
         <span class="lume-tag lume-tag-lume rounded px-2.5 py-1 text-xs font-bold">lumesh</span>
-        <span class="text-neutral-500 text-sm">structured pipeline, complete in one go</span>
+        <span class="text-neutral-500 text-sm">结构化管道，一气呵成</span>
       </div>
-      <pre class="text-sm leading-7"><code>fs.ls -lah *.log ?. \
-    | where(size > 1M) \
+      <pre class="text-sm leading-7"><code>fs.ls -lah *.log _! \
+    | where(size &gt; 1M) _! \
     | .sort('-size') \
     | .first(5)</code></pre>
     </div>
   </div>
   <div class="mt-8 text-xs flex" style="justify-content: end">
-    <a href="glance/why" class="lume-anchor">more comparisons</a>
+    <a href="glance/why" class="lume-anchor">更多对比</a>
   </div>
 </section>
 
 <section id="metrics" class="lume-section py-20 px-6 lg:px-16">
-  <h2 class="text-center text-2xl lg:text-3xl font-extrabold text-white">Lightweight and efficient</h2>
+  <h2 class="text-center text-2xl lg:text-3xl font-extrabold text-white">轻量，且高效</h2>
 
   <div class="mt-12 mx-auto max-w-7xl lume-metrics-flex">
     <div class="lume-metric-card lume-metric-item rounded-2xl p-6 text-center">
       <div class="lume-metric-value text-3xl font-extrabold">224<span class="text-base text-neutral-500 ml-1">ms</span></div>
-      <div class="mt-2 text-sm text-white">1 million loop summation</div>
-      <div class="mt-1 text-xs text-neutral-500">bash ~2200ms, 10x faster</div>
+      <div class="mt-2 text-sm text-white">100 万次循环求和</div>
+      <div class="mt-1 text-xs text-neutral-500">bash 约 2200ms，快 10 倍+</div>
     </div>
     <div class="lume-metric-card lume-metric-item rounded-2xl p-6 text-center">
       <div class="lume-metric-value text-3xl font-extrabold">4.3<span class="text-base text-neutral-500 ml-1">MB</span></div>
-      <div class="mt-2 text-sm text-white">lume full shell size</div>
-      <div class="mt-1 text-xs text-neutral-500">includes REPL / completion / highlighting</div>
+      <div class="mt-2 text-sm text-white">lume 完整 Shell 体积</div>
+      <div class="mt-1 text-xs text-neutral-500">REPL / 补全 / 高亮全带</div>
     </div>
     <div class="lume-metric-card lume-metric-item rounded-2xl p-6 text-center">
       <div class="lume-metric-value text-3xl font-extrabold">3.8<span class="text-base text-neutral-500 ml-1">MB</span></div>
-      <div class="mt-2 text-sm text-white">lume-se script executor</div>
-      <div class="mt-1 text-xs text-neutral-500">instant startup, minimal dependencies</div>
+      <div class="mt-2 text-sm text-white">lume-se 脚本执行器</div>
+      <div class="mt-1 text-xs text-neutral-500">极速启动，最小依赖</div>
     </div>
     <div class="lume-metric-card lume-metric-item rounded-2xl p-6 text-center">
       <div class="lume-metric-value text-3xl font-extrabold">22</div>
-      <div class="mt-2 text-sm text-white">built-in modules</div>
+      <div class="mt-2 text-sm text-white">内置模块</div>
       <div class="mt-1 text-xs text-neutral-500">fs / string / time / math / ui ...</div>
     </div>
   </div>
 </section>
 
 <section id="metrics" class="lume-section py-20 px-6 lg:px-16">
-<h2 class="text-center text-2xl lg:text-3xl font-extrabold text-white">Modern, and Natural</h2>
+  <h2 class="text-center text-2xl lg:text-3xl font-extrabold text-white">现代，且自然</h2>
 
-<div class="mt-12 mx-auto max-w-7xl lume-metrics-flex">
-<div class="lume-metric-card lume-metric-item rounded-2xl p-6">
-<div class="lume-metric-value text-3xl font-extrabold">Interaction<span class="block text-base text-neutral-500 ml-1">More Convenient</span></div>
-<div class="mt-4 text-sm text-white">Slash commands</div>
-<div class="mt-2 text-sm text-white">Programmable hotkeys</div>
-<div class="mt-2 text-sm text-white">Abbreviation auto-expansion</div>
-<div class="mt-2 text-sm text-white">Auto-suggestions and completion</div>
-<div class="mt-4 text-xs text-neutral-500 text-center">Programmable, extensible
-<a href="glance/" class="lume-anchor">Learn more features</a>
-</div>
-</div>
-<div class="lume-metric-card lume-metric-item rounded-2xl p-6">
-<div class="lume-metric-value text-3xl font-extrabold">Interface<span class="block text-base text-neutral-500 ml-1">More Freedom</span></div>
-<div class="mt-4 text-sm text-white">Programmable prompt</div>
-<div class="mt-2 text-sm text-white">Starship support</div>
-<div class="mt-2 text-sm text-white">Custom syntax highlighting</div>
-<div class="mt-2 text-sm text-white">Integrated UI modules</div>
-<div class="mt-4 text-xs text-neutral-500 text-center">Programmable, extensible
-<a href="glance/features/" class="lume-anchor">Learn more highlights</a>
-</div>
-</div>
-<div class="lume-metric-card lume-metric-item rounded-2xl p-6">
-<div class="lume-metric-value text-3xl font-extrabold">Syntax<span class="block text-base text-neutral-500 ml-1">More Natural</span></div>
-<div class="mt-4 text-sm text-white">More natural data structures</div>
-<div class="mt-2 text-sm text-white">More natural flow control</div>
-<div class="mt-2 text-sm text-white">More powerful error handling</div>
-<div class="mt-2 text-sm text-white">More powerful data pipelines</div>
-<div class="mt-4 text-xs text-neutral-500 text-center">Designed to reduce cognitive load
-<a href="features/" class="lume-anchor">Learn more comparisons</a>
-</div>
-</div>
-</div>
+  <div class="mt-12 mx-auto max-w-7xl lume-metrics-flex">
+    <div class="lume-metric-card lume-metric-item rounded-2xl p-6">
+      <div class="lume-metric-value text-3xl font-extrabold">交互<span class="text-base text-neutral-500 ml-1">更便捷</span></div>
+        <div class="mt-4 text-sm text-white">斜杠命令</div>
+        <div class="mt-2 text-sm text-white">可编程热键</div>
+        <div class="mt-2 text-sm text-white">缩写自动展开</div>
+        <div class="mt-2 text-sm text-white">自动提示与补全</div>
+      <div class="mt-4 text-xs text-neutral-500 text-center">可编程，可扩展
+          <a href="glance/" class="lume-anchor">了解更多特性</a>
+      </div>
+    </div>
+    <div class="lume-metric-card lume-metric-item rounded-2xl p-6">
+      <div class="lume-metric-value text-3xl font-extrabold">界面<span class="text-base text-neutral-500 ml-1">更自由</span></div>
+      <div class="mt-4 text-sm text-white">可编程提示符</div>
+      <div class="mt-2 text-sm text-white">支持starship</div>
+      <div class="mt-2 text-sm text-white">自定义语法高亮</div>
+      <div class="mt-2 text-sm text-white">集成UI模块</div>
+      <div class="mt-4 text-xs text-neutral-500 text-center">可编程，可扩展
+          <a href="glance/features/" class="lume-anchor">了解更多亮点</a>
+      </div>
+    </div>
+    <div class="lume-metric-card lume-metric-item rounded-2xl p-6">
+      <div class="lume-metric-value text-3xl font-extrabold">语法<span class="text-base text-neutral-500 ml-1">更自然</span></div>
+      <div class="mt-4 text-sm text-white">更自然的数据结构</div>
+      <div class="mt-2 text-sm text-white">更自然的流程控制</div>
+      <div class="mt-2 text-sm text-white">更强大的错误捕获</div>
+      <div class="mt-2 text-sm text-white">更强大的数据管道</div>
+      <div class="mt-4 text-xs text-neutral-500 text-center">只为降低心智消耗
+          <a href="features/" class="lume-anchor">了解更多对比</a>
+      </div>
+    </div>
+  </div>
 
-<div class="text-center max-w-2xl mx-auto mb-3 py-6">
-<a href="doc/quickstart" class="lume-btn lume-btn-outline rounded-lg px-6 py-3 font-semibold text-sm inline-flex items-center gap-2">
-Quick Start
-<span class="lume-btn-arrow">→</span>
-</a>
-</div></section>
+    <div class="text-center max-w-2xl mx-auto mb-3 py-6">
+      <a href="doc/quickstart" class="lume-btn lume-btn-outline rounded-lg px-6 py-3 font-semibold text-sm inline-flex items-center gap-2">
+          快速开始
+        <span class="lume-btn-arrow">→</span>
+      </a>
+    </div>
+
+</section>
 
 <script>
 function lumeCopyInstall(btn) {
@@ -183,4 +196,6 @@ function lumeCopyInstall(btn) {
   });
 }
 </script>
-{{ end }}
+
+</section>
+</article>

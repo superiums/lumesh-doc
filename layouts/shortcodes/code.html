@@ -1,0 +1,12 @@
+{{- $side := .Get "side" | default "bash" -}}  
+{{- $labelMap := dict "bash" "Bash" "lume" "Lume" "cta" "" -}}  
+{{- $label := index $labelMap $side | default (title $side) -}}  
+{{- $rendered := .Inner | .Page.RenderString -}}  
+{{- if eq $side "cta" }}  
+<div class="cta-code">{{ $rendered }}</div>  
+{{- else }}  
+<div class="compare-card {{ $side }}-side">  
+  <div class="compare-label {{ $side }}-label">● {{ $label }}</div>  
+  <div class="compare-code">{{ $rendered }}</div>  
+</div>  
+{{- end -}}

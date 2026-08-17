@@ -13,7 +13,9 @@ categories:
 
 ## 1.1 什么是Lumesh
 
+{{< card title="Lumesh" >}}  
 Lumesh 是一个现代化的 shell 和脚本语言，作为 Bash 的替代者而设计。它采用 Rust 实现，专为高性能和用户友好体验而打造，我们的目标是："像 JavaScript 一样书写，像 Bash 一样工作，像光一样运行"。
+{{< /card >}}
 
 ## 1.2 为什么要选择 Lumesh
 

@@ -19,7 +19,7 @@ categories:
 
 - Execute installation command
 ```bash
-curl -fsSL https://raw.githubusercontent.com/superiums/lumesh/main/docs/install.sh | bash
+curl -fsSL https://www.lumesh.cc.cd/install.sh | bash
 
 ```
 

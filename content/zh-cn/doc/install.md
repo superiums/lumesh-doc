@@ -21,7 +21,7 @@ categories:
 
 - 执行安装命令
 ```bash
-curl -fsSL https://raw.githubusercontent.com/superiums/lumesh/main/docs/install.sh | bash
+curl -fsSL https://www.lumesh.cc.cd/install.sh | bash
 
 ```
 

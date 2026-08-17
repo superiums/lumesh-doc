@@ -1,0 +1,478 @@
+{{- /* 容器 shortcode：{{% slides %}} ... {{% /slides %}} */ -}}
+<div class="slides-root">
+    <div class="slide-container">{{ .Inner }}</div>
+
+    <div class="slide-nav">
+        <div
+            style="
+                position: relative;
+                flex: 1;
+                display: flex;
+                justify-content: center;
+            "
+        >
+            <div class="slide-dots" id="dotsContainer"></div>
+        </div>
+    </div>
+    <div class="slide-nav">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">
+            <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+            >
+                <path d="M15 18l-6-6 6-6" />
+            </svg>
+            上一页
+        </button>
+        <span class="slide-counter" id="slideCounter">1 / 1</span>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">
+            下一页
+            <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+            >
+                <path d="M9 18l6-6-6-6" />
+            </svg>
+        </button>
+    </div>
+</div>
+
+{{ if not (.Page.Store.Get "slidesAssetsInjected") }} {{ .Page.Store.Set
+"slidesAssetsInjected" true }}
+<style>
+    .slides-root h1,
+    .slides-root p,
+    .slides-root div,
+    .slides-root span {
+        text-decoration: none !important;
+    }
+    .slides-root {
+        width: 100%;
+        max-width: 900px;
+        margin: 100px auto;
+    }
+    .slide-container {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 14px;
+        overflow: hidden;
+        min-height: 460px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        position: relative;
+    }
+    .slide {
+        display: none;
+        padding: 40px 44px;
+        animation: fadeIn 0.35s ease-out;
+    }
+    .slide.active {
+        display: block;
+    }
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Hero */
+    .slide-hero {
+        text-align: center;
+        padding-top: 72px;
+        padding-bottom: 72px;
+    }
+    .hero-tag {
+        display: inline-block;
+        font-size: 12px;
+        color: #999;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 18px;
+        border: 1px solid #e0e0e0;
+        padding: 5px 14px;
+        border-radius: 6px;
+        font-weight: 500;
+    }
+    .slide-hero h1 {
+        font-size: 38px;
+        font-weight: 600;
+        margin: 0 0 14px 0;
+        line-height: 1.2;
+        color: #1a1a1a;
+    }
+    .hero-sub {
+        font-size: 18px;
+        color: #888;
+        margin-bottom: 36px;
+    }
+    .hero-quote {
+        font-size: 16px;
+        color: #666;
+        font-style: italic;
+        max-width: 540px;
+        margin: 0 auto;
+        line-height: 1.8;
+        border-left: 3px solid #ddd;
+        padding-left: 22px;
+        text-align: left;
+    }
+
+    /* Compare */
+    .slide-compare h2 {
+        font-size: 26px;
+        font-weight: 600;
+        margin: 0 0 24px 0;
+        color: #1a1a1a;
+    }
+    .compare-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+    }
+    .compare-card {
+        border-radius: 10px;
+        padding: 20px 22px;
+        border: 1px solid #e8e8e8;
+    }
+    .compare-card.bash-side {
+        background: #fdf5f5;
+        border-color: #f0cccc;
+    }
+    .compare-card.lume-side {
+        background: #f0fafa;
+        border-color: #cce8e8;
+    }
+    .compare-card.cta-side {
+        background: #f8f8f8;
+        border-color: #e0e0e0;
+    }
+    .compare-label {
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .compare-label.bash-label {
+        color: #d44;
+    }
+    .compare-label.lume-label {
+        color: #2a9d8f;
+    }
+    .compare-code {
+        font-size: 13.5px;
+        line-height: 1.7;
+        color: #222;
+    }
+
+    /* chroma 覆盖，贴合卡片视觉 */
+    .compare-code .highlight,
+    .cta-code .highlight {
+        margin: 0;
+    }
+    .compare-code .highlight pre.chroma,
+    .cta-code .highlight pre.chroma {
+        background: transparent !important;
+        margin: 0;
+        padding: 0;
+        font-family:
+            "SF Mono", "Fira Code", "JetBrains Mono", "Consolas", monospace;
+        font-size: 13.5px;
+        line-height: 1.7;
+        white-space: pre-wrap;
+        word-break: break-all;
+        overflow: visible;
+    }
+    .compare-code .highlight pre.chroma code,
+    .cta-code .highlight pre.chroma code {
+        display: block;
+    }
+
+    /* Performance */
+    .slide-perf h2 {
+        font-size: 26px;
+        font-weight: 600;
+        margin: 0 0 28px 0;
+        color: #1a1a1a;
+    }
+    .perf-chart {
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 80px;
+        padding: 30px 0 50px;
+        height: 280px;
+    }
+    .perf-bar-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+    .perf-bar {
+        width: 110px;
+        border-radius: 8px 8px 0 0;
+    }
+    .perf-bar.bash-bar {
+        background: #e85d5d;
+    }
+    .perf-bar.lume-bar {
+        background: #4ecdc4;
+    }
+    .perf-value {
+        font-size: 24px;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+    }
+    .perf-value.bash-val {
+        color: #e85d5d;
+    }
+    .perf-value.lume-val {
+        color: #2a9d8f;
+    }
+    .perf-label {
+        font-size: 14px;
+        color: #999;
+        margin-top: 4px;
+    }
+    .perf-speedup {
+        text-align: center;
+        font-size: 34px;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-top: 10px;
+    }
+    .perf-speedup span {
+        color: #2a9d8f;
+    }
+    .perf-note {
+        text-align: center;
+        margin-top: 10px;
+        font-size: 14px;
+        color: #999;
+    }
+
+    /* CTA */
+    .slide-cta {
+        text-align: center;
+        padding-top: 56px;
+    }
+    .slide-cta h2 {
+        font-size: 32px;
+        font-weight: 600;
+        margin: 0 0 18px 0;
+        color: #1a1a1a;
+    }
+    .cta-sub {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 36px;
+        line-height: 1.8;
+    }
+    .cta-sub strong {
+        color: #1a1a1a;
+    }
+    .cta-code {
+        background: #f8f8f8;
+        border: 1px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 18px 28px;
+        display: inline-block;
+        text-align: left;
+        margin-bottom: 28px;
+        color: #333;
+    }
+    .cta-links {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    .cta-link {
+        font-size: 14px;
+        color: #666;
+        text-decoration: none;
+        padding: 10px 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        transition: all 0.2s;
+        background: #fff;
+    }
+    .cta-link:hover {
+        border-color: #999;
+        color: #1a1a1a;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+    .cta-slogan {
+        font-size: 13px;
+        color: #bbb;
+        margin-top: 32px;
+        letter-spacing: 0.06em;
+    }
+
+    /* Navigation */
+    .slide-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 18px;
+        padding: 0 4px;
+    }
+    .nav-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 10px 18px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: #fff;
+        color: #666;
+        font-size: 14px;
+        font-family: inherit;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .nav-btn:hover:not(:disabled) {
+        border-color: #999;
+        color: #1a1a1a;
+    }
+    .nav-btn:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+    }
+    .slide-dots {
+        display: flex;
+        gap: 8px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #ddd;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .dot.active {
+        background: #333;
+        width: 22px;
+        border-radius: 4px;
+    }
+    .slide-counter {
+        font-size: 13px;
+        color: #bbb;
+        font-variant-numeric: tabular-nums;
+        margin: 0 6px;
+    }
+
+    .slide-caption {
+        text-align: center;
+        margin-top: 18px;
+        font-size: 14px;
+        color: #999;
+        font-style: italic;
+    }
+
+    @media (max-width: 640px) {
+        .compare-grid {
+            grid-template-columns: 1fr;
+        }
+        .slide-hero h1 {
+            font-size: 26px;
+        }
+        .slide {
+            padding: 24px;
+        }
+        .perf-chart {
+            gap: 40px;
+        }
+        .perf-bar {
+            width: 70px;
+        }
+    }
+</style>
+
+<script>
+    (function () {
+        function initSlides(root) {
+            let currentSlide = 0;
+            const slides = root.querySelectorAll(".slide");
+            const totalSlides = slides.length;
+            const dotsContainer = root.querySelector("#dotsContainer");
+            const counter = root.querySelector("#slideCounter");
+            const prevBtn = root.querySelector("#prevBtn");
+            const nextBtn = root.querySelector("#nextBtn");
+
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement("div");
+                dot.className = "dot" + (i === 0 ? " active" : "");
+                dot.onclick = () => goToSlide(i);
+                dotsContainer.appendChild(dot);
+            }
+
+            function updateUI() {
+                slides.forEach((s, i) =>
+                    s.classList.toggle("active", i === currentSlide),
+                );
+                root.querySelectorAll(".dot").forEach((d, i) =>
+                    d.classList.toggle("active", i === currentSlide),
+                );
+                counter.textContent = currentSlide + 1 + " / " + totalSlides;
+                prevBtn.disabled = currentSlide === 0;
+                nextBtn.disabled = currentSlide === totalSlides - 1;
+            }
+
+            function changeSlide(dir) {
+                const next = currentSlide + dir;
+                if (next >= 0 && next < totalSlides) {
+                    currentSlide = next;
+                    updateUI();
+                }
+            }
+
+            function goToSlide(index) {
+                currentSlide = index;
+                updateUI();
+            }
+
+            root.__changeSlide = changeSlide;
+            root.__goToSlide = goToSlide;
+
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "ArrowLeft") changeSlide(-1);
+                if (e.key === "ArrowRight") changeSlide(1);
+            });
+
+            updateUI();
+        }
+
+        document.querySelectorAll(".slides-root").forEach(initSlides);
+
+        window.changeSlide = function (dir) {
+            document
+                .querySelectorAll(".slides-root")
+                .forEach((r) => r.__changeSlide && r.__changeSlide(dir));
+        };
+        window.goToSlide = function (idx) {
+            document
+                .querySelectorAll(".slides-root")
+                .forEach((r) => r.__goToSlide && r.__goToSlide(idx));
+        };
+    })();
+</script>
+{{ end }}
